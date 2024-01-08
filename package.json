@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "dev": "dotnet watch run --launch-profile hotreloadprofile --urls http://127.1.1.0:8080",
-    "build": "yarn && npm i && dotnet build -v q && yarn buildcss:linux && yarn build_routes",
+    "build": "yarn && npm i && dotnet build -v q && yarn buildcss:linux",
     "restore": "dotnet restore",
     "buildcss:dev": "cross-env TAILWIND_MODE=build postcss ./Styles/app.css -o ./wwwroot/css/app.css",
     "buildcss:release": "cross-env NODE_ENV=production postcss ./Styles/app.css -o ./wwwroot/css/app.css",

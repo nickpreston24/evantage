@@ -1,15 +1,17 @@
+using CodeMechanic.Diagnostics;
+
 namespace evantage.Models;
 
 public class Commissions
 {
     public List<Line> Lines { get; set; } = new();
-    public List<Phone> Phones { get; set; } = new();
+    public List<Device> Phones { get; set; } = new();
+    public InsuranceType InsuranceType { get; set; } = InsuranceType.Allstate;
 
-    // public double Total { get; set; } = -5.00;
     public double Total()
     {
-        double total = -5.00;
-
+        double total = 0.00;
+        total = Lines.Sum(line => line.InstallmentPlan.Dump("plan").GetEarnings());
         return total;
     }
 

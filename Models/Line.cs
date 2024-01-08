@@ -2,5 +2,6 @@ namespace evantage.Models;
 
 public class Line
 {
-    private InstallmentPlan InstallmentPlan { get; set; } = InstallmentPlan.NextUp;
+    public InstallmentPlan InstallmentPlan { get; set; } = InstallmentPlan.NextUp;
+    public Device Device { get; set; } = new();
 }

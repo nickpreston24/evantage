@@ -1,0 +1,45 @@
+@model evantage.Models.CounterBoxOptions;
+@{
+    var values = Model;
+}
+
+<div class="flex flex-row gap-2">
+
+    <label class="text-xl">
+        @values.Label
+    </label>
+
+    <div x-data="
+        {
+            count: @values.Count
+            , get counter_style() {
+                    console.log('count :>> ', this.count);
+                    return `--value:${this.count};`;
+            }
+            , update_counter(change = 1) {
+                console.log('changing :>> ', change);
+                let next_value = this.count + change;
+                console.log('to :>> ', next_value);
+
+                if(next_value < 0)
+                    change = 0;
+
+                this.count += change;
+            }
+        }
+"
+         class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+        <button class="btn btn-accent text-xl" x-on:click="update_counter(1)">
+            +
+        </button>
+        <!-- Adapted from: https://daisyui.com/components/countdown/ -->
+        <span class="countdown font-mono text-5xl">
+            <span :style="counter_style"></span>
+        </span>
+
+        <button class="btn btn-secondary text-xl" x-on:click="update_counter(-1)">
+            -
+        </button>
+    </div>
+
+</div>

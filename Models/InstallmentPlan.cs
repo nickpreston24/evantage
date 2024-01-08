@@ -1,9 +1,12 @@
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 
 namespace evantage.Models;
 
 public class InstallmentPlan : Enumeration
 {
+    public string Abbreviation;
+
     public double GetEarnings()
     {
         var earning_lookup = new Dictionary<InstallmentPlan, double>()
@@ -13,13 +16,15 @@ public class InstallmentPlan : Enumeration
         };
 
         var _ = earning_lookup.TryGetValue(this, out var found);
+        found.Dump("found installment cost :>> ");
         return found;
     }
 
-    public static InstallmentPlan NextUp => new(1, nameof(NextUp).ToLower());
-    public static InstallmentPlan Other => new(2, nameof(Other).ToLower());
+    public static InstallmentPlan NextUp => new(1, nameof(NextUp).ToLower(), "NU");
+    public static InstallmentPlan Other => new(2, nameof(Other).ToLower(), "Other");
 
-    public InstallmentPlan(int id, string name) : base(id, name)
+    public InstallmentPlan(int id, string name, string abbreviation) : base(id, name)
     {
+        Abbreviation = abbreviation;
     }
 }

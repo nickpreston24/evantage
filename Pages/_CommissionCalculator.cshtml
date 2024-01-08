@@ -1,15 +1,84 @@
+@using evantage.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CodeMechanic.Types
 @model evantage.Models.Commissions
 @{
     var commissions = Model ?? new();
+    var nextup_counter = new CounterBoxOptions()
+    {
+        Label = "NextUp",
+    };
+
+    var upgrade_counter = new CounterBoxOptions()
+    {
+        Label = "Upgrades",
+    };
+
+    var newline_counter = new CounterBoxOptions().With(x => x.Label = "New Lines");
 }
+<div x-data="setup()">
 
-<div class="flex flex-col">
+    <div class="flex flex-col items-center justify-center">
 
-    <ul>
-        <li>
-            Total: @commissions.Total()
-            <p>@commissions.Post</p>
-        </li>
-    </ul>
-    
+        <ul>
+            <li>
+                Total: @commissions.Total()
+                <p>@commissions.Post</p>
+            </li>
+        </ul>
+
+        <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
+            <partial name="_CounterBox" model="newline_counter"></partial>
+            <partial name="_CounterBox" model="nextup_counter"></partial>
+            <partial name="_CounterBox" model="upgrade_counter"></partial>
+
+
+        </div>
+
+
+        <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
+            <select
+                x-model="selected_internet"
+                class="select select-accent w-full max-w-xs">
+                <option disabled selected>Pick an Internet Plan</option>
+                <template x-cloak x-for="item in internet_plans">
+                    <option
+                        :key="item"
+                        :value="item"
+                        x-text="item">
+                    </option>
+                </template>
+            </select>
+
+            <select
+                x-model="selected_insurance"
+                class="select select-accent w-full max-w-xs">
+                <option disabled selected>Pick an Insurance Plan</option>
+                <template x-cloak x-for="item in insurance_plans">
+                    <option
+                        :key="item"
+                        :value="item"
+                        x-text="item">
+                    </option>
+                </template>
+            </select>
+
+            <button class="btn btn-accent" x-on:click="run_confirmation">Confirm</button>
+        </div>
+
+    </div>
+
 </div>
+<script>
+    function setup() {
+        return {
+            selected_insurance: '',
+            selected_internet: '',
+            insurance_plans: ['Allstate', 'Individual'],
+            internet_plans: ['300', '500', '1 Gig', '2 Gig', '5 Gig'],
+            run_confirmation() {
+               let answer = confirm('Post this commission?');
+            }
+        }
+}
+</script>

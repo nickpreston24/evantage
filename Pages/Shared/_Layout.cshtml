@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
-<html data-theme="night" lang="en" class='scroll-smooth'>
+<html lang="en" class='scroll-smooth'>
 <head>
     <base href="~/"/>
     <meta charset="utf-8"/>
@@ -35,9 +35,24 @@
 
 </head>
 
-<body class="flex-1 overflow-y-scroll">
+<body x-data="setup_layout()" :data-theme="selected_theme" class="flex-1 overflow-y-scroll">
 
 <main role="main">
+
+    <select
+        x-model="selected_theme"
+        class="select select-accent w-auto max-w-xs">
+        <option disabled selected>Pick your favorite theme</option>
+        <template x-cloak x-for="theme in themes">
+
+            <option
+                :key="theme"
+                :value="theme"
+                x-text="theme">
+            </option>
+        </template>
+    </select>
+
     @RenderBody()
 </main>
 
@@ -105,6 +120,50 @@
             </a>
         </div>
     </div>
+
+
 </footer>
+<script>
+    function setup_layout() {
+        return {
+            themes: [
+                
+            "light",
+              "dark",
+              "cupcake",
+              "bumblebee",
+              "emerald",
+              "corporate",
+              "synthwave",
+              "retro",
+              "cyberpunk",
+              "valentine",
+              "halloween",
+              "garden",
+              "forest",
+              "aqua",
+              "lofi",
+              "pastel",
+              "fantasy",
+              "wireframe",
+              "black",
+              "luxury",
+              "dracula",
+              "cmyk",
+              "autumn",
+              "business",
+              "acid",
+              "lemonade",
+              "night",
+              "coffee",
+              "winter",
+              "dim",
+              "nord",
+              "sunset",    
+            ],
+            selected_theme: "light"
+        }
+    }
+</script>
 
 </html>

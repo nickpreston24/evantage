@@ -3,9 +3,39 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "dev": "dotnet watch run --launch-profile hotreloadprofile --urls http://127.1.1.0:8080",
+    "build_routes": "node wwwroot/js/build_routes.js",
+    "build": "yarn && npm i && dotnet build -v q && yarn buildcss:linux && yarn build_routes",
+    "restore": "dotnet restore",
+    "buildcss:dev": "cross-env TAILWIND_MODE=build postcss ./Styles/app.css -o ./wwwroot/css/app.css",
+    "buildcss:release": "cross-env NODE_ENV=production postcss ./Styles/app.css -o ./wwwroot/css/app.css",
+    "buildcss:linux": "npx tailwindcss -i ./Styles/app.css -o ./wwwroot/css/site.css",
+    "desktop": "electronize-h5 start /watch",
+    "nuke": "rm -rf node_modules wwwroot/lib wwwroot/css bin obj",
+    "reinstall": "npm run nuke && yarn && npm i && npm run  buildcss:linux",
+    "quickstart": "bash quickstart.sh",
+    "lego": "lego -w -i bricks/ -o wwwroot/dist/"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
+    "autoprefixer": "^10.4.16",
+    "cross-env": "^7.0.3",
+    "daisyui": "^4.4.19",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.3.6"
+  },
+  "dependencies": {
+    "@cubejs-client/core": "^0.34.32",
+    "@polight/lego": "2.0.0-beta.7",
+    "alpinejs": "^3.13.3",
+    "animejs": "^3.2.2",
+    "axios": "^1.6.2",
+    "chart.js": "^4.4.1",
+    "htmx.org": "^1.9.9",
+    "three": "^0.159.0"
+  }
 }

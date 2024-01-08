@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "author": "",
+  "author": "Nick Preston",
   "license": "ISC",
   "scripts": {
     "dev": "dotnet watch run --launch-profile hotreloadprofile --urls http://127.1.1.0:8080",
-    "build_routes": "node wwwroot/js/build_routes.js",
     "build": "yarn && npm i && dotnet build -v q && yarn buildcss:linux && yarn build_routes",
     "restore": "dotnet restore",
     "buildcss:dev": "cross-env TAILWIND_MODE=build postcss ./Styles/app.css -o ./wwwroot/css/app.css",

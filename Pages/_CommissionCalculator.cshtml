@@ -1,0 +1,14 @@
+@model evantage.Models.Commissions
+@{
+    var commissions = Model ?? new();
+}
+
+<div class="flex flex-col">
+
+    <ul>
+        <li>
+            Total: @commissions.Total
+            <p>@commissions.Post</p>
+        </li>
+    </ul>
+</div>

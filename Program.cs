@@ -2,6 +2,7 @@ using System.Reflection;
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
+using evantage.Services;
 
 var policyName = "_myAllowSpecificOrigins";
 
@@ -26,10 +27,12 @@ DotEnv.Load();
 
 
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
+builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
+builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
+builder.Services.AddSingleton<IRazorRoutesService, RazorRoutesService>();
 
 builder.Services.AddControllers();
-
 
 var main_assembly = Assembly.GetExecutingAssembly();
 builder.Services.AddSingleton<IEmbeddedResourceQuery>(
@@ -41,6 +44,7 @@ builder.Services.AddSingleton<IEmbeddedResourceQuery>(
             debugMode: false
         )
         .CacheAllEmbeddedFileContents());
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();

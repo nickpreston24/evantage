@@ -1,12 +1,11 @@
 ﻿@page
 @using evantage.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
     var commission = Model.Commission ?? new Commissions();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Evantage Calculators</h1>
-    <partial name="_CommissionCalculator" model="@commission"/>
-</div>
+<partial name="_CommissionCalculator" model="@commission"/>
+<partial name="_NotesGraph"></partial>

@@ -16,8 +16,11 @@
 
     var newline_counter = new CounterBoxOptions().With(x => x.Label = "New Lines");
 }
-<div x-data="setup()">
+<section id="comission_calculator" class="text-center h-screen" x-data="setup()">
 
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Evantage Calculators</h1>
+    </div>
     <div class="flex flex-col items-center justify-center">
 
         <ul>
@@ -68,7 +71,7 @@
 
     </div>
 
-</div>
+</section>
 <script>
     function setup() {
         return {

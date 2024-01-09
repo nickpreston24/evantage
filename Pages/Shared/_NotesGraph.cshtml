@@ -1,0 +1,30 @@
+@using evantage.Services
+@using evantage.Models
+@using CodeMechanic.RazorHAT.Services
+@inject IRazorRoutesService routes_service
+@inject IInMemoryGraphService graph_service
+@{
+    var nodes = graph_service.GetNodes<Note>();
+}
+<section id="notes_graph" class="h-screen">
+
+    <div id="3d-graph"></div>
+
+</section>
+<script>
+    // Random tree
+    const N = 300;
+    const gData = {
+      nodes: [...Array(N).keys()].map(i => ({ id: i })),
+      links: [...Array(N).keys()]
+        .filter(id => id)
+        .map(id => ({
+          source: id,
+          target: Math.round(Math.random() * (id-1))
+        }))
+    };
+
+    const Graph = ForceGraph3D()
+      (document.getElementById('3d-graph'))
+        .graphData(gData);
+</script>

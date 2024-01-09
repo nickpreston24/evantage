@@ -5,7 +5,7 @@ namespace evantage.Models;
 public class Commissions
 {
     public List<Line> Lines { get; set; } = new();
-    public List<Device> Phones { get; set; } = new();
+    public List<Device> Devices { get; set; } = new();
     public InsuranceType InsuranceType { get; set; } = InsuranceType.Allstate;
 
     public double Total()

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html data-theme="night" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    Copyright © 2024 - All rights reserved<link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- <script src="https://unpkg.com/htmx.org@1.8.5"></script> -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+  </head>
+  <body>
+    <div x-data='setup()' class="border-red-500 border-2">
+      <div id="dashboard-contents" class="flex flex-row">
+        <div class="w-1/4">
+          <div class="bg-info/25">
+            <div class="border-info/25 border-2">
+              <h1 x-text="current_section"></h1>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-3/4">
+          <div class="bg-accent-content/25">
+            <div class="border-accent/25 border-2">
+              <h1>RIGHT</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div id="dashboard-headers" class="w-1/4 flex flex-row">
+        <div class="w-1/4 border-info border-0">
+          <h1>Left</h1>
+        </div>
+
+        <div class="w-3/4 border-accent border-0">
+          <h1>Right<div class="w-1/4 border-info border-0">
+            <h1>Left</h1>
+          </div></h1>
+        </div>
+      </div> -->
+
+      <div id="dashboard-contents" class="flex flex-row">
+        <div class="w-1/4">
+          <div class="bg-info/25">
+            <div class="border-info/25 border-2">
+              <div class="h-screen">1</div>
+              <div class="h-screen">2</div>
+              <div class="h-screen">3</div>
+              <div class="h-screen">4</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-3/4">
+          <div class="bg-accent-content/25">
+            <div class="border-accent/25 border-2">
+              <div class="h-screen">1</div>
+              <div class="h-screen">2</div>
+              <div class="h-screen">3</div>
+              <div class="h-screen">4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function setup() {
+      return {
+        // message: "Have a Potato Day! 🥔 ",
+      };
+    }
+  </script>
+</html>

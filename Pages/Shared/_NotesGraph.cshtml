@@ -26,5 +26,9 @@
 
     const Graph = ForceGraph3D()
       (document.getElementById('3d-graph'))
-        .graphData(gData);
+        .cooldownTicks(100)
+        .graphData(gData)
+        ;
+      Graph.onEngineStop(() => Graph.zoomToFit(400));
+
 </script>

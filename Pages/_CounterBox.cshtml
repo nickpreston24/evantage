@@ -13,17 +13,12 @@
         {
             count: @values.Count
             , get counter_style() {
-                    console.log('count :>> ', this.count);
-                    return `--value:${this.count};`;
+                   return `--value:${this.count};`;
             }
             , update_counter(change = 1) {
-                console.log('changing :>> ', change);
                 let next_value = this.count + change;
-                console.log('to :>> ', next_value);
-
                 if(next_value < 0)
                     change = 0;
-
                 this.count += change;
             }
         }

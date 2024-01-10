@@ -16,7 +16,7 @@
 
     var newline_counter = new CounterBoxOptions().With(x => x.Label = "New Lines");
 }
-<section id="comission-calculator" class="text-center h-screen" x-data="setup()">
+<section id="comission-calculator" class="text-center h-screen" x-data="commission_setup()">
 
     <div class="text-center">
         <h1 class="display-4">Welcome to Evantage Calculators</h1>
@@ -73,7 +73,7 @@
 
 </section>
 <script>
-    function setup() {
+    function commission_setup() {
         return {
             selected_insurance: '',
             selected_internet: '',

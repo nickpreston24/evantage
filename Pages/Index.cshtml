@@ -1,10 +1,13 @@
 ﻿@page
 @using evantage.Models
+@using evantage.Services
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
+@inject IInMemoryGraphService graph_service
 @{
     ViewData["Title"] = "Home page";
     var commission = Model.Commission ?? new Commissions();
+    // var nodes = graph_service.GetNodes<Note>();
 }
 <div x-data='setup()' class="border-red-500 border-2">
     <div id="dashboard-contents" class="flex flex-row">
@@ -53,7 +56,7 @@
 <script>
 function setup() {
     return {
-        current_section: "{@nameof(Commissions)}"
+        current_section: "@nameof(Commissions)"
     }
 }
 </script>

@@ -1,5 +1,6 @@
 using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Types;
+using evantage.Models;
 using Newtonsoft.Json;
 
 namespace evantage.Services;
@@ -35,10 +36,15 @@ public class InMemoryGraphService : IInMemoryGraphService
     }
 
 
-    public List<Node<T>> GetNodes<T>() where T : class
-    {
-        return new List<Node<T>>();
-    }
+    // public List<Node<T>> GetNodes<T>() where T : class
+    // {
+    //     // return Enumerable.Range(1, 5).Aggregate(new List<T>(), (list, i) =>
+    //     // {
+    //     //     // list.Add(Activator.CreateInstance(typeof(T)));
+    //     //     return list;
+    //     // }).ToList();
+    //     return new List<Node<T>>(5);
+    // }
 
     // async adapted from: https://www.youtube.com/watch?v=lQu-eBIIh-w
 
@@ -54,21 +60,36 @@ public class InMemoryGraphService : IInMemoryGraphService
 
 public class Node<T> where T : class
 {
-    public string Id { get; set; }
+    public Node(T fields)
+    {
+        Fields = fields;
+        Label = typeof(T).Name;
+    }
+
+    public int id { get; set; }
     public string Label { get; set; }
     public T Fields { get; set; }
     public Dictionary<string, Relationship<T>> Relationships { get; set; } = new();
+
+    // Threejs properties:
+    // {
+    //     nodes: [...Array(5).keys()].map(i => ({ id: i })),
+    //     links: []
+    // };
 }
 
 public class Relationship<T> where T : class
 {
-    public Relationship(params Node<T>[] nodes)
-    {
-        foreach (var node in nodes)
-        {
-            node.Relationships.TryAdd(Id, this);
-        }
-    }
+    public int source { get; set; }
+
+    public int target { get; set; }
+    // public Relationship(params Node<T>[] nodes)
+    // {
+    //     foreach (var node in nodes)
+    //     {
+    //         node.Relationships.TryAdd(Id, this);
+    //     }
+    // }
 
     public string Id { get; set; } = string.Empty;
     public string Label { get; set; }
@@ -102,6 +123,7 @@ public interface IInMemoryGraphService
 {
     InMemoryGraphService SetOptions(InMemoryGraphOptions options);
     InMemoryGraphService LoadOptions(string filename, bool debug_mode = false);
+
     List<Node<T>> LoadGraph<T>() where T : class;
-    List<Node<T>> GetNodes<T>() where T : class;
+    // List<Node<T>> GetNodes<T>() where T : class;
 }

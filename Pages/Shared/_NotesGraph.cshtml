@@ -1,10 +1,31 @@
 @using evantage.Services
 @using evantage.Models
 @using CodeMechanic.RazorHAT.Services
+@using CodeMechanic.Extensions
+@using CodeMechanic.Types
+
 @inject IRazorRoutesService routes_service
 @inject IInMemoryGraphService graph_service
 @{
-    var nodes = graph_service.GetNodes<Note>();
+    int n = 1000;
+    var ids = Enumerable.Range(1, n);
+    var nodes = Enumerable.Range(1, n).Select(i =>
+        new Node<Note>(
+            new Note
+            {
+            })
+            .With(node => node.id = i)).ToList();
+
+    var links = Enumerable.Range(1, nodes.Count)
+        .Select(i => new Relationship<Note>()
+        {
+            source = i,
+            target = ids.TakeFirstRandom()
+        })
+        .ToList()
+        ;
+    // Console.WriteLine("nodes serialized :>> " + nodes_json);
+    // Console.WriteLine("links serialized :>> " + links);
 }
 <section id="notes_graph" class="h-screen">
 
@@ -12,22 +33,15 @@
 
 </section>
 <script>
-    // Random tree
-    const N = 300;
-    const gData = {
-      nodes: [...Array(N).keys()].map(i => ({ id: i })),
-      links: [...Array(N).keys()]
-        .filter(id => id)
-        .map(id => ({
-          source: id,
-          target: Math.round(Math.random() * (id-1))
-        }))
+    const initData = {
+      nodes: @Html.Raw(@nodes.AsJSON()),
+      links: @Html.Raw(@links.AsJSON())
     };
 
     const Graph = ForceGraph3D()
       (document.getElementById('3d-graph'))
         .cooldownTicks(100)
-        .graphData(gData)
+        .graphData(initData)
         ;
       Graph.onEngineStop(() => Graph.zoomToFit(400));
 

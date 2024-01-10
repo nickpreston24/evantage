@@ -3,18 +3,22 @@
 @using CodeMechanic.RazorHAT.Services
 @using CodeMechanic.Extensions
 @using CodeMechanic.Types
+@using CodeMechanic.Diagnostics
 
 @inject IRazorRoutesService routes_service
 @inject IInMemoryGraphService graph_service
 @{
-    int n = 1000;
+    var sample_picsum_images = graph_service.picsum_images;
+    int n = 10;
     var ids = Enumerable.Range(1, n);
-    var nodes = Enumerable.Range(1, n).Select(i =>
-        new Node<Note>(
-            new Note
+    var nodes = Enumerable.Range(1, n)
+        .Select(i =>
+            new Node<Note>(new Note()
             {
+                img = sample_picsum_images.TakeFirstRandom().DownloadUrl.ToString()
             })
-            .With(node => node.id = i)).ToList();
+                .With(node => node.id = i))
+        .ToList();
 
     var links = Enumerable.Range(1, nodes.Count)
         .Select(i => new Relationship<Note>()
@@ -24,25 +28,68 @@
         })
         .ToList()
         ;
+
+    var next_nodes = nodes
+        .Select((x => x.Fields.img = sample_picsum_images
+            .TakeFirstRandom().DownloadUrl.ToString()))
+        .AsJSON();
     // Console.WriteLine("nodes serialized :>> " + nodes_json);
     // Console.WriteLine("links serialized :>> " + links);
+    Console.WriteLine("new nodes serialized :>> " + next_nodes);
+
+
 }
-<section id="notes_graph" class="h-screen">
 
+<section id="notes_graph" class="h-screen w-3/4">
     <div id="3d-graph"></div>
-
 </section>
 <script>
     const initData = {
       nodes: @Html.Raw(@nodes.AsJSON()),
       links: @Html.Raw(@links.AsJSON())
     };
-
+    // console.log("initdata :>> ", initData)
     const Graph = ForceGraph3D()
       (document.getElementById('3d-graph'))
         .cooldownTicks(100)
+        .onNodeClick(zoom_to_node)
+        .nodeLabel('id')
+        .nodeThreeObject(({ Fields }) => {
+            // console.log('fields :>> ', Fields);
+            const imgTexture = new THREE.TextureLoader().load(Fields.img);
+            imgTexture.colorSpace = THREE.SRGBColorSpace;
+            const material = new THREE.SpriteMaterial({ map: imgTexture });
+            const sprite = new THREE.Sprite(material);
+            sprite.scale.set(24, 24);
+            return sprite;
+        })
+        // .onNodeClick(removeNode)
+        .nodeAutoColorBy('User')
+        .nodeLabel(node => `${node.Fields.User}: ${node.Fields.Description}`)
         .graphData(initData)
         ;
-      Graph.onEngineStop(() => Graph.zoomToFit(400));
 
+      function removeNode(node) {
+        let { nodes, links } = Graph.graphData();
+        links = links.filter(l => l.source !== node && l.target !== node); // Remove links attached to node
+        nodes.splice(node.id, 1); // Remove node
+        nodes.forEach((n, idx) => { n.id = idx; }); // Reset node ids to array index
+        Graph.graphData({ nodes, links });
+      }
+      
+       function zoom_to_node(node){
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+
+          const newPos = node.x || node.y || node.z
+            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+          Graph.cameraPosition(
+            newPos, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          );
+        }
 </script>

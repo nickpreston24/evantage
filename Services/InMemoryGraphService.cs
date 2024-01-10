@@ -1,5 +1,6 @@
+using CodeMechanic.Diagnostics;
+using CodeMechanic.Extensions;
 using CodeMechanic.RazorHAT.Services;
-using CodeMechanic.Types;
 using evantage.Models;
 using Newtonsoft.Json;
 
@@ -13,7 +14,13 @@ public class InMemoryGraphService : IInMemoryGraphService
     public InMemoryGraphService(IJsonConfigService json_config_service)
     {
         this.json_config = json_config_service;
+        var picsum_api_results = json_config.ReadConfig("picsum.json");
+        // Console.WriteLine("picsum :>> " + picsum_api_results);
+        this.picsum_images = JsonConvert.DeserializeObject<List<Picsum>>(picsum_api_results);
+        // picsum_images.FirstOrDefault().Dump("first pic");
     }
+
+    public List<Picsum> picsum_images { get; set; }
 
     public InMemoryGraphService SetOptions(InMemoryGraphOptions options)
     {
@@ -29,101 +36,4 @@ public class InMemoryGraphService : IInMemoryGraphService
         options = graph_options;
         return this;
     }
-
-    public List<Node<T>> LoadGraph<T>() where T : class
-    {
-        return new List<Node<T>>();
-    }
-
-
-    // public List<Node<T>> GetNodes<T>() where T : class
-    // {
-    //     // return Enumerable.Range(1, 5).Aggregate(new List<T>(), (list, i) =>
-    //     // {
-    //     //     // list.Add(Activator.CreateInstance(typeof(T)));
-    //     //     return list;
-    //     // }).ToList();
-    //     return new List<Node<T>>(5);
-    // }
-
-    // async adapted from: https://www.youtube.com/watch?v=lQu-eBIIh-w
-
-    // public static async Task<InMemoryGraphService> CreateAsync()
-    // {
-    //     return new InMemoryGraphService(await Task.Run(() =>
-    //     {
-    //         ...
-    //         
-    //     }));
-    // }
-}
-
-public class Node<T> where T : class
-{
-    public Node(T fields)
-    {
-        Fields = fields;
-        Label = typeof(T).Name;
-    }
-
-    public int id { get; set; }
-    public string Label { get; set; }
-    public T Fields { get; set; }
-    public Dictionary<string, Relationship<T>> Relationships { get; set; } = new();
-
-    // Threejs properties:
-    // {
-    //     nodes: [...Array(5).keys()].map(i => ({ id: i })),
-    //     links: []
-    // };
-}
-
-public class Relationship<T> where T : class
-{
-    public int source { get; set; }
-
-    public int target { get; set; }
-    // public Relationship(params Node<T>[] nodes)
-    // {
-    //     foreach (var node in nodes)
-    //     {
-    //         node.Relationships.TryAdd(Id, this);
-    //     }
-    // }
-
-    public string Id { get; set; } = string.Empty;
-    public string Label { get; set; }
-    public T Properties { get; set; }
-    public Direction Direction { get; set; } = Direction.OneWay;
-}
-
-public class Direction : Enumeration
-{
-    public static Direction OneWay = new Direction(1, nameof(Direction.OneWay));
-    public static Direction BiDirectional = new Direction(1, nameof(Direction.BiDirectional));
-
-    public Direction(int id, string name) : base(id, name)
-    {
-    }
-}
-
-public class InMemoryGraphOptions
-{
-    public int NodeLimit { get; set; } = 100;
-
-    public async Task<InMemoryGraphOptions> LoadOptionsAsync()
-    {
-        // TODO: Deserialize JSON
-        var task = Task.Run(() => new InMemoryGraphOptions());
-        return await task;
-    }
-}
-
-public interface IInMemoryGraphService
-{
-    InMemoryGraphService SetOptions(InMemoryGraphOptions options);
-    InMemoryGraphService LoadOptions(string filename, bool debug_mode = false);
-
-    List<Node<T>> LoadGraph<T>() where T : class;
-    // List<Node<T>> GetNodes<T>() where T : class;
 }

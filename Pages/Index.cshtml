@@ -7,7 +7,6 @@
 @{
     ViewData["Title"] = "Home page";
     var commission = Model.Commission ?? new Commissions();
-    // var nodes = graph_service.GetNodes<Note>();
 }
 <div x-data='setup()' class="border-red-500 border-2">
     <div id="dashboard-contents" class="flex flex-row">
@@ -45,7 +44,9 @@
         <div class="w-3/4">
             <div class="bg-accent-content/25">
                 <div class="border-accent/25 border-2">
-                    <partial name="_NotesGraph"></partial>
+                    <div class="max-w-3/4">
+                        <partial name="_NotesGraph"></partial>
+                    </div>
                     <partial name="_CommissionCalculator" model="@commission"/>
                 </div>
             </div>

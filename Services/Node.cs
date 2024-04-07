@@ -1,10 +1,12 @@
+using CodeMechanic.Types;
+
 namespace evantage.Services;
 
 public class Node<T> where T : class
 {
-    public Node(T fields)
+    public Node(T fields = null)
     {
-        Fields = fields;
+        Fields = fields.OrNullClass();
         Label = typeof(T).Name;
     }
 

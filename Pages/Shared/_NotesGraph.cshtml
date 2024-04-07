@@ -7,6 +7,7 @@
 
 @inject IRazorRoutesService routes_service
 @inject IInMemoryGraphService graph_service
+@inject IDownloadImages image_downloader
 @{
     var sample_picsum_images = graph_service.picsum_images;
     int n = 10;
@@ -35,8 +36,15 @@
         .AsJSON();
     // Console.WriteLine("nodes serialized :>> " + nodes_json);
     // Console.WriteLine("links serialized :>> " + links);
-    Console.WriteLine("new nodes serialized :>> " + next_nodes);
+    // Console.WriteLine("new nodes serialized :>> " + next_nodes);
 
+    var requested_images = sample_picsum_images.Select(img => new ImageDownload()
+    {
+        source = img.DownloadUrl,
+        save_name = img.Url + ".jpg"
+    });
+
+    await image_downloader.DownloadImages(requested_images.ToArray());
 
 }
 
@@ -77,19 +85,4 @@
         Graph.graphData({ nodes, links });
       }
       
-       function zoom_to_node(node){
-          // Aim at node from outside it
-          const distance = 40;
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-
-          const newPos = node.x || node.y || node.z
-            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
-            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
-
-          Graph.cameraPosition(
-            newPos, // new position
-            node, // lookAt ({ x, y, z })
-            3000  // ms transition duration
-          );
-        }
 </script>

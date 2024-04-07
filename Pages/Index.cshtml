@@ -3,12 +3,14 @@
 @using evantage.Services
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
+
 @inject IInMemoryGraphService graph_service
 @{
     ViewData["Title"] = "Home page";
     var commission = Model.Commission ?? new Commissions();
+    var todos = new List<Todoist>();
 }
-<div x-data='setup()' class="border-red-500 border-2">
+<div x-data='setup()' class="">
     <div id="dashboard-contents" class="flex flex-row">
         <div class="w-1/4">
             <div class="bg-info/25">
@@ -48,6 +50,8 @@
                         <partial name="_NotesGraph"></partial>
                     </div>
                     <partial name="_CommissionCalculator" model="@commission"/>
+                    
+                    <partial name="_TodoistClone" model="todos"></partial>
                 </div>
             </div>
         </div>

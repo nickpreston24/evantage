@@ -31,6 +31,7 @@ builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
 builder.Services.AddSingleton<IRazorRoutesService, RazorRoutesService>();
+builder.Services.AddSingleton<IDownloadImages, ImageDownloader>();
 
 builder.Services.AddControllers();
 

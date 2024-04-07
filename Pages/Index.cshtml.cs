@@ -10,10 +10,15 @@ namespace evantage.Pages;
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
+    private readonly IDownloadImages imageDownloader;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(
+        ILogger<IndexModel> logger
+        , IDownloadImages image_downloader
+    )
     {
         _logger = logger;
+        imageDownloader = image_downloader;
     }
 
     public Commissions Commission { get; set; } = new();
@@ -21,6 +26,18 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         // sample:
+        MakeSampleCommissions();
+
+        // DownloadSamplePicsumImages();
+    }
+
+    private void DownloadSamplePicsumImages()
+    {
+        imageDownloader.DownloadImages();
+    }
+
+    private void MakeSampleCommissions()
+    {
         var lines = new List<Line>()
         {
             new Line() { InstallmentPlan = InstallmentPlan.NextUp },

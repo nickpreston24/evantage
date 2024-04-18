@@ -23,7 +23,10 @@
         <div class="w-3/4">
             <div class="bg-accent-content/25">
                 <div class="border-accent/25 border-2">
-                    <h1>RIGHT</h1>
+                    @* <h1>RIGHT</h1> *@
+                    @* <a href="#todos-panel">Todos</a> *@
+                    @* <a href="#comission-calculator">Commission Calculator</a> *@
+
                 </div>
             </div>
         </div>
@@ -33,12 +36,6 @@
         <div class="w-1/4">
             <div class="bg-info/25">
                 <div class="border-info/25 border-2">
-                    <div class="h-screen">
-                        <a href="#notes-graph">Notes Graph</a>
-                    </div>
-                    <div class="h-screen">
-                        <a href="#comission-calculator">Commission Calculator</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -47,11 +44,13 @@
             <div class="bg-accent-content/25">
                 <div class="border-accent/25 border-2">
                     <div class="max-w-3/4">
-                        <partial name="_NotesGraph"></partial>
+                        @* Todo: Move this to its own RAzor page and refactor out a hydro component if it makes sense
+                        It doesn't work well as a partial with 3 services injected into it.*@
+                        @* <partial name="_NotesGraph"></partial> *@
                     </div>
                     <partial name="_CommissionCalculator" model="@commission"/>
-                    
-                    <partial name="_TodoistClone" model="todos"></partial>
+
+                    @* <partial name="_TodoistClone" model="todos"></partial> *@
                 </div>
             </div>
         </div>

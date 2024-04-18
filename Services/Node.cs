@@ -4,9 +4,8 @@ namespace evantage.Services;
 
 public class Node<T> where T : class
 {
-    public Node(T fields = null)
+    public Node()
     {
-        Fields = fields.OrNullClass();
         Label = typeof(T).Name;
     }
 

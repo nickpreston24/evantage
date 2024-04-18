@@ -14,8 +14,8 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
     - [ ] Update Todoist service such that:
       - [ ] I can set the length of a task in labels and descriptions
         - [ ] Tags and descriptions may contain units and values
-        - [ ] T&D are parsed by regex in a mock 'natural language'
-        - [ ] Can do typeaheads in any input box as well.
+        - [ ] Durations (label and amount) are parsed by regex in a mock 'natural language'
+          - [ ] Can parse any natural language from any input box, by using typeaheads.
       - [ ] I can click a button and a randomized week (or more) will be generated
         - [ ] Each 'full day' is a collection of tasks grouped by similar weight (priority x duration x time passed since creation)
         - [ ] Optional: Might a bell curve of weight distribution help?
@@ -38,7 +38,7 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
 - [ ] Dockerize this app - Once I can properly Dockerize my many apps, I should have no trouble keeping them all federated (separated) from each other, while still running on localhost.  That way, I can make all my data AND apps portable.  So far, they are not, and that sucks.  I'm also sick of APIs and paying for Airtable, so I must get crafty and hacky.
 - [ ] I also want the ability to dump all Pocketbase data to a USB anytime (like in an emergency)
 - [ ] I'd also like an Airtable-like layer on top of Pocketbase, if it exists.  Maintaing data thru Airtable is grand, but expensive.
-- [ ] I'd also like Todoist integration (WiP)
+- [x] I'd also like Todoist integration (WiP)
   > Neo4j is optional at this point.  It was really more effective as a recommendation engine.
 
 - [ ] Use Google Maps to find main streets and businesses off the beaten path (idk, say, 150+ feet away from the road, maybe the corner businesses not facing the main st., etc.)

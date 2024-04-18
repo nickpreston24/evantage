@@ -35,11 +35,38 @@
     <script type="module" src="~/js/main.js"></script>
     <script src="~/dist/index.js" type="module"></script>
 
-    <link rel="stylesheet" href="~/css/site.css">
+    @* <link rel="stylesheet" href="~/css/site.css"> *@
 
 </head>
 
 <body x-data="setup_layout()" :data-theme="selected_theme" class="flex-1 overflow-y-scroll">
+
+
+<header class="">
+    @* <hydro name="NugsNav" params="@(new { Name = "Barbara" })"/> *@
+
+    <hydro-nav>
+        <slot name="links">
+            <li>
+                <a href="/">Homepage</a>
+            </li>
+            <li>
+                <a href="builder">Build</a>
+            </li>
+            <li>
+                <a href="sandbox">Sandbox</a>
+            </li>
+            <li>
+                <a href="admin">Admin</a>
+            </li>
+            <li>
+                <a href="about">About</a>
+            </li>
+        </slot>
+
+        <h1 class="text-3xl text-accent">Lock N Loadout!</h1>
+    </hydro-nav>
+</header>
 
 <main role="main">
 

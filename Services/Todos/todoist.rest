@@ -1,0 +1,18 @@
+
+### Get  User's projects
+
+curl -X GET \
+  https://api.todoist.com/rest/v2/projects \
+  -H "Authorization: Bearer $token"
+
+### Get all tasks
+
+curl -X GET \
+  https://api.todoist.com/rest/v2/tasks \
+  -H "Authorization: Bearer $token"
+
+### Get all completed tasks
+
+curl https://api.todoist.com/sync/v9/completed/get_all \
+    -H "Authorization: Bearer $token"
+

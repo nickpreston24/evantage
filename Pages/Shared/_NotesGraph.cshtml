@@ -9,16 +9,21 @@
 @inject IInMemoryGraphService graph_service
 @inject IDownloadImages image_downloader
 @{
-    var sample_picsum_images = graph_service.picsum_images;
-    int n = 10;
-    var ids = Enumerable.Range(1, n);
-    var nodes = Enumerable.Range(1, n)
+    var sample_picsum_images = graph_service.picsum_images ?? new List<Picsum>();
+    int max_nodes = 10;
+    var ids = Enumerable.Range(1, max_nodes);
+    var nodes = Enumerable.Range(1, max_nodes)
         .Select(i =>
-            new Node<Note>(new Note()
+            new Node<Note>()
             {
-                img = sample_picsum_images.TakeFirstRandom().DownloadUrl.ToString()
-            })
-                .With(node => node.id = i))
+                id = i,
+                Fields =
+                    new Note()
+                    {
+                        img = sample_picsum_images.TakeFirstRandom().DownloadUrl.ToString()
+                    }
+            }
+        )
         .ToList();
 
     var links = Enumerable.Range(1, nodes.Count)
@@ -31,7 +36,7 @@
         ;
 
     var next_nodes = nodes
-        .Select((x => x.Fields.img = sample_picsum_images
+        .Select((node => node.Dump("node").Fields.img = sample_picsum_images
             .TakeFirstRandom().DownloadUrl.ToString()))
         .AsJSON();
     // Console.WriteLine("nodes serialized :>> " + nodes_json);

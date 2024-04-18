@@ -11,16 +11,17 @@ Problem: If you forget to tick off a recurring task, you're out of luck. For som
   - [ ] Update the last one as recurring, with the original next-date applied.
   
 Problem:  The Eisenhower Matrix is great and all, and so are priorities and views, but that's just not enough!  What if we could have our schedule chunked up for us?  I have 250+ tasks that need spread out across X weeks, so how can we do that?
-    - [ ] Update Todoist service such that:
-      - [ ] I can set the length of a task in labels and descriptions
-        - [ ] Tags and descriptions may contain units and values
-        - [ ] Durations (label and amount) are parsed by regex in a mock 'natural language'
-          - [ ] Can parse any natural language from any input box, by using typeaheads.
-      - [ ] I can click a button and a randomized week (or more) will be generated
-        - [ ] Each 'full day' is a collection of tasks grouped by similar weight (priority x duration x time passed since creation)
-        - [ ] Optional: Might a bell curve of weight distribution help?
-        - [ ] The algorithm will do its best to slot the tasks so that no day is too large (limit: 5 tasks; 1x P1, 1x P2, 2x P3, 2x P4).  
-          - [ ] This can always be configured as I get better at completing tasks.
+
+- [ ] Update Todoist service such that:
+  - [ ] I can set the length of a task in labels and descriptions
+    - [ ] Tags and descriptions may contain units and values
+    - [ ] Durations (label and amount) are parsed by regex in a mock 'natural language'
+      - [ ] Can parse any natural language from any input box, by using typeaheads.
+  - [ ] I can click a button and a randomized week (or more) will be generated
+    - [ ] Each 'full day' is a collection of tasks grouped by similar weight (priority x duration x time passed since creation)
+    - [ ] Optional: Might a bell curve of weight distribution help?
+    - [ ] The algorithm will do its best to slot the tasks so that no day is too large (limit: 5 tasks; 1x P1, 1x P2, 2x P3, 2x P4).  
+      - [ ] This can always be configured as I get better at completing tasks.
 ### Other todos
 
 - [ ] See if there's another alternative for Airtable that's free and local.  I would like to not have to pay if there's a FOSS.

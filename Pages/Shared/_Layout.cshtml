@@ -39,7 +39,7 @@
 
 </head>
 
-<body x-data="setup_layout()" :data-theme="selected_theme" class="flex-1 overflow-y-scroll">
+<body x-data="setup_layout()" :data-theme="selected_theme" class="flex-1 overflow-y-scroll border-0 border-red-500">
 
 <header class="">
     <hydro-nav>
@@ -52,7 +52,7 @@
             </li>
         </slot>
 
-        <h1 class="text-3xl text-accent">
+        <h1 class="text-lg md:text-2xl lg:text-3xl text-accent">
             <div class="tooltip tooltip-bottom" :data-tip="slogan">
                 Sales Spy 🕵️
             </div>
@@ -154,7 +154,7 @@
             slogan:'Your personal sales sleuth!',
             themes: [
                 
-            "light",
+              "light",
               "dark",
               "cupcake",
               "bumblebee",

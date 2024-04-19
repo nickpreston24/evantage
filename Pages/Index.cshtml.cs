@@ -106,7 +106,7 @@ public class IndexModel : PageModel
         leads.Add(new Lead()
         {
             PhoneNumber = "(512) 993-0765",
-            CustomerName = "Jacob Thomas Gumms",
+            CustomerName = "Jacob Thomas Gumns",
             CompanyName = "Lone Wolf Leathers",
             Role = CompanyRole.Owner,
             Notes = new string[]

@@ -51,3 +51,7 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
   - [ ] Chunked transforms: Find specific lines using a start and ending regex (already built.) and perform specific transforms from start to end.  Usually replacements, but can be something like code generation, mass corrections to malformed data, finding dups (like Airtable does).
   - [ ] Allow user to queue the replacements and transforms.
   - [ ] Update the Hydrolizer to create C# props from alpinejs variables it discovers within script tags.
+
+#### Call tracking
+1. Create a button for each telephone number you upload to google sheets, csv, etc.
+2. 

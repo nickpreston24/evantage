@@ -18,9 +18,9 @@
 }
 <section id="comission-calculator" class="text-center h-screen" x-data="commission_setup()">
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome to Evantage Calculators</h1>
-    </div>
+    @* <div class="text-center"> *@
+    @*     <h1 class="display-4">Welcome to Evantage Calculators</h1> *@
+    @* </div> *@
     <div class="flex flex-col items-center justify-center">
 
         <ul>
@@ -34,24 +34,24 @@
             <partial name="_CounterBox" model="newline_counter"></partial>
             <partial name="_CounterBox" model="nextup_counter"></partial>
             <partial name="_CounterBox" model="upgrade_counter"></partial>
-
-
         </div>
 
-
-        <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
-            <select
-                x-model="selected_internet"
-                class="select select-accent w-full max-w-xs">
-                <option disabled selected>Pick an Internet Plan</option>
-                <template x-cloak x-for="item in internet_plans">
-                    <option
-                        :key="item"
-                        :value="item"
-                        x-text="item">
-                    </option>
-                </template>
-            </select>
+        <div class="grid grid-flow-row gap-5 text-center auto-cols-max">
+            <div>
+                <h3>Internet Plan</h3>
+                <select
+                    x-model="selected_internet"
+                    class="select select-accent w-full max-w-xs">
+                    <option disabled selected>Pick an Internet Plan</option>
+                    <template x-cloak x-for="item in internet_plans">
+                        <option
+                            :key="item"
+                            :value="item"
+                            x-text="item">
+                        </option>
+                    </template>
+                </select>
+            </div>
 
             <select
                 x-model="selected_insurance"

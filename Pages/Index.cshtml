@@ -23,7 +23,9 @@
         <div class="w-3/4">
             <div class="bg-accent-content/25">
                 <div class="border-accent/25 border-2">
-                    @* <h1>RIGHT</h1> *@
+
+                    <h1>LEADS</h1>
+                    <partial name="_LeadsTable"></partial>
                     @* <a href="#todos-panel">Todos</a> *@
                     @* <a href="#comission-calculator">Commission Calculator</a> *@
 
@@ -41,6 +43,22 @@
         </div>
 
         <div class="w-3/4">
+
+
+            @* CSV/Excel *@
+
+            <div class="bg-accent-content/25">
+                <div class="border-accent/25 border-2">
+
+                    @* <hydro name="Counter" params="@(new { Count = 10 })"/> *@
+
+                    @* <hydro name="Counter"></hydro> *@
+                    @* params="@(CurrentLeads = new List<Lead>())" *@
+                    @* <hydro name="LeadsPanel"  *@
+                    @*        ></hydro> *@
+                </div>
+            </div>
+
             <div class="bg-accent-content/25">
                 <div class="border-accent/25 border-2">
                     <div class="max-w-3/4">
@@ -48,6 +66,7 @@
                         It doesn't work well as a partial with 3 services injected into it.*@
                         @* <partial name="_NotesGraph"></partial> *@
                     </div>
+
                     <partial name="_CommissionCalculator" model="@commission"/>
 
                     @* <partial name="_TodoistClone" model="todos"></partial> *@
@@ -55,16 +74,6 @@
             </div>
 
 
-            @* panel 2 *@
-
-            <div class="bg-accent-content/25">
-                <div class="border-accent/25 border-2">
-                    <h1 class="text-xl text-primary">
-
-                        Panel 2
-                    </h1>
-                </div>
-            </div>
         </div>
     </div>
 </div>

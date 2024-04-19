@@ -40,7 +40,7 @@
         <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4" />
         <PackageReference Include="CodeMechanic.Regex" Version="1.0.2" />
         <PackageReference Include="CodeMechanic.Types" Version="1.0.7" />
-        <PackageReference Include="Hydro" Version="0.12.0" />
+        <PackageReference Include="Hydro" Version="0.10.0" />
         <PackageReference Include="System.Runtime.Caching" Version="8.0.0" />
     </ItemGroup>
 

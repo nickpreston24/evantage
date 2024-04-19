@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace evantage.Pages;
 
-[BindProperties]
+[BindProperties(SupportsGet = true)]
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly IDownloadImages imageDownloader;
+    public string Query { get; set; } = string.Empty;
 
     public IndexModel(
         ILogger<IndexModel> logger
@@ -22,6 +23,7 @@ public class IndexModel : PageModel
     }
 
     public Commissions Commission { get; set; } = new();
+    public List<Lead> CurrentLeads { get; set; } = new();
 
     public void OnGet()
     {
@@ -29,6 +31,13 @@ public class IndexModel : PageModel
         MakeSampleCommissions();
 
         // DownloadSamplePicsumImages();
+    }
+
+
+    public async Task<IActionResult> OnGetSearch()
+    {
+        Console.WriteLine(nameof(OnGetSearch));
+        return Content("You Searched: " + Query);
     }
 
     private void DownloadSamplePicsumImages()

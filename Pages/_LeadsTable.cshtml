@@ -18,8 +18,25 @@
         </span>
     </div>
 
-    <div id="search_form" class="grid grid-cols-auto">
+    <div id="search_form" class="flex flex-col">
 
+        <div class="card-action">
+            <h2 class="text-2xl text-accent">New Leads</h2>
+            <form disabled method="post" enctype="multipart/form-data">
+                <input class="file-input file-input-bordered w-full max-w-xs" type="file" asp-for="Upload"/>
+                <input class="btn btn-secondary" type="submit"/>
+            </form>
+
+            <label class="text-2xl text-accent">
+                Leads Imported
+                <span hx-get
+                      hx-trigger="load"
+                      hx-page-handler="CountCSVFiles"
+                      hx-swap="innerHTML">
+                    <span>0</span>
+                </span>
+            </label>
+        </div>
         <input type="text"
                id="query"
                autocomplete="off"
@@ -33,14 +50,8 @@
                aria-label="Username"
                aria-describedby="search-addon">
 
-        <div class="card-action">
-            <form disabled method="post" enctype="multipart/form-data">
-                <input class="file-input file-input-bordered w-full max-w-xs" type="file" asp-for="Upload"/>
-                <input class="btn btn-secondary" type="submit"/>
-            </form>
-        </div>
-    </div>
 
+    </div>
 
     @if (Model.Results is {} leads)
     {
@@ -57,13 +68,12 @@
                     </th>
                     <th>Customer</th>
                     <th>Job</th>
-                    <th>Favorite Color</th>
+                    <th>Company</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody id="results">
                 @await Html.PartialAsync("_Results")
-                @* <partial name="_Results"></partial> *@
                 </tbody>
 
             </table>

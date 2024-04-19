@@ -60,6 +60,23 @@ public class IndexModel : PageModel
         return Partial("_Results", this);
     }
 
+
+    public async Task<IActionResult> OnGetCountCSVFiles()
+    {
+        string cwd = Directory.GetCurrentDirectory();
+        string csv_uploads_folder = "uploads";
+        string csv_folder_path = Path.Combine(cwd, csv_uploads_folder);
+        var grepper = new Grepper()
+        {
+            RootPath = csv_folder_path,
+            FileSearchMask = "*.csv"
+        };
+
+        var files = grepper.GetFileNames().ToList();
+
+        return Content($"<span>{files.Count}</span>");
+    }
+
     public async Task OnPostAsync()
     {
         if (Upload == null || Upload.FileName.IsEmpty()) return;
@@ -73,7 +90,7 @@ public class IndexModel : PageModel
 
     private static List<Lead> MakeSampleLeads()
     {
-        int max_leads = 10;
+        int max_leads = 1;
         var leads = Enumerable.Range(1, max_leads)
             .Select(index =>
                 new Lead()
@@ -84,6 +101,18 @@ public class IndexModel : PageModel
                 }
             )
             .ToList();
+
+
+        leads.Add(new Lead()
+        {
+            PhoneNumber = "(512) 993-0765",
+            CustomerName = "Jacob Thomas Gumms",
+            CompanyName = "Lone Wolf Leathers",
+            Notes = new string[]
+            {
+                "Leathering is his hobby; 3pm CST, Mobile card scanner would be deal, Android user, tomorrow and Monday, Storefront, Open date is May 17th"
+            }
+        });
 
         return leads.Dump("leads created");
     }

@@ -38,21 +38,12 @@
         </div>
 
         <div class="w-3/4">
-
-
             @* CSV/Excel *@
-
-            <div class="bg-accent-content/25">
-                <div class="border-accent/25 border-2">
-
-                    @* <hydro name="Counter" params="@(new { Count = 10 })"/> *@
-
-                    @* <hydro name="Counter"></hydro> *@
-                    @* params="@(CurrentLeads = new List<Lead>())" *@
-                    @* <hydro name="LeadsPanel"  *@
-                    @*        ></hydro> *@
-                </div>
-            </div>
+            @* <div class="bg-accent-content/25"> *@
+            @*     <div class="border-accent/25 border-2"> *@
+            @* *@
+            @*     </div> *@
+            @* </div> *@
 
             <div class="bg-accent-content/25">
                 <div class="border-accent/25 border-2">
@@ -63,8 +54,6 @@
                     </div>
 
                     <partial name="_CommissionCalculator" model="@commission"/>
-
-                    @* <partial name="_TodoistClone" model="todos"></partial> *@
                 </div>
             </div>
 

@@ -41,28 +41,22 @@
 
 <body x-data="setup_layout()" :data-theme="selected_theme" class="flex-1 overflow-y-scroll">
 
-
 <header class="">
     <hydro-nav>
         <slot name="links">
             <li>
-                <a href="/">Homepage</a>
+                <a href="/">🏠 Home</a>
             </li>
             <li>
-                <a href="builder">Build</a>
-            </li>
-            <li>
-                <a href="sandbox">Sandbox</a>
-            </li>
-            <li>
-                <a href="admin">Admin</a>
-            </li>
-            <li>
-                <a href="about">About</a>
+                <a href="/">🎬 Leads</a>
             </li>
         </slot>
 
-        <h1 class="text-3xl text-accent">Lock N Loadout!</h1>
+        <h1 class="text-3xl text-accent">
+            <div class="tooltip tooltip-bottom" :data-tip="slogan">
+                Sales Spy 🕵️
+            </div>
+        </h1>
     </hydro-nav>
 </header>
 
@@ -70,6 +64,7 @@
 
     <select
         x-model="selected_theme"
+        x-effect="console.log(selected_theme); localStorage.setItem('theme', selected_theme)"
         class="select select-accent w-auto max-w-xs">
         <option disabled selected>Pick your favorite theme</option>
         <template x-cloak x-for="theme in themes">
@@ -104,7 +99,8 @@
             </path>
         </svg>
         <p class="font-bold">
-            Evantage<br/>We grow companies.
+            @* Evantage<br/>We grow companies. *@
+            Sales Spy <br/><span x-text="slogan"></span>
         </p>
         <p>Copyright © 2024 - All rights reserved</p>
     </div>
@@ -152,8 +148,10 @@
 
 </footer>
 <script>
+    let previous = localStorage.getItem('theme') ?? "light";
     function setup_layout() {
         return {
+            slogan:'Your personal sales sleuth!',
             themes: [
                 
             "light",
@@ -189,7 +187,7 @@
               "nord",
               "sunset",    
             ],
-            selected_theme: "light"
+            selected_theme: previous
         }
     }
 </script>

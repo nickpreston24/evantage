@@ -1,6 +1,10 @@
-﻿using CodeMechanic.Types;
+﻿using CodeMechanic.Diagnostics;
+using CodeMechanic.FileSystem;
+using CodeMechanic.Types;
 using evantage.Models;
 using evantage.Services;
+using Htmx;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,33 +15,87 @@ public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly IDownloadImages imageDownloader;
-    public string Query { get; set; } = string.Empty;
+    private IWebHostEnvironment _environment;
 
-    public IndexModel(
-        ILogger<IndexModel> logger
+    public string Query { get; set; } = string.Empty;
+    [BindProperty] public IFormFile Upload { get; set; }
+
+    public IndexModel(ILogger<IndexModel> logger
         , IDownloadImages image_downloader
-    )
+        , IWebHostEnvironment environment)
     {
+        _environment = environment;
+
         _logger = logger;
         imageDownloader = image_downloader;
     }
 
     public Commissions Commission { get; set; } = new();
-    public List<Lead> CurrentLeads { get; set; } = new();
 
-    public void OnGet()
+    private static List<Lead> CurrentLeads { get; set; } = MakeSampleLeads();
+
+    // The filtered results from current leads
+    public List<Lead> Results { get; set; } = new();
+
+
+    public IActionResult OnGet()
     {
-        // sample:
-        MakeSampleCommissions();
+        Results = string.IsNullOrEmpty(Query)
+            ? CurrentLeads.Dump("current leads")
+            : CurrentLeads
+                .Where(lead => lead.ToString()
+                    .Contains(Query, StringComparison.OrdinalIgnoreCase))
+                .ToList();
 
-        // DownloadSamplePicsumImages();
+        if (!Request.IsHtmx())
+            return Page();
+
+        Response.Htmx(headers =>
+        {
+            // we want to push the current url 
+            // into the history
+            headers.Push(Request.GetEncodedUrl());
+        });
+
+        return Partial("_Results", this);
     }
 
+    public async Task OnPostAsync()
+    {
+        if (Upload == null || Upload.FileName.IsEmpty()) return;
+        string save_dir = Path.Combine(_environment.ContentRootPath, "uploads");
+        FS.MakeDir(save_dir);
+        var save_path = Path.Combine(save_dir, Upload.FileName);
+        Console.WriteLine($"Saving file to '{save_path}'");
+        await using var fileStream = new FileStream(save_path, FileMode.Create);
+        await Upload.CopyToAsync(fileStream);
+    }
+
+    private static List<Lead> MakeSampleLeads()
+    {
+        int max_leads = 10;
+        var leads = Enumerable.Range(1, max_leads)
+            .Select(index =>
+                new Lead()
+                {
+                    Index = index,
+                    CompanyName = "Acme " + index,
+                    CustomerName = "Wile E. Coyote"
+                }
+            )
+            .ToList();
+
+        return leads.Dump("leads created");
+    }
 
     public async Task<IActionResult> OnGetSearch()
     {
         Console.WriteLine(nameof(OnGetSearch));
-        return Content("You Searched: " + Query);
+        // return Content("You Searched: " + Query);
+        Results = CurrentLeads.Where(lead => lead.CompanyName.Contains(Query)).ToList();
+        Results.Count.Dump("# of results");
+        CurrentLeads.Count.Dump("# of results");
+        return Partial("_LeadsTable", this);
     }
 
     private void DownloadSamplePicsumImages()

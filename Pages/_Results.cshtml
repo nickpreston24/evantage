@@ -1,0 +1,44 @@
+@model IndexModel
+
+@{
+    var leads = Model.Results;
+}
+
+@foreach (var lead in leads)
+{
+    <tr class="border-4 border-primary">
+        <th class="">
+            <label>
+                <input type="checkbox" class="checkbox"/>
+            </label>
+        </th>
+        <td>
+            <div class="flex items-center gap-3">
+                <div class="avatar">
+                    <div class="mask mask-squircle w-12 h-12">
+                        <img src="~/img/sample.jpg" alt="Avatar Tailwind CSS Component"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-bold">@lead.CustomerName</div>
+                    <div class="text-sm opacity-50">@lead.State</div>
+                </div>
+            </div>
+        </td>
+        <td>
+            @lead.CompanyName
+            <br/>
+            <span class="badge badge-ghost badge-sm">@lead.Role</span>
+        </td>
+        <td>Purple</td>
+        <th>
+            <a href="@lead.CallablePhoneLink">
+                <button class="btn btn-ghost btn-xs">
+                    <div class="tooltip" data-tip="Call @lead.CustomerName">
+                        📞
+                    </div>
+                </button>
+            </a>
+        </th>
+    </tr>
+}

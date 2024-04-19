@@ -6,7 +6,7 @@
 
 @foreach (var lead in leads)
 {
-    <tr class="border-4 border-primary">
+    <tr class="">
         <th class="">
             <label>
                 <input type="checkbox" class="checkbox"/>
@@ -26,9 +26,13 @@
             </div>
         </td>
         <td>
-            @lead.Role
+            <div class="tooltip" data-tip="@lead.Role.Description">
+                @lead.Role.Name
+            </div>
             <br/>
-            <span class="badge badge-ghost badge-sm">@lead.Status</span>
+            <div class="tooltip" data-tip="@lead.Status.Description">
+                <span class="badge badge-ghost badge-sm">@lead.Status.Name</span>
+            </div>
         </td>
         <td>@lead.CompanyName</td>
         <th>

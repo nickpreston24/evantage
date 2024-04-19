@@ -97,17 +97,18 @@ public class IndexModel : PageModel
                 {
                     Index = index,
                     CompanyName = "Acme " + index,
-                    CustomerName = "Wile E. Coyote"
+                    CustomerName = "Wile E. Coyote",
+                    Role = CompanyRole.Unknown,
                 }
             )
             .ToList();
-
 
         leads.Add(new Lead()
         {
             PhoneNumber = "(512) 993-0765",
             CustomerName = "Jacob Thomas Gumms",
             CompanyName = "Lone Wolf Leathers",
+            Role = CompanyRole.Owner,
             Notes = new string[]
             {
                 "Leathering is his hobby; 3pm CST, Mobile card scanner would be deal, Android user, tomorrow and Monday, Storefront, Open date is May 17th"

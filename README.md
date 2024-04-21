@@ -52,6 +52,42 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
   - [ ] Allow user to queue the replacements and transforms.
   - [ ] Update the Hydrolizer to create C# props from alpinejs variables it discovers within script tags.
 
-#### Call tracking
-1. Create a button for each telephone number you upload to google sheets, csv, etc.
-2. 
+## Features
+
+### Call tracking
+- [ ] Create a button for each telephone number you upload to google sheets, csv, etc.
+- [ ] Provide a link to google maps for addresses.
+  -  I'd love to be able to upload a csv of leads and have the address, call button ready to go.
+- [ ] Address lookup:
+  - [ ] Parse the years been in business
+  - [ ] Parse the hours of operation (so you're not wasting calls)
+    - [ ] Grey out (disable) the call button, if not within hours.
+    - [ ] Using htmx polling, refresh these call buttons, checking to see if we're within hours.
+    - [ ] Maybe provide a status: "Available" or something.
+### Leads Generation
+- [ ] Leads Scraper
+  - [ ] Save cssselectors for sites with this kind of info, like the sales tax office, the online phone books, etc.
+  - [ ] Scrape Addresses, phones, hours of operation from Google.
+    - [ ] May have to use ScrapingBee, so not banned.
+  - [ ] Prevent duplicates by comparing phone numbers.
+
+### OCR
+
+- .net libraries to try:
+  - [ ] [tesseract](https://dev.to/mhamzap10/how-to-use-tesseract-ocr-in-c-9gc)
+  - [ ] [ironocr](https://ironsoftware.com/csharp/ocr/examples/simple-csharp-ocr-tesseract/?utm_source=nuget&utm_medium=organic&utm_campaign=readme&utm_content=supportanddocs)
+- If OCR is reasonably successful:
+  - [ ] Parse out phone numbers, business ids, and addresses where possible.
+  - [ ] cross ref with anything useful you find in the google maps api.
+  - [ ] Update your db with new or existing locations.
+
+### Airtable
+
+- [ ] Create a new Leads table to hold onto leads, temporarily.
+- [ ] Copy each query string (GET|POST, etc.) into consts.
+- [ ] Recycle the airtable service regex to parse out the parts of ea. query string.
+- [ ] Goals:
+  - [ ] GET/Create new lead
+  - [ ] POST/Update existing lead
+  - [ ] Bonus: Use the existing CSV reader to upload your local CSV file contents to Airtable.
+  - [ ] Create a dedicated route in Razor for Airtable.

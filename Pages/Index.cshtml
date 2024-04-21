@@ -7,30 +7,31 @@
 @inject IInMemoryGraphService graph_service
 @{
     ViewData["Title"] = "Home page";
-    var commission = Model.Commission ?? new Commissions();
-    var todos = new List<Todoist>();
+    // var commission = Model.Commission ?? new Commissions();
+    // var todos = new List<Todoist>();
 }
-<div x-data='setup()' class="">
-    <div id="dashboard-contents" class="flex flex-row">
-        <div class="w-1/4">
-            <div class="bg-info/25">
-                <div class="border-info/25 border-2">
-                    <h1 x-text="current_section"></h1>
-                </div>
-            </div>
-        </div>
 
-        <div class="w-3/4">
+<div x-data='setup()' class="w-max border-2 border-red-500">
+    <section id="dashboard-contents" class="flex flex-row">
+        @* <div x-show="false" class="w-1/4"> *@
+        @*     <div class="bg-info/25"> *@
+        @*         <div class="border-info/25 border-2"> *@
+        @*             <h1 x-text="current_section"></h1> *@
+        @*         </div> *@
+        @*     </div> *@
+        @* </div> *@
+
+        <div class="w-max">
             <div class="bg-accent-content/25">
                 <div class="border-accent/25 border-2">
                     <partial name="_LeadsTable"></partial>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="dashboard-contents" class="flex flex-row">
-        <div class="w-1/4">
+    <section x-show="false" id="dashboard-contents" class="flex flex-row">
+        <div x-show="false" class="w-1/4">
             <div class="bg-info/25">
                 <div class="border-info/25 border-2">
                 </div>
@@ -53,13 +54,13 @@
                         @* <partial name="_NotesGraph"></partial> *@
                     </div>
 
-                    <partial name="_CommissionCalculator" model="@commission"/>
+                    @* <partial name="_CommissionCalculator" model="@commission"/> *@
                 </div>
             </div>
 
 
         </div>
-    </div>
+    </section>
 </div>
 
 <script>

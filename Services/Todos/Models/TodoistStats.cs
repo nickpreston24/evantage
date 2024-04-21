@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace CodeMechanic.Todoist;
 
 public class TodoistStats

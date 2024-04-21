@@ -1,5 +1,3 @@
-using System;
-
 namespace CodeMechanic.Todoist;
 
 public class TodoistEvent

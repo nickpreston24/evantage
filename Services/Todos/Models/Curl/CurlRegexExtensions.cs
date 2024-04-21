@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace CodeMechanic.Todoist;
+namespace CodeMechanic.Curl;
 
 public static class CurlRegexExtensions
 {

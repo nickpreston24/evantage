@@ -1,5 +1,3 @@
-using CodeMechanic.Diagnostics;
-using CodeMechanic.Extensions;
 using CodeMechanic.RazorHAT.Services;
 using evantage.Models;
 using Newtonsoft.Json;

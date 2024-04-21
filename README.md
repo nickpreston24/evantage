@@ -102,3 +102,9 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
 - [ ] Have the call button update Airtable with 'call_count++', set `last_call_date` to `DateTime.Now` and have it disabled for that record when `call_count == 0 || DateTime.Now >= last_call_date`.  Calling 4-6 mo. later is fine, and we don't have to reset the call count, necessarily.  
 - [ ] Create a field for when to call back again.  This can be a simple datebox, but I like the idea of having a few presets like `1 Day`, `1 Month`, `6 Months`, etc.
 
+### Google Maps
+- [ ] Integrate basic gmap
+- [ ] Look for way to show heatmap of already visited places.
+- [ ] Mark already visited pins as red, default green.
+
+

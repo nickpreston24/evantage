@@ -1,4 +1,4 @@
-namespace evantage.Services;
+namespace evantage.Models;
 
 public class Relationship<T> where T : class
 {

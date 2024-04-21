@@ -1,6 +1,6 @@
 using CodeMechanic.Types;
 
-namespace evantage.Services;
+namespace evantage.Models;
 
 public class Direction : Enumeration
 {

@@ -1,4 +1,4 @@
-namespace CodeMechanic.Todoist;
+namespace CodeMechanic.Curl;
 
 public record CurlHeader
 {

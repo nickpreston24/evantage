@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using CodeMechanic.Types;
 
-namespace CodeMechanic.Todoist;
+namespace CodeMechanic.Curl;
 
 public class CurlRegex : Enumeration
 {

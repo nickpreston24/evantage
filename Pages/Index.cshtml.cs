@@ -1,5 +1,5 @@
 ﻿using CodeMechanic.Diagnostics;
-using CodeMechanic.FileSystem;
+using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Types;
 using evantage.Models;
 using evantage.Services;
@@ -15,17 +15,20 @@ public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly IDownloadImages imageDownloader;
+    private readonly IAirtableQueryingService airtable_queries;
 
     public string Query { get; set; } = string.Empty;
     
 
     public IndexModel(ILogger<IndexModel> logger
         , IDownloadImages image_downloader
+        , IAirtableQueryingService airtable_queryer
         )
     {
       
         _logger = logger;
         imageDownloader = image_downloader;
+        this.airtable_queries = airtable_queryer;
     }
 
     public Commissions Commission { get; set; } = new();

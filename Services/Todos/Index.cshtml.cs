@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using CodeMechanic.Todoist;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

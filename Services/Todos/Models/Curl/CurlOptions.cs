@@ -1,7 +1,7 @@
 using System.Text;
 using CodeMechanic.Advanced.Regex;
 
-namespace CodeMechanic.Todoist;
+namespace CodeMechanic.Curl;
 
 public class CurlOptions
 {

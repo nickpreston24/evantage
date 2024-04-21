@@ -1,9 +1,8 @@
 using Newtonsoft.Json;
 
+namespace CodeMechanic.Airtable;
 
-namespace CodeMechanic.Todoist;
-
-public static class TodoistExtensions
+public static class AirtableExtensions
 {
     public static List<T> Deserialize<T>(this string line) // where T : class
     {

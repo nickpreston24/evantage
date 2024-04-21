@@ -1,6 +1,4 @@
-using CodeMechanic.Types;
-
-namespace evantage.Services;
+namespace evantage.Models;
 
 public class Node<T> where T : class
 {

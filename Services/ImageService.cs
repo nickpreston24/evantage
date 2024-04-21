@@ -1,6 +1,4 @@
-using System.Drawing;
 using System.Net;
-using CodeMechanic.Diagnostics;
 
 namespace evantage.Services;
 

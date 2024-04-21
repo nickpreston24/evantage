@@ -15,17 +15,15 @@ public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly IDownloadImages imageDownloader;
-    private IWebHostEnvironment _environment;
 
     public string Query { get; set; } = string.Empty;
-    [BindProperty] public IFormFile Upload { get; set; }
+    
 
     public IndexModel(ILogger<IndexModel> logger
         , IDownloadImages image_downloader
-        , IWebHostEnvironment environment)
+        )
     {
-        _environment = environment;
-
+      
         _logger = logger;
         imageDownloader = image_downloader;
     }
@@ -61,32 +59,9 @@ public class IndexModel : PageModel
     }
 
 
-    public async Task<IActionResult> OnGetCountCSVFiles()
-    {
-        string cwd = Directory.GetCurrentDirectory();
-        string csv_uploads_folder = "uploads";
-        string csv_folder_path = Path.Combine(cwd, csv_uploads_folder);
-        var grepper = new Grepper()
-        {
-            RootPath = csv_folder_path,
-            FileSearchMask = "*.csv"
-        };
+    
 
-        var files = grepper.GetFileNames().ToList();
-
-        return Content($"<span>{files.Count}</span>");
-    }
-
-    public async Task OnPostAsync()
-    {
-        if (Upload == null || Upload.FileName.IsEmpty()) return;
-        string save_dir = Path.Combine(_environment.ContentRootPath, "uploads");
-        FS.MakeDir(save_dir);
-        var save_path = Path.Combine(save_dir, Upload.FileName);
-        Console.WriteLine($"Saving file to '{save_path}'");
-        await using var fileStream = new FileStream(save_path, FileMode.Create);
-        await Upload.CopyToAsync(fileStream);
-    }
+    
 
     private static List<Lead> MakeSampleLeads()
     {

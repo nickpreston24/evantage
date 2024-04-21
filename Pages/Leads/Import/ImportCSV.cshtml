@@ -2,18 +2,91 @@
 @model evantage.Pages.Leads.Import.ImportCSV
 
 @{
-    Layout = null;
 }
 
-<!DOCTYPE html>
+<section>
+    <div class="flex">
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    Import Leads from CSV
-</div>
-</body>
-</html>
+        <h1>
+            Import Leads from CSV
+        </h1>
+
+        <label class="text-2xl text-accent">
+            Leads Imported:
+            <span hx-get
+                  hx-page="Import/ImportCSV"
+                  hx-trigger="load"
+                  hx-page-handler="CountCSVFiles"
+                  hx-swap="innerHTML">
+                ...
+            </span>
+        </label>
+
+        <div class="card-action">
+            <h2 class="text-2xl text-accent">New Leads</h2>
+            <form disabled method="post" enctype="multipart/form-data">
+                <input class="file-input file-input-bordered w-full max-w-xs" type="file"
+                       hx-page="Import/ImportCSV"
+                       asp-for="Upload"/>
+                <input class="btn btn-secondary" type="submit"/>
+            </form>
+
+
+        </div>
+    </div>
+
+    <!-- main imported leads table -->
+    <div class="overflow-x-auto">
+        <table class="table">
+            <!-- head -->
+            <thead>
+            <tr>
+                <th>
+                    <label class="tooltip" data-tip="sync with airtable">
+                        <!-- sync to airtable -->
+                        <button class="btn btn-accent">
+                            Sync
+                        </button>
+                    </label>
+                </th>
+                <th>Name</th>
+                <th>Job</th>
+                <th>Favorite Color</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- row 1 -->
+            <tr>
+                <th>
+                    <label>
+                        <input type="checkbox" class="checkbox"/>
+                    </label>
+                </th>
+                <td>
+                    <div class="flex items-center gap-3">
+                        <div class="avatar">
+                            <div class="mask mask-squircle w-12 h-12">
+                                <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component"/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold">Hart Hagerty</div>
+                            <div class="text-sm opacity-50">United States</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    Zemlak, Daniel and Leannon
+                    <br/>
+                    <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                </td>
+                <td>Purple</td>
+                <th>
+                    <button class="btn btn-ghost btn-xs">details</button>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

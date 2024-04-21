@@ -30,7 +30,7 @@ builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
-builder.Services.AddSingleton<IRazorRoutesService, RazorRoutesService>();
+builder.Services.AddSingleton<evantage.Services.IRazorRoutesService2, evantage.Services.RazorRoutesService2>();
 builder.Services.AddSingleton<IDownloadImages, ImageDownloader>();
 
 builder.Services.AddControllers();

@@ -1,4 +1,10 @@
-﻿using CodeMechanic.Diagnostics;
+﻿using System.Diagnostics;
+using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
+using CodeMechanic.Advanced.Regex;
+using CodeMechanic.Airtable;
+using CodeMechanic.Curl;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Types;
 using evantage.Models;
@@ -15,20 +21,19 @@ public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly IDownloadImages imageDownloader;
-    private readonly IAirtableQueryingService airtable_queries;
+    private readonly IAirtableServiceV2 airtable_queries;
 
     public string Query { get; set; } = string.Empty;
-    
+
 
     public IndexModel(ILogger<IndexModel> logger
         , IDownloadImages image_downloader
-        , IAirtableQueryingService airtable_queryer
-        )
+        , IAirtableServiceV2 airtable_queryer
+    )
     {
-      
         _logger = logger;
         imageDownloader = image_downloader;
-        this.airtable_queries = airtable_queryer;
+        airtable_queries = airtable_queryer;
     }
 
     public Commissions Commission { get; set; } = new();
@@ -39,10 +44,13 @@ public class IndexModel : PageModel
     public List<Lead> Results { get; set; } = new();
 
 
-    public IActionResult OnGet()
+    public async Task<ActionResult> OnGet()
     {
+        var from_airtable = await GetAllLeadsFromAirtable();
+
         Results = string.IsNullOrEmpty(Query)
-            ? CurrentLeads.Dump("current leads")
+            ? CurrentLeads
+            // .Dump("current leads")
             : CurrentLeads
                 .Where(lead => lead.ToString()
                     .Contains(Query, StringComparison.OrdinalIgnoreCase))
@@ -58,18 +66,17 @@ public class IndexModel : PageModel
             headers.Push(Request.GetEncodedUrl());
         });
 
+
         return Partial("_Results", this);
     }
 
 
-    
-
-    
-
     private static List<Lead> MakeSampleLeads()
     {
-        int max_leads = 1;
-        var leads = Enumerable.Range(1, max_leads)
+        var leads = new List<Lead>();
+
+        int max_fake_leads = 1;
+        var fake_leads = Enumerable.Range(1, max_fake_leads)
             .Select(index =>
                 new Lead()
                 {
@@ -80,6 +87,9 @@ public class IndexModel : PageModel
                 }
             )
             .ToList();
+        ;
+
+        leads.AddRange(fake_leads);
 
         leads.Add(new Lead()
         {
@@ -93,7 +103,9 @@ public class IndexModel : PageModel
             }
         });
 
-        return leads.Dump("leads created");
+        return leads
+            // .Dump("leads created")
+            ;
     }
 
     public async Task<IActionResult> OnGetSearch()
@@ -127,5 +139,104 @@ public class IndexModel : PageModel
         double total = 0;
 
         return Partial("_CommissionCalculator", new Commissions());
+    }
+
+
+    private List<CurlOptions> GetClient(string curl)
+    {
+        var curlRegex = get_regex_from_curl(curl);
+        var regex = CurlRegex.Find(curlRegex);
+        // regex.Dump(nameof(regex));
+        // Console.WriteLine(curl);
+
+        var curl_options = curl.Extract<CurlOptions>(regex);
+
+        // if (debug_mode)
+        curl_options.Dump(nameof(curl_options));
+
+        return curl_options;
+    }
+
+    private CurlRegex get_regex_from_curl(string curl)
+    {
+        if (Regex.IsMatch(curl, @"-X\s*(GET)"))
+        {
+            return CurlRegex.GET;
+        }
+
+        if (Regex.IsMatch(curl, @"-X\s*(POST)"))
+        {
+            return CurlRegex.POST;
+        }
+
+        return CurlRegex.HEADERS;
+    }
+
+    private async Task<List<Lead>> GetAllLeadsFromAirtable()
+    {
+        string curl = """
+             curl "https://api.airtable.com/v0/BASE_ID/Interactions?maxRecords=3&view=Calls%20%26%20meetings" \
+            -H "Authorization: Bearer YOUR_SECRET_API_TOKEN"
+        """;
+
+        string api_key = Environment.GetEnvironmentVariable("AIRTABLE_API_KEY") ?? "";
+        string base_id = Environment.GetEnvironmentVariable("AIRTABLE_LEADS_BASE") ?? "";
+        // Update the curl string to always have the most updated bearer token (and not a sample, like most tutorials)
+        curl =
+            Regex.Replace(
+                curl
+                , @"Bearer \$?\w+"
+                , "Bearer " + api_key
+            );
+        // Update the baseId
+        curl =
+            Regex.Replace(
+                curl
+                , @"BASE_ID"
+                , base_id
+            );
+
+
+        Console.WriteLine("Curl: " + curl);
+
+        var options = curl
+                .Extract<CurlOptions>(CurlRegex.GET.compiled)
+                .Select(next => next
+                    // .With(opts =>
+                    // {
+                    //     opts.execution_method = "GET";
+                    //     // opts.bearer_token = api_key;
+                    // })
+                )
+            ;
+        // var options = GetClient(raw_get);
+        options.Dump("extracted_curl_request");
+        return new List<Lead>();
+
+        // Call
+
+        var all_tasks = options
+            .Select(curl_options => GetContentAsync(curl_options.uri, curl_options.bearer_token))
+            .ToList();
+
+        Console.WriteLine("Calling API...");
+        Console.WriteLine("total tasks running :>> " + all_tasks.Count);
+
+        var responses = await Task.WhenAll(all_tasks);
+        Console.WriteLine("responses :>> ", responses.Length);
+
+        return new List<Lead>();
+    }
+
+    public async Task<string> GetContentAsync(string uri, string bearer_token, bool debug = false)
+    {
+        using HttpClient http = new HttpClient();
+        http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer_token);
+        var response = await http.GetAsync(uri);
+        response.EnsureSuccessStatusCode();
+        var content = await response.Content.ReadAsStringAsync();
+        if (debug)
+            Console.WriteLine("content :>> " + content);
+        return content;
     }
 }

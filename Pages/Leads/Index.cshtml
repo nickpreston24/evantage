@@ -14,13 +14,23 @@
         new RazorRoute() { file_name = "Contacts", subdirectory = "/Leads/Airtable?viewname=_Contacts" },
         new RazorRoute() { file_name = "Sales Pipeline", subdirectory = "/Leads/Airtable?viewname=_SalesPipeline" },
     };
+
+    var importer_routes = new List<ImportRoute>()
+    {
+        new ImportRoute() { Title = "Markdown", Tip = "Import Leads from markdown", Link = "/Leads/Import/ImportMarkdown" },
+        new ImportRoute() { Title = "CSV", Tip = "Import Leads from markdown", Link = "/Leads/Import/ImportCSV" }
+    };
 }
 
-<section class="flex flex-row">
+<section class="flex flex-col items-center justify-center">
 
     @* Auto *@
+    <h1>Airtable</h1>
     <ul x-show="true" class="menu menu-horizontal bg-base-200 rounded-box mt-6">
-        @foreach (var route in routes)
+        @foreach
+            (var route in
+                routes
+            )
         {
             var route_name = @route.file_name.Replace("_", "").Replace(".cshtml", "");
             var route_link = @route.subdirectory;
@@ -29,6 +39,25 @@
                    data-tip="Go to @route_link"
                    href="@route_link">
                     @route.file_name
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                </a>
+            </li>
+        }
+    </ul>
+
+
+    <h1>Import From:</h1>
+    <ul x-show="true" class="menu menu-horizontal bg-base-200 rounded-box mt-6">
+        @foreach (var route in importer_routes)
+        {
+            <li>
+                <a class="tooltip"
+                   data-tip="Go to @route.Tip"
+                   href="@route.Link">
+                    @route.Title
                     <svg xmlns="http://www.w3.org/2000/svg"
                          class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>

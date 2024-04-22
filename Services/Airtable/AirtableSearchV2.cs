@@ -5,7 +5,7 @@ using CodeMechanic.Diagnostics;
 using CodeMechanic.Reflection;
 using CodeMechanic.Types;
 
-namespace CodeMechanic.RazorHAT.Services;
+namespace CodeMechanic.Airtable;
 
 public class AirtableSearchV2
 {

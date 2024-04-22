@@ -1,4 +1,5 @@
 using System.Reflection;
+using CodeMechanic.Airtable;
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
@@ -32,6 +33,8 @@ builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
 builder.Services.AddSingleton<evantage.Services.IRazorRoutesService2, evantage.Services.RazorRoutesService2>();
 builder.Services.AddSingleton<IDownloadImages, ImageDownloader>();
+
+builder.Services.AddSingleton<IAirtableServiceV2, AirtableServiceV2>();
 
 builder.Services.AddControllers();
 

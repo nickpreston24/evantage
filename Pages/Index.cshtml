@@ -1,72 +1,52 @@
 ﻿@page
-@using evantage.Models
 @using evantage.Services
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
 
-@inject IInMemoryGraphService graph_service
+@* @inject IInMemoryGraphService graph_service *@
 @{
     ViewData["Title"] = "Home page";
     // var commission = Model.Commission ?? new Commissions();
     // var todos = new List<Todoist>();
 }
 
-<div x-data='setup()' class="w-max border-2 border-red-500">
-    <section id="dashboard-contents" class="flex flex-row">
-        @* <div x-show="false" class="w-1/4"> *@
-        @*     <div class="bg-info/25"> *@
-        @*         <div class="border-info/25 border-2"> *@
-        @*             <h1 x-text="current_section"></h1> *@
-        @*         </div> *@
-        @*     </div> *@
-        @* </div> *@
+<div x-data='setup()' class="border-0 border-red-500 h-screen">
 
-        <div class="w-max">
-            <div class="bg-accent-content/25">
-                <div class="border-accent/25 border-2">
-                    <partial name="_LeadsTable"></partial>
-                </div>
-            </div>
+    <div class="tooltip tooltip-top" :data-tip="current_view_tooltip">
+        <button
+            class="btn btn-primary"
+            x-text="curent_view"
+            @@click="toggle_forms()">
+        </button>
+    </div>
+
+    <section id="dashboard-contents" class="flex flex-col items-center justify-center">
+        <div
+            width="100%"
+            x-show="show_leads_table" class="w-full">
+            <partial name="_LeadsTable"></partial>
+            @* <partial name="Leads/Airtable/Forms/_AddOpportunity"></partial> *@
+        </div>
+        @* ... *@
+        <div x-show="show_leads_form" class="w-full">
+            <partial x-show="show_leads_form" name="Leads/Airtable/Forms/_AddLead"></partial>
         </div>
     </section>
 
-    <section x-show="false" id="dashboard-contents" class="flex flex-row">
-        <div x-show="false" class="w-1/4">
-            <div class="bg-info/25">
-                <div class="border-info/25 border-2">
-                </div>
-            </div>
-        </div>
-
-        <div class="w-3/4">
-            @* CSV/Excel *@
-            @* <div class="bg-accent-content/25"> *@
-            @*     <div class="border-accent/25 border-2"> *@
-            @* *@
-            @*     </div> *@
-            @* </div> *@
-
-            <div x-show="false" class="bg-accent-content/25">
-                <div class="border-accent/25 border-2">
-                    <div class="max-w-3/4">
-                        @* Todo: Move this to its own RAzor page and refactor out a hydro component if it makes sense
-                        It doesn't work well as a partial with 3 services injected into it.*@
-                        @* <partial name="_NotesGraph"></partial> *@
-                    </div>
-
-                    @* <partial name="_CommissionCalculator" model="@commission"/> *@
-                </div>
-            </div>
-
-
-        </div>
-    </section>
 </div>
 
 <script>
-function setup() {
-    return {
-        current_section: "@nameof(Commissions)"
+    function setup() {
+        return {
+            curent_view: 'Add Lead',
+            show_leads_form: false,
+            show_leads_table: true,
+            toggle_forms() {
+                this.show_leads_form = !this.show_leads_form
+                this.show_leads_table = !this.show_leads_table
+                this.curent_view = this.show_leads_form == true ? 'View Leads' : 'Add Lead'
+                this.current_view_tooltip = this.show_leads_form == true ? 'View All Current Leads' : 'Add a new Lead'
+            }
+        }
     }
-}
 </script>

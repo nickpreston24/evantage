@@ -29,7 +29,7 @@ DotEnv.Load();
 
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
-builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
+builder.Services.AddSingleton<evantage.Services.IMarkdownService, evantage.Services.MarkdownService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
 builder.Services.AddSingleton<evantage.Services.IRazorRoutesService2, evantage.Services.RazorRoutesService2>();
 builder.Services.AddSingleton<IDownloadImages, ImageDownloader>();

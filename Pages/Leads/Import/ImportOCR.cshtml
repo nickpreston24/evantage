@@ -3,6 +3,8 @@
 
 @{
     <!-- TODO:
+    // https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html#simplest-invocation-to-ocr-an-image
+    
     1. add import button
     2. Load filepath from mobile directory
     3. Test and verify the file loaded by showing line count on Android.
@@ -10,8 +12,99 @@
     5. POST to Airtable.
     6. (The remaining text is probably not going to be very accurate, so ommitting it for now.  Texts should sync to Drive anyways)
     -->
+
+    int cols = @Model.FileCount % 10;
+    var photos = @Model.PhotoPaths;
+    int index = 0;
+
 }
 
+<div class="flex flex-col gap-2">
 
-<h1>Import OCR TXTs</h1>
+    <h1>Import OCR TXTs</h1>
+    <label for="">
+        Images found for conversion:
+    </label>
+    <p>@Model.FileCount</p>
 
+    <div class="grid grid-cols-@cols grid-rows-auto">
+        @foreach (var photo in photos)
+        {
+            <div x-data="{loading:false, foo: 999}"
+                 class="card w-96 bg-base-100 shadow-xl"
+                 key="@index">
+                <div class="card-body">
+                    <h2 class="card-title">@photo.FileName</h2>
+                    <p>@photo.FilePath</p>
+                    <div class="card-actions justify-end">
+
+                        <button
+                            hx-get
+                            hx-page-handler="Import"
+                            hx-swap="outerHTML"
+                            hx-vals='{"id": "@index"}'
+                            hx-indicator="#bars_@index"
+                            hx-on::before-request="loading=true"
+                            hx-on::after-request="loading=false"
+                            class="btn btn-primary">
+                            Import
+
+                            <img
+                                id="bars_@index" alt="Result loading..."
+                                class="htmx-indicator ml-4 md:w-6 sm:w-4"
+                                src="~/img/bars.svg"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            index++;
+        }
+
+    </div>
+
+
+    @* <div class="flex-row flex gap-2"> *@
+    @*     <button *@
+    @*         class="btn btn-secondary" *@
+    @*         hx-get *@
+    @*         hx-indicator="#bars" *@
+    @*         hx-target="#bash_output" *@
+    @*         hx-page-handler="ConvertImageToText"> *@
+    @*         Run OCR via Bash *@
+    @*     </button> *@
+    @* *@
+    @*     <img *@
+    @*         id="bars" alt="Result loading..." *@
+    @*         class="htmx-indicator ml-4 md:w-6 sm:w-4" *@
+    @*         src="~/img/bars.svg"/> *@
+    @* </div> *@
+
+    <label class="text-lg text-accent" for="bash_output">Bash Ouput</label>
+    <textarea 
+            id="bash_output" 
+            disabled class="text-primary textarea-accent" 
+            name="bash" 
+            cols="30" 
+            rows="10">...</textarea>
+
+    @* <ul> *@
+    @*     @foreach (var fp in @Model.PhotoPaths) *@
+    @*     { *@
+    @*         <li>@fp</li> *@
+    @*     } *@
+    @* </ul> *@
+
+</div>
+
+@* Works, but need it to run on Google images *@
+
+@* <script> *@
+@* // import { createWorker } from 'tesseract.js'; *@
+@* (async () => { *@
+@*   const worker = await Tesseract.createWorker('eng'); *@
+@*   const ret = await worker.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png'); *@
+@*   // const ret = await worker.recognize('https://photos.app.goo.gl/5PV2nbgXnZAGENfj7'); *@
+@*   console.log(ret.data.text); *@
+@*   await worker.terminate(); *@
+@* })(); *@
+@* </script> *@

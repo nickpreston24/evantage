@@ -2,7 +2,7 @@
 @model evantage.Pages.Leads.Import.ImportFromMarkdown
 
 @{
-    var md_files = Model.LocalMarkdownFiles;
+    var md_files = @Model.LocalMarkdownFiles;
     int cols = @md_files.Count % 10;
     int index = 0;
 }

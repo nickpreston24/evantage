@@ -65,13 +65,23 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
     - [ ] Using htmx polling, refresh these call buttons, checking to see if we're within hours.
     - [ ] Maybe provide a status: "Available" or something.
 ### Leads Generation
-- [ ] Leads Scraper
+
+#### Leads Scraper
   - [ ] Save cssselectors for sites with this kind of info, like the sales tax office, the online phone books, etc.
   - [ ] Scrape Addresses, phones, hours of operation from Google.
     - [ ] May have to use ScrapingBee, so not banned.
   - [ ] Prevent duplicates by comparing phone numbers.
 
+#### Feature: Best time to call
+  - [ ] Create array of time slots (30min default) for the day
+  - [ ] Create array of time Slots for current hours.
+  - [ ] Subtract the two arrays (use IComparable, and if necessary, NodaTime for easy compares)
+    - [ ] Overload the` Equals()`
+    - [ ] Overload `ToString()` for compares.
+    - [ ] Default to UTC, but verify w/ research first.
+
 ### OCR
+  - [ ] 
 
 - .net libraries to try:
   - [ ] [tesseract](https://dev.to/mhamzap10/how-to-use-tesseract-ocr-in-c-9gc)
@@ -93,18 +103,94 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
   - [ ] Create a dedicated route in Razor for Airtable.
 
 #### Web Clippers
+
 - [ ] Sales tax office Web clipper
 - [ ] Generic FFL leads clipper
   - Snags url, title, etc.
   - Updates the 'lead sources' table
 
 ### Cold Calling
+
 - [ ] Have the call button update Airtable with 'call_count++', set `last_call_date` to `DateTime.Now` and have it disabled for that record when `call_count == 0 || DateTime.Now >= last_call_date`.  Calling 4-6 mo. later is fine, and we don't have to reset the call count, necessarily.  
 - [ ] Create a field for when to call back again.  This can be a simple datebox, but I like the idea of having a few presets like `1 Day`, `1 Month`, `6 Months`, etc.
 
 ### Google Maps
+
 - [ ] Integrate basic gmap
 - [ ] Look for way to show heatmap of already visited places.
 - [ ] Mark already visited pins as red, default green.
+- [ ] Icon for "find on google maps"
+  - [ ] Takes the user to google maps (embedded, like your react map)
+  - [ ] "Doors Deluxe" (nice title! ^_^)
+  - [ ] Once the user lands on Maps, alpinejs verfies the `current_phone` matches the current Google Map Pin's phone number. 
+  - [ ] In Map, highlight the phone and address.
+  - [ ] Maybe add a hoverable modal (daisy dropdown) for calling the phone?
+    - [ ] And of course, hook that into an `hx-get` to update the call count for that number! ^_^
+
+### Statuses, Types and Descriptions
+- [ ] Create a special base `Enumeration` class called `Alias` & `IAlias` interface.
+  - [ ] takes `string aliases` as a cotr. param
+  - [ ] The goal is to:
+      1.   Map these aliases to airtable Selects & MultiSelects (or other entities)
+      2.   If an alias is discovered in a description (.contains()), or is a close match, suggest and edit in the table.  
+           1.   Note: use `x-init` when loading and calling the `CheckForAliases()` handler.
+    - [ ] Create `AirtableAlias` subclass
+      - [ ] Create extensions like `ToAlias(string aliases[]})` that support conversion to defined `IAlias`es.
+      - [ ] fields
+        - [ ] base_id
+        - [ ] table_id
+        - [ ] record_id (the one that comes from Airtable, if it's possible to get it from a Select)
 
 
+### Stats Page
+* Want to know:
+1.  How many calls for the Day
+2.  Calls for the weekk
+3.  How much to make up for the week.
+4.  Ideally, show percent completion for: (Doors, Cold Calls, Leads Generation)
+
+### Current Call Page
+- [ ] Create a `CurrentCall` Page.
+- [ ] Redirect after clicking the call button.
+- [ ] Add a call button to it.
+- [ ] Create an edit form so you can update the Lead while in a call.
+- [ ] Notes should be prominently displayed.
+- [ ] Statuses:
+  - [ ] Voicemail
+  - [ ] Textback
+  - [ ] Callback  
+    - [ ] Callback Time (grab dropdown/calendar from your OrchardCore)
+      - [ ] Set status of Lead (in Airtable) as 'Callback'
+      - [ ] If current state is already 'Callback' in Airtable, increment the call_count, and set state to 'CalledBack' (or equivalent)
+      - [ ] test on your mobile, using your own Webex account (or anything that'll call your mobile)
+
+### Google Search Menus
+
+- [ ] Add 'Search Google' option when hovering over an:
+  - [ ] Address & Zip
+  - [ ] Website
+- [ ] Add 'Search Phone' option when hovering over phones
+  - [ ] Use an online phone book, if possible.
+  - [ ] fallback, search Google for the phone # and see what business pops up.
+- [ ] Bonus:
+  - [ ] What if I could, with each Google Maps search results, add *similar businesses*?
+    - I got the idea from "Abundant Seed Investments".
+    - Google already recommends them.  Maybe Waze also has an API I can use.
+- Consider writing a MySQL service in Railway, or perhaps even Turso.
+  - [ ] Investigate: C# Turso driver.
+
+### Services
+
+- [ ] Add AirtableServices for:
+  - [ ] Leads (Interactions)
+  - [ ] Opportunities (Appointments, Followups, Callbacks, textbacks, closes, etc.)
+
+### Webex
+- [ ] setup on linux
+- [ ] try calling yourself
+
+### Todoist
+
+- [ ] Create task from Lead
+- [ ] Create new todoistTask using Todoist API, uder project 'EMG'
+- [ ] Set label to whatever the current (relevant) status is (e.g.`@callback`, `@appointment`, etc.)

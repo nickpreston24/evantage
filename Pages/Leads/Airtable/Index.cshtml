@@ -4,6 +4,7 @@
     string view_path = "Views/" + (@Model.ViewName ?? "_Opportunities");
     Console.WriteLine("View requested: " + view_path);
 }
+
 <section>
     @* <partial name="Views/_SalesPipeline"></partial> *@
     <partial name="@view_path"></partial>

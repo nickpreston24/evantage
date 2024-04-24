@@ -55,13 +55,14 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
 ## Features
 
 ### Call tracking
-- [ ] Create a button for each telephone number you upload to google sheets, csv, etc.
-- [ ] Provide a link to google maps for addresses.
+- [x] Create a button for each telephone number you upload to google sheets, csv, etc.
+  - [ ] In addition to a call btn, I'd like a link for "Add as Contact" on my phone, if possible. (idk how, but I'd imagine highlighting it will work) - p4.
+- [ ] Provide a link to google maps for addresses. - p2
   -  I'd love to be able to upload a csv of leads and have the address, call button ready to go.
-- [ ] Address lookup:
-  - [ ] Parse the years been in business
-  - [ ] Parse the hours of operation (so you're not wasting calls)
-    - [ ] Grey out (disable) the call button, if not within hours.
+- [ ] Address lookup: p4
+  - [ ] Parse the years been in business - p4
+  - [ ] Parse the hours of operation (so you're not wasting calls) - p4
+    - [ ] Grey out (disable) the call button, if not within hours. - p4
     - [ ] Using htmx polling, refresh these call buttons, checking to see if we're within hours.
     - [ ] Maybe provide a status: "Available" or something.
 ### Leads Generation
@@ -81,13 +82,15 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
     - [ ] Default to UTC, but verify w/ research first.
 
 ### OCR
-  - [ ] 
-
 - .net libraries to try:
-  - [ ] [tesseract](https://dev.to/mhamzap10/how-to-use-tesseract-ocr-in-c-9gc)
-  - [ ] [ironocr](https://ironsoftware.com/csharp/ocr/examples/simple-csharp-ocr-tesseract/?utm_source=nuget&utm_medium=organic&utm_campaign=readme&utm_content=supportanddocs)
+  - These were a bust...
+  - [x] [tesseract](https://dev.to/mhamzap10/how-to-use-tesseract-ocr-in-c-9gc)
+  - [x] [ironocr](https://ironsoftware.com/csharp/ocr/examples/simple-csharp-ocr-tesseract/?utm_source=nuget&utm_medium=organic&utm_campaign=readme&utm_content=supportanddocs)
+  - `tesseract.js` works.
+  - `tesseract` on linux works.
 - If OCR is reasonably successful:
   - [ ] Parse out phone numbers, business ids, and addresses where possible.
+    - [ ] *P1* Add a button to your existing textarea, which takes the text as-is and saves to Airtable.  Can be used for imports from tesseract.js, local drive, or copy-paste!
   - [ ] cross ref with anything useful you find in the google maps api.
   - [ ] Update your db with new or existing locations.
 
@@ -191,6 +194,64 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
 
 ### Todoist
 
-- [ ] Create task from Lead
-- [ ] Create new todoistTask using Todoist API, uder project 'EMG'
-- [ ] Set label to whatever the current (relevant) status is (e.g.`@callback`, `@appointment`, etc.)
+- [ ] Create task from Lead - p1
+  - [ ] Create new todoistTask using Todoist API, under project 'EMG'
+  - [ ] Have todoist set a reminder to blow up my phone with. :) p1
+  - [ ] Set label to whatever the current (relevant) status is (e.g.`@callback`, `@appointment`, etc.) - p3
+
+
+### Bash
+- [ ] OPTIONAL: add an input box for running a bash cmd on railway.
+
+### SQLITE
+
+- [ ] maintain a locel repo & database for syncing new leads coming from OCR, regex, etc.
+
+
+### Priority
+- [ ] Create records in a sqlite db so you can stop using the excel.
+- [ ] query and update all records for the current day to Airtable using their PUT.
+  - [ ] Note: probably no way to use bulk upload, so need to wait ~2.5 seconds per upload.
+  - [ ] May need to write this as a CLI option in your existing app.
+  - [ ] --upload-air Leads.db...
+- [ ] Finally, Get all Leads and render on Home screen.
+
+
+### Auto form entry
+- [ ] Find out how to copy/paste into a form from the browser/clipboard
+- [ ] Add a clipboard btn that can copy ClientVine's Contact shape.
+
+### Call Details - p2
+
+- [ ] Under the Call button, I'd like the following
+  - [ ] Call count (# of times I called this #) - p1
+  - [ ] Date of last call in red. - p1
+  - [ ] Status of last call (callback, email, text, hung up, DNC, disconnected number, etc) - p2
+  - [ ] A link to the full call history `/Call/History/12345`. - p3
+  - [ ] Time till next callback (for Voicemails and callback Statuses) - p4
+  - [ ] A link to clientvine that auto-copies all relevant details. - p2
+  - [ ] p2 - I'd like to see how many times I've called back in the call history.
+  
+### Lead Details
+- [ ] Under business name, I'd like the following
+  - [ ] Website link
+  - [ ] Notes (details expander)
+  - [ ] The phone # related to this Lead.
+  - [ ] Contacts list (details exapnder or menu)
+
+
+### Leads Search
+
+- [ ] Save recent searches to localStorage after hitting Submit, right before `hx-get` fires.  clg it to test it; show it in a dropdown, take 5, if possible ...  - p4.
+
+### Special Features todo page
+
+- [ ] Read `Readme.md` as a `string[]` - p2
+- [ ] Extract out `p1`s thru `p4` and sort by priority, desc on the page. - p2
+- [ ] readonly, for now.  Easy way to track. :)
+- [ ] unmarked tasks at the bottom labeled (in red) "unsorted"
+- [ ] tasks that are checked, show at the bottom, disabled or crossed off. p3
+
+### Offline Mode
+
+- [ ] run yarn & Test your asp-fallback scripts (htmx, alpinejs, tw, etc.) (be sure to save your wifi password, first)

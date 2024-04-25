@@ -8,18 +8,31 @@
     ViewData["Title"] = "Home page";
     // var commission = Model.Commission ?? new Commissions();
     // var todos = new List<Todoist>();
+
+
 }
 
 <div x-data='setup()' class="border-0 border-red-500 h-screen">
 
-    <div class="tooltip tooltip-top" :data-tip="current_view_tooltip">
+    <div id="quick_dial">
+        <label for="">Quick Dial</label>
+        <input class="rounded-box" x-model='dial_number'></input>
+        <a :href="'tel:' + dial_number" x-text="dial_number">
+            📞
+        </a>
+    </div>
+
+    <div id="view_switcher" class="tooltip tooltip-top" :data-tip="current_view_tooltip">
         <button
             class="btn btn-primary"
             x-text="curent_view"
             @@click="toggle_forms()">
         </button>
 
-        <a target="_blank" href="https://dallas.clientvine.net/">
+        <a target="_blank"
+           data-tip="Go to Client Vine"
+           class="tooltip"
+           href="https://dallas.clientvine.net/">
             <button
                 class='btn btn-primary'>
                 ClientVine
@@ -29,18 +42,25 @@
 
     <section id="dashboard-contents" class="flex flex-col items-center justify-center">
         <div
+            x-transition
             width="100%"
             x-show="show_leads_table" class="w-full">
             <partial name="_LeadsTable"></partial>
             @* <partial name="Leads/Airtable/Forms/_AddOpportunity"></partial> *@
         </div>
-        @* ... *@
-        <div x-show="show_leads_form" class="w-full">
+
+        <h2>INTERACTIONS</h2>
+
+        <div hx-get hx-page-handler="AllInteractions">
+            ...
+        </div>
+
+        <div x-transition x-show="show_leads_form" class="w-full">
             <partial x-show="show_leads_form" name="Leads/Airtable/Forms/_AddLead"></partial>
         </div>
     </section>
 
-    <partial name="StarterScript" />
+    <partial name="StarterScript"/>
 </div>
 
 <script>
@@ -49,6 +69,8 @@
             curent_view: 'Add Lead',
             show_leads_form: false,
             show_leads_table: true,
+            current_view_tooltip: '',
+            dial_number: '8175652372',
             toggle_forms() {
                 this.show_leads_form = !this.show_leads_form
                 this.show_leads_table = !this.show_leads_table

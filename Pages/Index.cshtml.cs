@@ -13,6 +13,7 @@ using Htmx;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using AirtableSearchV2 = CodeMechanic.Airtable.AirtableSearchV2;
 
 namespace evantage.Pages;
 
@@ -22,6 +23,9 @@ public class IndexModel : PageModel
     private readonly ILogger<IndexModel> _logger;
     private readonly IDownloadImages imageDownloader;
     private readonly IAirtableServiceV2 airtable_queries;
+    private readonly string base_id;
+    private readonly string airtable_pat;
+    private IAirtableServiceV2 airtable_service;
 
     public string Query { get; set; } = string.Empty;
 
@@ -34,6 +38,9 @@ public class IndexModel : PageModel
         _logger = logger;
         imageDownloader = image_downloader;
         airtable_queries = airtable_queryer;
+        base_id = Environment.GetEnvironmentVariable("AIRTABLE_LEADS_BASE") ?? "<base_id>";
+        airtable_pat = Environment.GetEnvironmentVariable("AIRTABLE_API_KEY") ?? "<pat>";
+        Console.WriteLine(airtable_pat);
     }
 
     public Commissions Commission { get; set; } = new();
@@ -68,6 +75,34 @@ public class IndexModel : PageModel
 
 
         return Partial("_Results", this);
+    }
+
+    public async Task<IActionResult> OnGetAllInteractions(string term = "")
+    {
+        // throw new NotImplementedException(nameof(OnGetAllInteractions));
+
+        string url = $"https://api.airtable.com/v0/{base_id}/Interactions?maxRecords=3&view=Calls%20%26%20meetings";
+
+        var search = new AirtableSearchV2(base_id, "Interactions", 10) { };
+
+        var results = await airtable_service
+            .SearchRecords<Interaction>(search
+                    .With(searchmod =>
+                    {
+                        // searchmod.filterByFormula = $"(FIND(\"{term}\", {{Name}}))";
+                    })
+                , debug: true
+            );
+
+        results.Dump(nameof(results));
+
+        return Partial("_LeadsTable", this);
+    }
+
+    public async Task<IActionResult> OnGetAllLeadSources()
+    {
+        // throw new NotImplementedException(nameof(OnGetAllLeadSources));
+        return Partial("_LeadsTable", this);
     }
 
 
@@ -239,4 +274,22 @@ public class IndexModel : PageModel
             Console.WriteLine("content :>> " + content);
         return content;
     }
+}
+
+public class Interaction
+{
+    public string Notes { get; set; } = string.Empty;
+    
+    /**
+     *  "Notes": "Called Dr. Feelgood at 6pm Sat.",
+                "Kind": "Sample",
+                "Type": "Cold Call",
+                "Interaction": "—Cold Call",
+                "Last Modified": "2024-04-22T01:19:09.000Z",
+                "Created": "2024-04-22T01:00:19.000Z"
+     */
+}
+
+public class LeadSource
+{
 }

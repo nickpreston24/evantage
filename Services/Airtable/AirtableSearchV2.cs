@@ -14,11 +14,14 @@ public class AirtableSearchV2
     public AirtableSearchV2(
         string baseId
         , string tableName
-        , bool debug_mode = false)
+        , int maxRecords = 100
+        , bool debug_mode = false
+        )
     {
         debugMode = debug_mode;
         this.base_id = baseId;
         this.table_name = tableName;
+        this.maxRecords = maxRecords;
     }
 
     private static string[] prop_names = { };

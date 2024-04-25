@@ -28,7 +28,7 @@ public class AirtableServiceV2 : IAirtableServiceV2
             .GetParent(Environment.CurrentDirectory)
             ?.Parent?.Parent?.FullName;
 
-        base_id = Environment.GetEnvironmentVariable("AIRTABLE_LEADS_BASE");
+        base_id = Environment.GetEnvironmentVariable("AIRTABLE_SALES_SPY_BASE_ID");
         api_key = Environment.GetEnvironmentVariable("AIRTABLE_API_KEY");
 
         Console.WriteLine(base_id);
@@ -64,7 +64,7 @@ public class AirtableServiceV2 : IAirtableServiceV2
         if (string.IsNullOrEmpty(search.table_name))
             search.table_name = typeof(T).Name + "s";
 
-        string airtable_pat = Environment.GetEnvironmentVariable("AIRTABLE_PAT") ?? "<AIRTABLE_PAT>";
+        string airtable_pat = Environment.GetEnvironmentVariable("AIRTABLE_SALES_SPY_PAT") ?? "<AIRTABLE_SALES_SPY_PAT>";
         // Console.WriteLine("api key:>>" + api_key);
         Console.WriteLine("base id:>>" + base_id);
         Console.WriteLine("pat:>>" + airtable_pat);

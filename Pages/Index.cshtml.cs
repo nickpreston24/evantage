@@ -37,7 +37,7 @@ public class IndexModel : PageModel
         _logger = logger;
         imageDownloader = image_downloader;
         airtable_service = airtable_svc;
-        base_id = Environment.GetEnvironmentVariable("AIRTABLE_LEADS_BASE") ?? "<base_id>";
+        base_id = Environment.GetEnvironmentVariable("AIRTABLE_SALES_SPY_BASE_ID") ?? "<base_id>";
         airtable_pat = Environment.GetEnvironmentVariable("AIRTABLE_API_KEY") ?? "<pat>";
         Console.WriteLine(airtable_pat);
     }
@@ -241,7 +241,7 @@ public class IndexModel : PageModel
         """;
 
         string api_key = Environment.GetEnvironmentVariable("AIRTABLE_API_KEY") ?? "";
-        string base_id = Environment.GetEnvironmentVariable("AIRTABLE_LEADS_BASE") ?? "";
+        string base_id = Environment.GetEnvironmentVariable("AIRTABLE_SALES_SPY_BASE_ID") ?? "";
         // Update the curl string to always have the most updated bearer token (and not a sample, like most tutorials)
         curl =
             Regex.Replace(

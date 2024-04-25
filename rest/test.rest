@@ -1,0 +1,18 @@
+curl "https://api.airtable.com/v0/app0KekplH2tNZzH2/Interactions?maxRecords=3&view=Calls%20%26%20meetings" \
+            -H "Authorization: Bearer keyl5Wo5ETa4HR4tt"
+
+
+
+###
+curl "https://api.airtable.com/v0/app0KekplH2tNZzH2/Interactions?maxRecords=3&view=Calls%20%26%20meetings" \
+            -H "Authorization: Bearer patdgEwJHaWYEdX9v.7f582e3197071dba05ccd012fe337c79d8db216b5a5a4b4ec2c8987211ec4a24"
+
+###
+curl https://api.airtable.com/v0/app0KekplH2tNZzH2/Interactions?base_id=app0KekplH2tNZzH2&offset=&filterByFormula=&maxRecords=10&pageSize=10&view=&cellFormat=&timeZone=&userLocale=&returnFieldsByFieldId=True  \
+            -H "Authorization: Bearer patdgEwJHaWYEdX9v.7f582e3197071dba05ccd012fe337c79d8db216b5a5a4b4ec2c8987211ec4a24"
+
+
+
+###
+curl https://api.airtable.com/v0/meta/bases/app0KekplH2tNZzH2/tables  \
+            -H "Authorization: Bearer patdgEwJHaWYEdX9v.7f582e3197071dba05ccd012fe337c79d8db216b5a5a4b4ec2c8987211ec4a24"

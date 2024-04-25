@@ -22,22 +22,21 @@ public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly IDownloadImages imageDownloader;
-    private readonly IAirtableServiceV2 airtable_queries;
+    private readonly IAirtableServiceV2 airtable_service;
     private readonly string base_id;
     private readonly string airtable_pat;
-    private IAirtableServiceV2 airtable_service;
 
     public string Query { get; set; } = string.Empty;
 
 
     public IndexModel(ILogger<IndexModel> logger
         , IDownloadImages image_downloader
-        , IAirtableServiceV2 airtable_queryer
+        , IAirtableServiceV2 airtable_svc
     )
     {
         _logger = logger;
         imageDownloader = image_downloader;
-        airtable_queries = airtable_queryer;
+        airtable_service = airtable_svc;
         base_id = Environment.GetEnvironmentVariable("AIRTABLE_LEADS_BASE") ?? "<base_id>";
         airtable_pat = Environment.GetEnvironmentVariable("AIRTABLE_API_KEY") ?? "<pat>";
         Console.WriteLine(airtable_pat);
@@ -45,7 +44,7 @@ public class IndexModel : PageModel
 
     public Commissions Commission { get; set; } = new();
 
-    private static List<Lead> CurrentLeads { get; set; } = MakeSampleLeads();
+    private static List<Lead> CurrentLeads { get; set; } = new(); //= MakeSampleLeads();
 
     // The filtered results from current leads
     public List<Lead> Results { get; set; } = new();
@@ -79,30 +78,57 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAllInteractions(string term = "")
     {
+        string tablename = "Interactions";
+        Console.WriteLine(nameof(OnGetAllInteractions));
         // throw new NotImplementedException(nameof(OnGetAllInteractions));
 
-        string url = $"https://api.airtable.com/v0/{base_id}/Interactions?maxRecords=3&view=Calls%20%26%20meetings";
+        // string url = $"https://api.airtable.com/v0/{base_id}/{tablename}?maxRecords=3&view=Calls%20%26%20meetings";
+        // Console.WriteLine("url:>>" + url);
+        var search = new AirtableSearchV2(base_id, tablename, 10) { };
 
-        var search = new AirtableSearchV2(base_id, "Interactions", 10) { };
+        search.Dump("search", ignoreNulls: false);
 
+        if (airtable_service == null)
+            return Content("service is null");
         var results = await airtable_service
-            .SearchRecords<Interaction>(search
-                    .With(searchmod =>
-                    {
-                        // searchmod.filterByFormula = $"(FIND(\"{term}\", {{Name}}))";
-                    })
+            .SearchRecords<Part>(search
+                // .With(searchmod =>
+                // {
+                //     searchmod.filterByFormula = $"(FIND(\"{term}\", {{Name}}))";
+                // })
                 , debug: true
             );
-
+        //
         results.Dump(nameof(results));
 
-        return Partial("_LeadsTable", this);
+        // return Partial("_LeadsTable", this);
+        return Content("test");
     }
 
     public async Task<IActionResult> OnGetAllLeadSources()
     {
-        // throw new NotImplementedException(nameof(OnGetAllLeadSources));
-        return Partial("_LeadsTable", this);
+        throw new NotImplementedException(nameof(OnGetAllLeadSources));
+        // return Partial("_LeadsTable", this);
+    }
+
+    public async Task<IActionResult> OnGetAllScripts()
+    {
+        string tablename = "Parts";
+        Console.WriteLine(nameof(OnGetAllInteractions));
+        var search = new AirtableSearchV2(base_id, tablename, 10) { };
+        search.Dump("search", ignoreNulls: false);
+
+        if (airtable_service == null)
+            return Content("service is null");
+        var results = await airtable_service
+            .SearchRecords<Script>(search
+                , debug: true
+            );
+        //
+        results.Dump(nameof(results));
+
+        // return Partial("_LeadsTable", this);
+        return Content("test");
     }
 
 
@@ -276,10 +302,21 @@ public class IndexModel : PageModel
     }
 }
 
+public class Part
+{
+    public string Name { get; set; } = "";
+}
+
 public class Interaction
 {
     public string Notes { get; set; } = string.Empty;
-    
+    public string Kind { get; set; } = string.Empty;
+
+    public string Type { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
+    public string Last_Modified { get; set; } = string.Empty;
+    public string Created { get; set; } = string.Empty;
+
     /**
      *  "Notes": "Called Dr. Feelgood at 6pm Sat.",
                 "Kind": "Sample",
@@ -292,4 +329,10 @@ public class Interaction
 
 public class LeadSource
 {
+}
+
+public class Script
+{
+    public string Name { get; set; } = string.Empty;
+    public string Notes { get; set; } = string.Empty;
 }

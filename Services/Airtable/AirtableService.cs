@@ -3,6 +3,7 @@ using System.Runtime.Caching;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.RazorHAT;
 using CodeMechanic.Types;
+using Newtonsoft.Json.Linq;
 
 namespace CodeMechanic.Airtable;
 
@@ -60,45 +61,69 @@ public class AirtableServiceV2 : IAirtableServiceV2
         AirtableSearchV2 search
         , bool debug = false)
     {
-        var (
-            table_name,
-            offset,
-            fields,
-            filterByFormula,
-            maxRecords,
-            pageSize,
-            sort,
-            view,
-            cellFormat,
-            timeZone,
-            userLocale,
-            returnFieldsByFieldId
-            ) = search /*.Dump("search")*/;
+        if (string.IsNullOrEmpty(search.table_name))
+            search.table_name = typeof(T).Name + "s";
 
-        if (string.IsNullOrEmpty(table_name))
-            table_name = typeof(T).Name + "s";
-
+        string airtable_pat = Environment.GetEnvironmentVariable("AIRTABLE_PAT") ?? "<AIRTABLE_PAT>";
+        // Console.WriteLine("api key:>>" + api_key);
+        Console.WriteLine("base id:>>" + base_id);
+        Console.WriteLine("pat:>>" + airtable_pat);
         using HttpClient http_client = new HttpClient();
-        var response = await http_client
-            .GetAsync(search
-                .With(s =>
-                {
-                    s.base_id = base_id;
-                    s.table_name = table_name;
-                })
+        http_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", airtable_pat);
+        // http_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", api_key);
+        string url = search
+                // .With(s =>
+                // {
+                //     // s.base_id = base_id;
+                //     // s.table_name = table_name;
+                // })
                 .AsQuery()
-            );
+            // .Dump("Full query:>>")
+            ;
+        Console.WriteLine("url:>> " + url);
+        var response = await http_client.GetAsync(url);
+
         if (debug)
             response.Dump("raw response");
 
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
-        // Console.WriteLine("Here's the raw JSON:");
-        // Console.WriteLine(json);
+        Console.WriteLine("Here's the raw JSON:");
+        Console.WriteLine(json);
 
-        var list = new RecordList<T>(json);
-        var (_, records) = new RecordList<T>(json);
+        // var list = new RecordList<T>(json);
+        // var (_, records) = new RecordList<T>(json);
+
+        var records = GetRecordsFromJson<T>(json);
+        return records;
+    }
+
+    private List<T> GetRecordsFromJson<T>(string json = "{}")
+    {
+        JObject search = JObject.Parse(json);
+
+        // get JSON result objects into a list
+        List<JToken> tokens = search["records"]
+            .Children()
+            // .Dump("children")
+            ["fields"]
+            // .Dump("fields children")
+            .ToList();
+
+
+        // serialize JSON results into .NET objects
+        var records = new List<T>();
+
+        foreach (JToken token in tokens)
+        {
+            token.Dump(nameof(token));
+            // JToken.ToObject is a helper method that uses JsonSerializer internally
+            T instance = token.ToObject<T>();
+            instance.Dump(nameof(instance));
+            records.Add(instance);
+        }
+
         return records;
     }
 }

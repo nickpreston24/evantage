@@ -1,0 +1,114 @@
+@using CodeMechanic.Types
+@model List<LogRecord>
+@{
+    var rows = Model;
+}
+
+<section id="splunky_logs" class="vertical-padding">
+    <div class="overflow-x-auto wrapper">
+        <b>Rows: @rows.Count</b>
+
+        <table class="table w-full">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Table</th>
+                <th>Exception</th>
+                <th>Diff</th>
+                <th>Params</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var row in rows.Take(100))
+            {
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" class="checkbox"/>
+                        </label>
+                    </th>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="avatar">
+                                <div class="bg-neutral text-neutral-content rounded-full w-12">
+                                    <span class="text-3xl">@row.table_name.ToUpperInvariant()[0]</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="font-bold text-secondary">@row.table_name</div>
+                                <div class="text-sm opacity-50 text-primary">@row.database_name</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @row.operation_name
+                        <br/>
+                        <span class="badge badge-ghost badge-sm">@row.exception_message</span>
+                    </td>
+                    <td>@row.diff</td>
+                    <td>@row.sql_parameters</td>
+                    <th x-data="{show_details = false}">
+                        <button class="btn btn-ghost btn-xs" x-on:click="show_details=!show_details">
+                            Details
+                        </button>
+                    </th>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>
+<style>
+    .wrapper {
+        width: min(900px, 100% - 3rem);
+        /*margin-inline: auto;*/
+    }
+    table {
+        border-collapse: collapse;
+    }
+    
+    th,td {
+        padding: 1rem;
+        /*background: #002f4a;*/
+    }
+    
+    caption,th {
+        text-align: left;
+    }
+    
+    caption {
+        /*background: hsl(0, 0%, 0%);*/
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    
+     @@media(max-width: 650px) {
+        th {
+            display: none;
+        }
+        td {
+            display: block;
+            padding: 0.75rem 1rem;
+        }
+        
+        td:first-child {
+            padding-top: 2rem;
+        }
+        td:last-child {
+            padding-bottom: 2rem;
+        }
+        
+        td::before {
+            content: attr(data-cell) ": ";
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+        
+        /*td:nth-of-type(1)::before {*/
+        /*    content: "retailer"*/
+        /*}*/
+     }
+        
+</style>

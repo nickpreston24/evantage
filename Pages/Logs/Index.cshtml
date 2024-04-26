@@ -1,0 +1,18 @@
+@page
+@model evantage.Pages.Logs.Index
+
+@{
+}
+
+<div>
+    <section
+        hx-get
+        hx-trigger="load"
+        hx-page-handler="AllLogs"
+        hx-target="#all_logs">
+        <label>
+            All logs, Sorted by created_at:
+        </label>
+        <span id="all_logs"></span>
+    </section>
+</div>

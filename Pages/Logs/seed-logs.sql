@@ -3,6 +3,7 @@ create table logs
 (
     id               int      NOT NULL AUTO_INCREMENT, -- not very critical, but nice for tracking how many rows and what we've removed.
     # WHAT happened?
+    exception_mesage   text,
     exception_text   text,                             -- stack traces, exception messages, etc.
     sql_parameters   json,                             -- Records what params were passed so we can figure out what went wrong.
     payload          json,                             -- what JSON if any was passed thru the API on the way to our CRUD operation?

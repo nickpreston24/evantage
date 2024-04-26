@@ -2,6 +2,7 @@
 @model List<LogRecord>
 @{
     var rows = Model;
+    int limit = 100;
 }
 
 <section id="splunky_logs" class="vertical-padding">
@@ -20,9 +21,9 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var row in rows.Take(100))
+            @foreach (var row in rows.Take(limit))
             {
-                <tr>
+                <tr x-data="{show_details: false}">
                     <th>
                         <label>
                             <input type="checkbox" class="checkbox"/>
@@ -32,27 +33,28 @@
                         <div class="flex items-center gap-3">
                             <div class="avatar">
                                 <div class="bg-neutral text-neutral-content rounded-full w-12">
-                                    <span class="text-3xl">@row.table_name.ToUpperInvariant()[0]</span>
+                                    <span class="text-3xl">@row.database_name.ToUpperInvariant()[0]</span>
                                 </div>
                             </div>
                             <div>
-                                <div class="font-bold text-secondary">@row.table_name</div>
-                                <div class="text-sm opacity-50 text-primary">@row.database_name</div>
+                                <div class="font-bold text-secondary">@row.operation_name</div>
+                                <div class="text-sm opacity-50 text-primary">@row.table_name</div>
                             </div>
                         </div>
                     </td>
                     <td>
-                        @row.operation_name
+                        @row.exception_message
                         <br/>
-                        <span class="badge badge-ghost badge-sm">@row.exception_message</span>
+                        <span class="badge badge-ghost badge-sm">@row.exception_severity</span>
                     </td>
-                    <td>@row.diff</td>
-                    <td>@row.sql_parameters</td>
-                    <th x-data="{show_details = false}">
+                    <th>
                         <button class="btn btn-ghost btn-xs" x-on:click="show_details=!show_details">
                             Details
                         </button>
+                        <td x-text="show_details" x-show="show_details">@row.exception_message</td>
                     </th>
+                    <td>@row.diff</td>
+                    <td>@row.sql_parameters</td>
                 </tr>
             }
             </tbody>

@@ -186,7 +186,7 @@ public sealed class LogRecord
     public string breadcrumb { get; set; } = string.Empty;
     public string table_name { get; set; } = string.Empty;
     public string server_name { get; set; } = string.Empty;
-    public string database_name { get; set; } = string.Empty;
+    public string database_name { get; set; } = "railway"; // = string.Empty;
     public string application_name { get; set; } = string.Empty;
     public string modified_by { get; set; } = string.Empty;
     public string created_by { get; set; } = string.Empty;

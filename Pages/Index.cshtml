@@ -59,14 +59,14 @@
         @*     ... *@
         @* </div> *@
         
-        <h2>SCRIPTS</h2>
-        <div hx-get
-             hx-trigger="load"
-             hx-page="Index"
-             hx-swap="innerHTML"
-             hx-page-handler="AllScripts">
-            ...
-        </div>
+        @* <h2>SCRIPTS</h2> *@
+        @* <div hx-get *@
+        @*      hx-trigger="load" *@
+        @*      hx-page="Index" *@
+        @*      hx-swap="innerHTML" *@
+        @*      hx-page-handler="AllScripts"> *@
+        @*     ... *@
+        @* </div> *@
         <div x-transition x-show="show_leads_form" class="w-full">
             <partial x-show="show_leads_form" name="Leads/Airtable/Forms/_AddLead"></partial>
         </div>

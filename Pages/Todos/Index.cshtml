@@ -2,9 +2,14 @@
 @using CodeMechanic.Todoist
 @model Index
 
-<div x-data="setup_todoist()" class="items-center justify-center flex flex-col">
+<div x-data="setup_todoist()"
+     class="items-center justify-center flex flex-col">
 
-    <ul class="menu menu-horizontal lg:menu-horizontal bg-transparent rounded-box opacity-50">
+    @* <pre x-text="localStorage.getItem('blade_state')"></pre> *@
+    @* x-effect="localStorage.setItem('blade_state', blades);" *@
+    <ul
+
+        class="menu menu-horizontal lg:menu-horizontal bg-transparent rounded-box opacity-50">
 
         <span :class="blades.full_day.classname" data-tip="A Full Day">
             <button @@click="blades.full_day.show = !blades.full_day.show" class="btn btn-md ">
@@ -110,7 +115,7 @@
             x-transition
             x-show="blades.projects_breakdown.show"
             x-collapse
-            class="bento bento-shadow-blue grid grid-rows-auto grid-cols-1 gap-4 col-span-2 md:col-span-1">
+            class="bento bento-shadow-blue grid grid-rows-auto lg:grid-cols-2 grid-cols-1 gap-4 lg:col-span-2 sm:col-span-1">
             @foreach (var project in @Model.todoist_stats.TodoistProjects)
             {
                 var tasks_related_to_project = @Model.todoist_stats.FindTodosByProject(project);
@@ -161,7 +166,11 @@
 </div>
 
 <script>
-let special_hover_border = 'tooltip border-2 rounded-lg border-info'
+    let special_hover_border = 'tooltip border-2 rounded-lg border-info'
+    let previous_state = localStorage.getItem('blade_state');
+    // !previous_state ??
+    //  console.log('prev blade state:>> ', previous_state); // todo: save blade states on toggle events, then have it load into blades obj.
+    
     function setup_todoist() {
         return {
             blades: {
@@ -171,6 +180,10 @@ let special_hover_border = 'tooltip border-2 rounded-lg border-info'
                 readme_table: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},    
                 full_day: {show:true, get classname() {return !this.show? 'tooltip':special_hover_border}} 
             }
+            // ,
+            // save_blades(){
+            //     localStorage.setItem('blade_state', this.blades);
+            // }
         }
     }
 </script>

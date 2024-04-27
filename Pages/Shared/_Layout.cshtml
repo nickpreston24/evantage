@@ -26,7 +26,9 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>
 
     <!-- Alpine Plugins -->
-    <script defer src='https://cdn.jsdelivr.net/npm/@@alpinejs/persist@3.x.x/dist/cdn.min.js'></script>
+    @* src='https://cdn.jsdelivr.net/npm/@@alpinejs/persist@3.x.x/dist/cdn.min.js' *@
+    <script defer
+            asp-fallback-src="~/lib/@@alpinejs"></script>
     <script src="https://unpkg.com/htmx.org@latest/dist/ext/alpine-morph.js"></script>
     <script defer src="https://unpkg.com/@@alpinejs/morph@3.x.x/dist/cdn.min.js"></script>
 

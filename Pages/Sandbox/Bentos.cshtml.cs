@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace evantage.Pages.Leads;
+namespace evantage.Pages.Sandbox;
 
-public class Index : PageModel
+public class Bentos : PageModel
 {
     public void OnGet()
     {
+        
     }
 }

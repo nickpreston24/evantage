@@ -1,0 +1,18 @@
+@model evantage.Pages.Components.HydroBento
+
+<div class="grid grid-cols-2 grid-rows-auto gap-2">
+    @Model.Slot()
+</div>
+
+<style>
+    .bento {
+        /*Src: https://tailwindcss.com/docs/border-radius*/
+        border-radius: 1.5rem;
+        border-color: #444444;
+        box-shadow: #49ff18;
+    }
+    .bento-shadow-blue {
+      box-shadow: 0 .25rem .75rem #00caff;
+    }
+
+</style>

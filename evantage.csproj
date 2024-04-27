@@ -34,7 +34,7 @@
 
     <ItemGroup>
         <PackageReference Include="Bogus" Version="35.5.0" />
-<!--        <PackageReference Include="CodeMechanic.Async" Version="1.0.1" />-->
+        <PackageReference Include="CodeMechanic.Async" Version="1.0.1" />
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.2" />
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.4" />
@@ -51,6 +51,11 @@
 
     <ItemGroup>
         <Folder Include="Styles" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Services\Todos\Index.cshtml" />
     </ItemGroup>
 
 </Project>

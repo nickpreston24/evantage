@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace evantage.Pages.Leads;
+namespace evantage.Pages.Todo;
 
-public class Index : PageModel
+public class Todoist : PageModel
 {
     public void OnGet()
     {
+        
     }
 }

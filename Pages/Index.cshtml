@@ -1,16 +1,16 @@
 ﻿@page
-@using evantage.Services
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
 
-@* @inject IInMemoryGraphService graph_service *@
 @{
     ViewData["Title"] = "Home page";
-    // var commission = Model.Commission ?? new Commissions();
-    // var todos = new List<Todoist>();
 }
 
-
 <div>
-    <h1>blah</h1>
+    <hydro-hero>
+        <slot name="title">Welcome Back!</slot>
+        @* <slot name="message">Pick an option</slot> *@
+        @* <slot name="button">hello thar</slot> *@
+
+        
+    </hydro-hero>
 </div>

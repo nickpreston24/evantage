@@ -1,5 +1,5 @@
 .env
-**.rest
+**/*.rest
 .idea
 node_modules
 wwwroot/lib

@@ -255,3 +255,7 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
 ### Offline Mode
 
 - [ ] run yarn & Test your asp-fallback scripts (htmx, alpinejs, tw, etc.) (be sure to save your wifi password, first)
+
+### To Fix
+
+1. Having a deploy issue right after adding /Logs: [last good commit](https://github.com/nickpreston24/evantage/commit/f49765e39690fec8d6257a84698fb5ead402187c?diff=unified&w=1#diff-16356dd7d493d3f455c053c628f0ea4266db867dc32218d24dba0422b1f16182)

@@ -3,7 +3,10 @@ using CodeMechanic.Airtable;
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
+using CodeMechanic.Todoist;
 using evantage.Services;
+using IMarkdownService = evantage.Services.IMarkdownService;
+using MarkdownService = CodeMechanic.RazorHAT.Services.MarkdownService;
 
 var policyName = "_myAllowSpecificOrigins";
 
@@ -26,15 +29,14 @@ builder.Services.AddCors(options =>
 // Load and inject .env files & values
 DotEnv.Load();
 
-
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
-builder.Services.AddSingleton<evantage.Services.IMarkdownService, evantage.Services.MarkdownService>();
+builder.Services.AddSingleton<IMarkdownService, evantage.Services.MarkdownService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
-builder.Services.AddSingleton<evantage.Services.IRazorRoutesService2, evantage.Services.RazorRoutesService2>();
+builder.Services.AddSingleton<IRazorRoutesService2, RazorRoutesService2>();
 builder.Services.AddSingleton<IDownloadImages, ImageDownloader>();
-
 builder.Services.AddSingleton<IAirtableServiceV2, AirtableServiceV2>();
+builder.Services.AddSingleton<ITodoistService, TodoistService>();
 
 builder.Services.AddControllers();
 

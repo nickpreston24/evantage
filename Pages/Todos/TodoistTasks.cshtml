@@ -1,0 +1,17 @@
+<div
+    x-transition
+    hx-get
+    hx-trigger="load"
+    hx-target="#todoist_todos"
+    hx-indicator="#todoist_indicator"
+    hx-page-handler="AllTodoistTasks">
+
+    <h1 class="text-lg text-secondary bg-content">Todoist Tasks</h1>
+    <div id="todoist_todos"></div>
+
+    <span id="todoist_indicator"
+          class="htmx-indicator">
+        <label for="">loading todoist tasks...</label>
+        <img alt="bars" src="~/img/bars.svg"/>
+    </span>
+</div>

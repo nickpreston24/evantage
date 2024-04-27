@@ -1,0 +1,150 @@
+@page
+@using CodeMechanic.Todoist
+@model Index
+
+<div x-data="setup_todoist()" class="items-center justify-center flex flex-col">
+
+    <ul class="menu menu-horizontal lg:menu-horizontal bg-transparent rounded-box opacity-50">
+        <button @@click="blades.todos_table.show = !blades.todos_table.show" class="btn btn-md">
+            <span class="text-sm">
+                Todos
+            </span>
+        </button>
+
+        <button @@click="blades.readme_table.show = !blades.readme_table.show" class="btn btn-md">
+            <span class="text-sm">
+                README
+            </span>
+        </button>
+        <button @@click="blades.stats.show = !blades.stats.show" class="btn btn-md">
+            <span class="text-sm">
+                Stats
+            </span>
+
+        </button>
+        <button @@click="blades.projects_breakdown.show = !blades.projects_breakdown.show" class="btn btn-md">
+            <span class="text-sm">
+                Projects
+            </span>
+        </button>
+
+    </ul>
+
+    <hydro-bento>
+        <div x-transition
+             x-show="blades.readme_table.show" class="bento bento-shadow-blue p-4 col-span-2 md:col-span-1">
+            <partial name="TodoistTasks"></partial>
+        </div>
+
+
+        <div x-transition x-show="blades.todos_table.show" class="bento  p-4 bento-shadow-blue col-span-2 md:col-span-1">
+            <partial name="ReadmeTasks"></partial>
+        </div>
+
+        <section
+            x-transition
+            x-collapse
+            x-show="blades.stats.show"
+            class="bento bento-shadow-blue card bg-base-100 shadow-xl col-span-2 md:col-span-1">
+            <div class="border-primary border-l-accent">
+                <div class="hero">
+                    <div class="hero-content text-center">
+                        <div class="max-w-md">
+                            <h1 class="text-5xl text-accent font-bold">Your Goals</h1>
+                            <p class="py-6 text-secondary">
+                                Here's how you're doing overall:
+                            </p>
+
+                            <div class="stats lg:stats-horizontal stats-vertical shadow">
+
+                                <div class="stat place-items-center">
+                                    <div class="stat-title">Total Tasks</div>
+                                    <div class="stat-value">@Model.all_tasks_count</div>
+                                    @* <div class="stat-desc">From January 1st to February 1st</div> *@
+                                </div>
+
+                                <div class="stat place-items-center">
+                                    <div class="stat-title">Projects</div>
+                                    <div class="stat-value text-secondary">@Model.project_total_count</div>
+                                    @* <div class="stat-desc text-secondary">↗︎ 40 (2%)</div> *@
+                                </div>
+
+                                <div class="stat place-items-center">
+                                    <div class="stat-title">Tasks Completed</div>
+                                    <div class="stat-value">@Model.completed_tasks_count</div>
+                                    <div class="stat-desc text-ghost font-italic">(this week)</div>
+                                    @* <div class="stat-desc">↘︎ 90 (14%)</div> *@
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section
+            x-transition
+            x-show="blades.projects_breakdown.show" x-collapse class="bento bento-shadow-blue grid grid-rows-auto grid-cols-1 gap-4 col-span-2 md:col-span-1">
+            @foreach (var project in @Model.todoist_stats.TodoistProjects)
+            {
+                var tasks_related_to_project = @Model.todoist_stats.FindTodosByProject(project);
+                var completed_tasks = @Model.todoist_stats.FindCompletedTodos(project);
+                // var done_percentage = MathExtensions.GetPercentChange(completed_tasks_count, related_tasks.Count);
+
+                <div class="card w-full bg-base-100 shadow-xl">
+
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            @project.name
+                            <div class="badge badge-secondary">@project.view_style</div>
+                        </h2>
+
+                        <div class="stats stats-vertical border-2 border-accent-content/10">
+                            <div class="stat">
+                                <div class="stat-figure text-secondary">
+
+                                    <div class="radial-progress" style="--value:80;" role="progressbar">
+                                        @* @done_percentage % *@
+                                    </div>
+                                </div>
+                                <div class="stat-value">@completed_tasks.Count</div>
+                                <div class="stat-title">Tasks done</div>
+                                <div class="stat-desc text-lg text-primary">
+                                    @tasks_related_to_project.Count total tasks in this project.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @* <p>@project.view_style</p> *@
+                        @* <div class="card-actions justify-end"> *@
+                        @*     <div class="badge badge-outline">Fashion</div> *@
+                        @*     <div class="badge badge-outline">Products</div> *@
+                        @* </div> *@
+                    </div>
+                </div>
+        @* <li>Name: @project.name</li> *@
+        @* <li>Name: @project.color</li> *@
+        @* <li>Name: @project.id</li> *@
+            }
+        </section>
+
+
+    </hydro-bento>
+
+</div>
+
+<script>
+    function setup_todoist() {
+        return {
+            blades: {
+                stats: {show:true},     
+                projects_breakdown: {show:false},     
+                todos_table: {show:false},     
+                readme_table: {show:false},     
+            }
+        }
+    }
+</script>

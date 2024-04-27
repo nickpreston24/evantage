@@ -1,0 +1,21 @@
+<div
+    x-transition
+    class=""
+    hx-get
+    hx-trigger="load"
+    hx-target="#projects"
+    hx-page="Index"
+    hx-indicator="#projects_indicator"
+    hx-page-handler="AllProjectTodos">
+
+    <h1 class="text-lg text-secondary bg-content">Tasks from README.md</h1>
+    <div id="projects">
+
+    </div>
+
+    <span id="projects_indicator" class="htmx-indicator">
+        <label for="">loading markdown projects...</label>
+        <img alt="bars" src="~/img/bars.svg"/>
+    </span>
+
+</div>

@@ -5,4 +5,6 @@ public class TodoistStats
     public List<TodoistProject> TodoistProjects { get; set; } = new();
     public List<TodoistTask> TodoistTasks { get; set; } = new();
     public List<CompletedTodoistTask> CompletedTasks { get; set; } = new();
+
+    public List<TodoistComment> Comments = new();
 }

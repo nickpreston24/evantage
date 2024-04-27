@@ -1,0 +1,52 @@
+@using CodeMechanic.Diagnostics
+@using System.Text
+@using CodeMechanic.Types
+@* @model List<CodeMechanic.Todoist.TodoistTask> *@
+@model Index
+@{
+    int limit = 1000;
+    var rows = @Model.todoist_stats.TodoistTasks
+        .If(@Model.sort_by_priority, tasks => tasks
+            .OrderByDescending(x => x.priority))
+        .ToList()
+        // .OrderByDescending(x => x.priority.If(true))
+        ;
+    // var rows = Model.Take(limit).ToList();
+    // rows.Dump("rowss");
+}
+
+<div class="overflow-x-auto wrapper">
+    <b>Rows: @rows.Count</b>
+
+    <input
+        disabled
+        type="text"
+        id="query"
+        autocomplete="off"
+        hx-get
+        hx-page="Index"
+        hx-page-handler="Search"
+        asp-for="Query"
+        hx-target="#todoist_results"
+        hx-trigger="keyup changed delay:250ms"
+        placeholder="Search"
+        class="form-control"
+        aria-describedby="search-addon">
+
+    <table class="table w-full">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Task</th>
+            <th>
+                <span>Priority /</span>
+                <br/>
+                <span>Labels</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody id="todoist_results">
+        <partial name="_TodoistRows" model="@rows"/>
+        </tbody>
+    </table>
+</div>

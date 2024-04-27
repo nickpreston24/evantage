@@ -32,12 +32,11 @@
 
     <hydro-bento>
         <div x-transition
-             x-show="blades.readme_table.show" class="bento bento-shadow-blue p-4 col-span-2 md:col-span-1">
+             x-show="blades.todos_table.show" class="bento bento-shadow-blue p-4 col-span-2">
             <partial name="TodoistTasks"></partial>
         </div>
 
-
-        <div x-transition x-show="blades.todos_table.show" class="bento  p-4 bento-shadow-blue col-span-2 md:col-span-1">
+        <div x-transition x-show="blades.readme_table.show" class="bento  p-4 bento-shadow-blue col-span-2 md:col-span-1">
             <partial name="ReadmeTasks"></partial>
         </div>
 
@@ -86,7 +85,9 @@
 
         <section
             x-transition
-            x-show="blades.projects_breakdown.show" x-collapse class="bento bento-shadow-blue grid grid-rows-auto grid-cols-1 gap-4 col-span-2 md:col-span-1">
+            x-show="blades.projects_breakdown.show"
+            x-collapse
+            class="bento bento-shadow-blue grid grid-rows-auto grid-cols-1 gap-4 col-span-2 md:col-span-1">
             @foreach (var project in @Model.todoist_stats.TodoistProjects)
             {
                 var tasks_related_to_project = @Model.todoist_stats.FindTodosByProject(project);
@@ -140,9 +141,9 @@
     function setup_todoist() {
         return {
             blades: {
-                stats: {show:true},     
+                stats: {show:false},     
                 projects_breakdown: {show:false},     
-                todos_table: {show:false},     
+                todos_table: {show:true},     
                 readme_table: {show:false},     
             }
         }

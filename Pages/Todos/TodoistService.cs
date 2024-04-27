@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Curl;
 using CodeMechanic.Diagnostics;
+using CodeMechanic.Types;
 using Newtonsoft.Json;
 
 namespace CodeMechanic.Todoist;
@@ -15,7 +16,7 @@ public class TodoistService : ITodoistService
     private readonly string projectDirectory;
     private readonly string env_path;
     private readonly string api_key;
-    public bool debug_mode { get; set; } = false;
+    public bool debug_mode { get; set; } = true;
 
     private readonly MemoryCache cache;
 
@@ -45,7 +46,7 @@ public class TodoistService : ITodoistService
         cache.Add(cacheKey, cachedData, cachePolicy);
     }
 
-    
+
     /// <summary>
     /// Durations are parsed by regex in a mock 'natural language'
     /// </summary>
@@ -82,6 +83,35 @@ public class TodoistService : ITodoistService
         // Todo: save via api.
 
         throw new NotImplementedException(nameof(SetDurationForTodo));
+    }
+
+    public async Task<List<TodoistComment>> GetTaskComments(string task_id)
+    {
+        string curl = $"""
+            curl "https://api.todoist.com/rest/v2/comments?task_id={ task_id}  " \
+                -H "Authorization: Bearer $token"
+        """ ;
+
+        curl = Regex.Replace(
+            curl
+            , @"Bearer \$?\w+"
+            , "Bearer " + api_key
+        );
+
+        // Console.WriteLine("Curl text :>> " + curl);
+
+        var options = //GetClient(curl)
+                curl.Extract<CurlOptions>(CurlRegex.GET.compiled)
+                    .FirstOrDefault()
+                    .Dump("curl bits")
+            ;
+
+        var comments_json = await GetContentAsync(options.uri, options.bearer_token);
+        Console.WriteLine("json\n" + comments_json);
+
+        var all_comments = comments_json.Deserialize<TodoistComment>();
+
+        return all_comments;
     }
 
     public async Task<TodoistStats> GetProjectsAndTasks()
@@ -137,6 +167,11 @@ public class TodoistService : ITodoistService
         return stats;
     }
 
+    public Task<TodoistTask> UpdateTask(TodoistTask task)
+    {
+        throw new NotImplementedException();
+    }
+
     private TodoistStats CreateStats(string[] responses)
     {
         Console.WriteLine("responses passed in :>> " + responses.Length);
@@ -179,8 +214,8 @@ public class TodoistService : ITodoistService
     {
         var curlRegex = get_regex_from_curl(curl);
         var regex = CurlRegex.Find(curlRegex);
-        // regex.Dump(nameof(regex));
-        // Console.WriteLine(curl);
+        regex.Dump(nameof(regex));
+        Console.WriteLine(curl);
 
         var curl_options = curl.Extract<CurlOptions>(regex);
 
@@ -189,7 +224,6 @@ public class TodoistService : ITodoistService
 
         return curl_options;
     }
-
 
     private CurlRegex get_regex_from_curl(string curl)
     {
@@ -210,6 +244,7 @@ public class TodoistService : ITodoistService
     {
         using HttpClient http = new HttpClient();
         http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer_token);
+        Console.WriteLine(uri);
         var response = await http.GetAsync(uri);
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();

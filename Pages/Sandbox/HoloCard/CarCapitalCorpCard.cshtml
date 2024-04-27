@@ -1,0 +1,116 @@
+@* <link rel="stylesheet" src="./carcapitalcorpcard.css"> *@
+@* <link href="@Url.Content("~/carcapitalcorpcard.css")" rel="stylesheet" type="text/css" /> *@
+@* <link href="@Url.Content("~/css/carcapitalcorpcard.css")" rel="stylesheet" type="text/css" /> *@
+
+@using CodeMechanic.Diagnostics
+@model evantage.Pages.CarCapital.Inventory.Car
+@{
+    var car = Model.Dump("current model");
+}
+
+<div class="screen">
+    @* <div class="screen-image" style="background-image: uri('https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80');" ></div> *@
+    
+    <div class="screen-image" style="background-image: uri(@car.Image_Url)" ></div>
+    
+    <div class="screen-overlay"></div>
+    <div class="screen-content">
+        <i class="screen-icon fa-brands fa-codepen"></i>
+        <div class="screen-user">
+            <span class="name" data-value="@car.Name">@car.Name</span>
+            <a class="link" href="https://carcapital.com/" target="_blank">Car Capital</a>
+        </div>
+    </div>
+</div>
+
+<div x-show="false" id="blob"></div>
+<div x-show="false" id="blur"></div>
+
+<div id="links">
+    <div x-show="false" class="meta-link">
+        <span class="label">Futuristic Card Effect</span>
+        <span class="dot">·</span>
+        <a class="source" href="https://www.sprite.com/zerolimits" target="_blank">
+            <i class="fa-solid fa-link"></i>
+        </a>
+        <span class="dot">·</span>
+        <a class="youtube" href="https://youtu.be/jMVhxBB3l0w" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    </div>
+
+    <div x-show="false" class="meta-link">
+        <span class="label">Glowy Blob Effect</span>
+        <span class="dot">·</span>
+        <a class="source" href="https://www.poppr.be" target="_blank">
+            <i class="fa-solid fa-link"></i>
+        </a>
+        <span class="dot">·</span>
+        <a class="youtube" href="https://youtu.be/kySGqoU7X-s" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    </div>
+
+    <div x-show="false" class="meta-link">
+        <span class="label">Text Effect</span>
+        <span class="dot">·</span>
+        <a class="source" href="https://kprverse.com" target="_blank">
+            <i class="fa-solid fa-link"></i>
+        </a>
+        <span class="dot">·</span>
+        <a class="youtube" href="https://youtu.be/W5oawMJaXbU" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+/* -- Glow effect -- */
+
+const blob = document.getElementById("blob");
+
+window.onpointermove = event => { 
+  const { clientX, clientY } = event;
+  
+  blob.animate({
+    left: `${clientX}px`,
+    top: `${clientY}px`
+  }, { duration: 3000, fill: "forwards" });
+}
+
+/* -- Text effect -- */
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+let interval = null;
+
+const screen = document.querySelector(".screen"),
+      name = document.querySelector(".name");
+
+screen.onmouseenter = event => {  
+  let iteration = 0;
+  
+  clearInterval(interval);
+  
+  interval = setInterval(() => {
+    name.innerText = name.innerText
+      .split("")
+      .map((letter, index) => {
+        if(index < iteration) {
+          return name.dataset.value[index];
+        }
+      
+        return letters[Math.floor(Math.random() * 26)]
+      })
+      .join("");
+    
+    if(iteration >= name.dataset.value.length){ 
+      clearInterval(interval);
+    }
+    
+    iteration += 1 / 3;
+  }, 30);
+}
+
+</script>

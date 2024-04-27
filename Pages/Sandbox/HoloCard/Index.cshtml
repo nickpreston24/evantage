@@ -1,0 +1,82 @@
+@page
+@using CodeMechanic.Diagnostics
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model evantage.Pages.CarCapital.Inventory.Index
+@{
+    var car_search = Model.Search_Results.Dump("current search");
+    var total_cars = Model.AllCarInventory.Dump("all cars in model").Count;
+}
+
+<link href="@Url.Content("~/css/carcapitalcorpcard.css")" rel="stylesheet" type="text/css"/>
+
+<div x-data='setup()'>
+    <form hx-post hx-page="Index" hx-page-handler="Validate" hx-swap="outerHTML"
+          class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+        <div class="mb-3">
+            <label class="form-label" asp-for="@car_search.Name"></label>
+            <input type="text" class="form-control" asp-for="@car_search.Name">
+            <div class="invalid-feedback">
+                <span asp-validation-for="@car_search.Name"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="@car_search.Cost"></label>
+            <input type="text" class="form-control" asp-for="@car_search.Cost">
+            <div class="invalid-feedback">
+                <span asp-validation-for="@car_search.Cost"></span>
+            </div>
+        </div>
+
+        <div :class="grid_class">
+
+            <template x-for="[key, value] of Object.entries(options)">
+                <div class="mb-3">
+                    <label class="form-label" :for="key"></label>
+                    <span x-text="key">This is for debugging only and can be omitted</span>
+                    <input type="checkbox" class="form-control toggle toggle-accent" :for="key">
+                </div>
+            </template>
+        </div>
+
+        <div class="control">
+            <button id="submitButton" type="submit" class="btn btn-primary">
+                <span class="htmx-indicator">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="visually-hidden">Loading...</span>
+                </span>
+                Submit
+            </button>
+
+            @Html.AntiForgeryToken()
+        </div>
+
+    </form>
+
+    <h3>@total_cars Cars on lot</h3>
+
+</div>
+
+<script>
+    const categories = [
+        'Chinese', 'Faith', 'Catholicism', 'Letters', 'French', 'Proverbs'
+    ]
+
+    function setup() {
+        return {
+            title: "Teachings",
+            selected_category: "Chinese",
+            categories: categories,
+            options: {
+                sort_by_make: true,
+                sort_by_model: true,
+                sort_by_cost: true,
+                sort_by_name: false,
+            },
+            get grid_class() {
+                let cols = this.options ? this.options.length : 2;
+                return `grid grid-cols-${cols}`;
+            }
+        }
+    }
+</script>

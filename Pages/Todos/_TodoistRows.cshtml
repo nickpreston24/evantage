@@ -1,3 +1,4 @@
+@using evantage.Pages.Todo
 @model List<CodeMechanic.Todoist.TodoistTask>
 @{
     var rows = Model;
@@ -20,7 +21,7 @@
                 <div>
                     <div class="tooltip" data-tip="Visit">
                         <a target="_blank" href="@row.url">
-                            <div class="font-bold text-secondary truncate">@row.content</div>
+                            <div class="font-bold text-secondary truncate">@row.content.Trim()</div>
                         </a>
                     </div>
                     <p class="text-sm opacity-50 text-primary">@row.project_id</p>
@@ -29,7 +30,7 @@
         </td>
         <td>
             <label>Priority:</label>
-            <span>@row.priority</span>
+            <span>@row.priority.FixPriorityBug()</span>
             <br/>
             @foreach (var label in @row.labels)
             {

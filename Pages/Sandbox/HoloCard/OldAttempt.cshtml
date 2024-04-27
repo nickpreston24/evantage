@@ -1,0 +1,158 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model evantage.Pages.CarCapital.Inventory.OldAttempt;
+@{
+    var car_search = Model.CarSearch;
+}
+
+<div x-data='setup()'>
+
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+
+            @* Right half *@
+            <div class="text-center lg:text-left">
+                <h1 class="text-5xl font-bold">Search now!</h1>
+                <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+            </div>
+
+            @* Left half *@
+            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                <div class="card-body">
+
+                    <form
+                        hx-post
+                        hx-page-handler="Validate"
+                        hx-swap="outerHTML"
+                        class="form-horizontal needs-validation" _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="@car_search.Name"></label>
+                            <input type="text" class="form-control" asp-for="@car_search.Name">
+                            <div class="invalid-feedback">
+                                <span asp-validation-for="@car_search.Name"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="@car_search.Cost"></label>
+                            <input type="text" class="form-control" asp-for="@car_search.Cost">
+                            <div class="invalid-feedback">
+                                <span asp-validation-for="@car_search.Cost"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="tooltip" :data-tip="show ? 'Hide options' : 'Show all options!'">
+                            <button class="btn btn-accent" @@click="show =! show" x-text="show ? 'Hide' : 'Show' ">...</button>
+                        </div>
+
+                        <div x-show="show" class="join join-vertical justify-start flex flex-col">
+
+                            <div class="tooltip" data-tip="I'm a tooltip! :D">
+                                <markdown x-show="options.length > 0"
+                                          data-tippy-content="I'm a tooltip! :D">
+                                    # Hello there!, you can choose search options below
+                                </markdown>
+                            </div>
+
+                            <template x-cloak x-for="[key, value] of Object.entries(options)">
+
+                                <button
+                                    x-show="true"
+                                    x-on:click="option[key]=!value"
+                                    class="btn btn-primary join-item shadow-md shadow-secondary-400/50"
+                                    :class="{'border-2 border-secondary btn-ghost': !value, 'border-2 border-accent': value }">
+                                    <label
+                                        :data-tippy-content="key"
+                                        x-text="key"
+                                        class="form-label badge badge-sm"
+                                        :asp-for='key'>
+                                    </label>
+
+                                    <input x-bind:name='key'
+                                           x-bind:value='value'
+                                           x-bind:checked="value"
+                                           type="checkbox"
+                                           :asp-for="key"
+                                           :data-tippy-content="key"
+                                           class="form-control toggle toggle-primary">
+                                </button>
+
+                                <div
+                                    x-show="show">
+
+                                    <button
+                                        @@click='value=!value'
+                                        class="swap btn btn-primary flex-grow  ">
+
+
+                                        <div class="items-center">
+                                            <span class="" x-text="key"></span>
+
+                                            <!-- this hidden checkbox controls the state -->
+                                            <label class="swap swap-flip text-lg  flex-grow-0 flex-shrink-0">
+
+                                                <!-- this hidden checkbox controls the state -->
+                                                <input
+                                                    :checked="value"
+                                                    type="checkbox"/>
+
+                                                <div class="swap-on">✔️</div>
+                                                <div class="swap-off">❌</div>
+                                            </label>
+
+                                        </div>
+
+                                    </button>
+
+                                </div>
+
+                            </template>
+
+                        </div>
+
+
+                        <div class="control">
+                            <button id="submitButton" type="submit" class="btn btn-primary">
+                                <span class="htmx-indicator">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Loading...</span>
+                                </span>
+                                Submit
+                            </button>
+
+                            @Html.AntiForgeryToken()
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    var makes = [
+        'Chinese', 'Faith', 'Catholicism', 'Letters', 'French', 'Proverbs'
+    ]
+
+    function setup() {
+        return {
+            car_model: "Model S",
+            selected_make: "Telsa",
+            show: true,
+            makes: makes,
+            options: {
+                sort_by_car_model: true,
+                sort_by_cost: true,
+                sort_by_make: false               
+            },
+            get grid_class() {
+                let cols = this.options ? this.options.length : 5;
+                return `grid grid-cols-${cols}`;
+            }
+        }
+    }
+</script>

@@ -80,8 +80,9 @@
         <slot name="corner">
             @* <div class="dropdown dropdown-end"> *@
             <div tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                <div>
+                <div x-transition>
                     <select
+                        x-transition
                         x-model="selected_theme"
                         x-effect="console.log(selected_theme); localStorage.setItem('theme', selected_theme)"
                         class="select select-accent w-auto max-w-xs">
@@ -180,7 +181,7 @@
             </a>
 
             <a href="https://todoist.com" target="_blank">
-                <svg width="150" height="auto" viewBox="0 0 746 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <svg width="150" height="24" viewBox="0 0 746 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
                     <title>Todoist_Developer</title>
                     <desc>Created with Sketch.</desc>

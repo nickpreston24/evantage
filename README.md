@@ -259,3 +259,13 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
 ### To Fix
 
 1. Having a deploy issue right after adding /Logs: [last good commit](https://github.com/nickpreston24/evantage/commit/f49765e39690fec8d6257a84698fb5ead402187c?diff=unified&w=1#diff-16356dd7d493d3f455c053c628f0ea4266db867dc32218d24dba0422b1f16182)
+
+### side by side / Bugs Fixed page
+
+1. Create a /bugs/fixed collage page.  Simple grid or bento of your best bug fixes.
+2. Create a /porfolio path?
+3. Make a side-by-side with your code vs their code, showing your fix.  This can be screengrabs like your Todoist fixes, mockups of stuff from old jobs, etc.  stash sidebyside screenies under /img.
+
+### Portfolio page
+1. Create a scrolling, virtual resume that takes users through a timeline, describing what you do and where you're at now.
+2. 

@@ -9,21 +9,21 @@ namespace CodeMechanic.Diagnostics;
 public static class DiagnosticExtensions
 {
     // TODO: Move to CodeMechanic.Types lib if you can.
-    public static bool OverridesToString(this object v)
-    {
-        return v.ToString() != v.GetType().ToString();
-    }
+    // public static bool OverridesToString(this object v)
+    // {
+    //     return v.ToString() != v.GetType().ToString();
+    // }
 
-    public static void Print(params object[] items)
-    {
-        foreach (var item in items)
-        {
-            if (item.OverridesToString())
-                Console.WriteLine(item);
-            else
-                item.Dump();
-        }
-    }
+    // public static void Print(params object[] items)
+    // {
+    //     foreach (var item in items)
+    //     {
+    //         if (item.OverridesToString())
+    //             Console.WriteLine(item);
+    //         else
+    //             item.Dump();
+    //     }
+    // }
 
     public static T QuickWatch<T>(this Func<T> fn, string message = "quick watch :>> ")
     {

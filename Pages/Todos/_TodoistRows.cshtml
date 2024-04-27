@@ -20,7 +20,7 @@
                 <div>
                     <div class="tooltip" data-tip="Visit">
                         <a target="_blank" href="@row.url">
-                            <div class="font-bold text-secondary">@row.content</div>
+                            <div class="font-bold text-secondary truncate">@row.content</div>
                         </a>
                     </div>
                     <p class="text-sm opacity-50 text-primary">@row.project_id</p>
@@ -74,3 +74,14 @@
         <td>@row.id</td>
     </tr>
 }
+
+<style>
+    
+    .truncate {
+      width: 250px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+      
+</style>

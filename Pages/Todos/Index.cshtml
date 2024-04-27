@@ -5,29 +5,37 @@
 <div x-data="setup_todoist()" class="items-center justify-center flex flex-col">
 
     <ul class="menu menu-horizontal lg:menu-horizontal bg-transparent rounded-box opacity-50">
-        <button @@click="blades.todos_table.show = !blades.todos_table.show" class="btn btn-md">
-            <span class="text-sm">
-                Todos
-            </span>
-        </button>
+        <span class="tooltip" data-tip="All Todos from Todoist">
+            <button @@click="blades.todos_table.show = !blades.todos_table.show" class="btn btn-md ">
+                <span class="text-sm">
+                    Todos
+                </span>
+            </button>
+        </span>
 
-        <button @@click="blades.readme_table.show = !blades.readme_table.show" class="btn btn-md">
-            <span class="text-sm">
-                README
-            </span>
-        </button>
-        <button @@click="blades.stats.show = !blades.stats.show" class="btn btn-md">
-            <span class="text-sm">
-                Stats
-            </span>
+        <span class="tooltip" data-tip="Todos from Readme.md">
+            <button @@click="blades.readme_table.show = !blades.readme_table.show" class="btn btn-md">
+                <span class="text-sm">
+                    README
+                </span>
+            </button>
+        </span>
 
-        </button>
-        <button @@click="blades.projects_breakdown.show = !blades.projects_breakdown.show" class="btn btn-md">
-            <span class="text-sm">
-                Projects
-            </span>
-        </button>
+        <span class="tooltip" data-tip="Todoist Stats">
+            <button @@click="blades.stats.show = !blades.stats.show" class="btn btn-md">
+                <span class="text-sm">
+                    Stats
+                </span>
 
+            </button>
+        </span>
+        <span class="tooltip" data-tip="List of Todoist Projects">
+            <button @@click="blades.projects_breakdown.show = !blades.projects_breakdown.show" class="btn btn-md">
+                <span class="text-sm">
+                    Projects
+                </span>
+            </button>
+        </span>
     </ul>
 
     <hydro-bento>

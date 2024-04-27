@@ -1,0 +1,59 @@
+@model List<CodeMechanic.Todoist.TodoistTask>
+
+@{
+    var priorities_select = Enumerable.Range(1, 4);
+}
+
+<ul>
+
+    @foreach (var task in Model)
+    {
+        <li class="grid grid-cols-2 gap-2" x-data="{show_updates:false}">
+            <a target="_blank" href="@task.url" class="text-lg text-secondary truncate">
+                @task.content
+            </a>
+
+            <div>
+
+                <button class="btn btn-accent btn-sm" x-on:click="show_updates=!show_updates">Actions</button>
+                <div x-show="show_updates" class="flex flex-col">
+
+                    <div class="form-control">
+                        <label class="cursor-pointer label">
+                            <span class="label-text">Complete</span>
+                            <input type="checkbox" class="checkbox checkbox-accent"/>
+                        </label>
+                    </div>
+
+                    <select class="select select-accent w-full max-w-xs">
+                        <option disabled selected>Choose Priority</option>
+
+                        @foreach (var p in priorities_select)
+                        {
+                            <option>@p</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <details class="text-info">
+                <div class="flex flex-col items-center justify-center gap-4">
+                    <b>created on: @task.created_at</b>
+                    <b>due: @task?.due?.date</b>
+                </div>
+            </details>
+        </li>
+    }
+</ul>
+
+
+<style>
+    
+    .truncate {
+      width: 250px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+      
+</style>

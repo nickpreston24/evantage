@@ -6,7 +6,7 @@
 
     <ul class="menu menu-horizontal lg:menu-horizontal bg-transparent rounded-box opacity-50">
 
-        <span class="tooltip" data-tip="A Full Day">
+        <span :class="blades.full_day.classname" data-tip="A Full Day">
             <button @@click="blades.full_day.show = !blades.full_day.show" class="btn btn-md ">
                 <span class="text-sm">
                     Full Day
@@ -14,8 +14,7 @@
             </button>
         </span>
 
-
-        <span class="tooltip" data-tip="All Todos from Todoist">
+        <span :class="blades.todos_table.classname" class="tooltip" data-tip="All Todos from Todoist">
             <button @@click="blades.todos_table.show = !blades.todos_table.show" class="btn btn-md ">
                 <span class="text-sm">
                     Todos
@@ -23,7 +22,7 @@
             </button>
         </span>
 
-        <span class="tooltip" data-tip="Todos from Readme.md">
+        <span :class="blades.readme_table.classname" class="tooltip" data-tip="Todos from Readme.md">
             <button @@click="blades.readme_table.show = !blades.readme_table.show" class="btn btn-md">
                 <span class="text-sm">
                     README
@@ -31,7 +30,7 @@
             </button>
         </span>
 
-        <span class="tooltip" data-tip="Todoist Stats">
+        <span :class="blades.stats.classname" class="tooltip" data-tip="Todoist Stats">
             <button @@click="blades.stats.show = !blades.stats.show" class="btn btn-md">
                 <span class="text-sm">
                     Stats
@@ -39,7 +38,7 @@
 
             </button>
         </span>
-        <span class="tooltip" data-tip="List of Todoist Projects">
+        <span :class="blades.projects_breakdown.classname" class="tooltip" data-tip="List of Todoist Projects">
             <button @@click="blades.projects_breakdown.show = !blades.projects_breakdown.show" class="btn btn-md">
                 <span class="text-sm">
                     Projects
@@ -162,14 +161,15 @@
 </div>
 
 <script>
+let special_hover_border = 'tooltip border-2 rounded-lg border-info'
     function setup_todoist() {
         return {
             blades: {
-                stats: {show:false},     
-                projects_breakdown: {show:false},     
-                todos_table: {show:false},     
-                readme_table: {show:false},    
-                full_day: {show:true} 
+                stats: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
+                projects_breakdown: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
+                todos_table: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
+                readme_table: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},    
+                full_day: {show:true, get classname() {return !this.show? 'tooltip':special_hover_border}} 
             }
         }
     }

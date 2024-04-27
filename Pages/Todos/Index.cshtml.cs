@@ -24,7 +24,9 @@ public class Index : PageModel
 
     public bool sort_by_priority { get; set; } = true;
 
-    public MyFullDay FullDay { get; set; }
+    public MyFullDay FullDay => cached_full_day;
+
+    private static MyFullDay cached_full_day { get; set; } = new();
     // public List<TodoistTask> SearchResults = new();
 
     private readonly ITodoistService todoist;
@@ -50,8 +52,29 @@ public class Index : PageModel
     public async Task<IActionResult> OnGetFullDay()
     {
         Console.WriteLine(nameof(OnGetFullDay));
-        todoist_stats.TodoistTasks.FirstOrDefault()?.Dump("full day works?");
+        // todoist_stats.TodoistTasks.FirstOrDefault()?.Dump("full day works?");
+
+        var todays_frog = GetRandomTasks(1, 1);
+        var low_hanging_fruit = GetRandomTasks(2, new[] { 3, 4 });
+        var midday_tasks = GetRandomTasks(2, new[] { 2, 3 });
+
+        cached_full_day.TodaysFrog = todays_frog;
+        cached_full_day.LowHangingFruit = low_hanging_fruit;
+        cached_full_day.Midday = midday_tasks;
+
         return Partial("_FullDayCard", this);
+    }
+
+    private static List<TodoistTask> GetRandomTasks(int take = 1, params int[] priorities)
+    {
+        if (priorities?.Length == 0)
+            priorities = Enumerable.Range(3, 4).ToArray();
+        return cached_todoist_stats.TodoistTasks
+            .Where(todo => priorities.Contains(todo.priority.FixPriorityBug().Id))
+            .OrderBy(todo => todo.created_at.ToDateTime()) // favor older tasks
+            .Dump("sorted by created date")
+            .TakeRandom(take)
+            .ToList();
     }
 
     public async Task<IActionResult> OnGetSearch()

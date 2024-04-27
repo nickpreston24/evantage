@@ -5,56 +5,29 @@
 @{
     var sample_fullday = new MyFullDay()
     {
-        TodaysFrog = new TodoistTask() { content = "create full day cards", priority = "1" }.AsList()
+        TodaysFrog = new TodoistTask() { content = "create full day cards", priority = "1" }.AsList(),
     };
     @* @Model.todoist_stats.TodoistTasks.Count.Dump("total tasks") *@
 
-    var priorities_select = Enumerable.Range(1, 4).ToArray();
-
-    var full_day = @Model.FullDay ?? sample_fullday;
+    var full_day = @Model.FullDay;
 
     Model.todoist_stats.TodoistTasks.Count.Dump("total tasks");
 }
-<div class="card card-compact w-96 bg-base-100 shadow-xl">
-    <figure>
-        @* <img src="https://picsum.photos/300/200" alt="Shoes"/> *@
-    </figure>
+<div class="card card-compact w-128 bg-base-100 shadow-xl">
+    @* figure usually goes here *@
     <div class="card-body">
-        <h2 class="card-title">Your Full Day</h2>
-        <div id="full_day_tasks" class="text-primary">
-            <h3>Today's frogs:</h3>
-            <ul>
-                @foreach (var task in sample_fullday.TodaysFrog)
-                {
-                    <li class="grid grid-cols-2 gap-2" x-data="{show_updates:false}">
-                        <p class="text-lg">
-                            @task.content
-                        </p>
-                        <div>
+        <h1 class="card-title text-3xl">Your Full Day</h1>
+        <div id="full_day_tasks" class="text-primary grid grid-cols-2 grid-rows-auto gap-4">
+            
+            <h2 class="text-2xl">Today's frogs:</h2>
+            <partial name="_TaskList" model="full_day.TodaysFrog"></partial>
 
-                            <button class="btn btn-accent" x-on:click="show_updates=true">Options</button>
-                            <div x-show="show_updates" class="flex flex-col">
+            <h2 class="text-2xl">LowHangingFruit</h2>
+            <partial name="_TaskList" model="full_day.LowHangingFruit"></partial>
 
-                                <div class="form-control">
-                                    <label class="cursor-pointer label">
-                                        <span class="label-text">Tick</span>
-                                        <input type="checkbox" checked="checked" class="checkbox checkbox-accent"/>
-                                    </label>
-                                </div>
+            <h2 class="text-2xl">Midday</h2>
+            <partial name="_TaskList" model="full_day.Midday"></partial>
 
-                                <select class="select select-accent w-full max-w-xs">
-                                    <option disabled selected>Choose Priority</option>
-
-                                    @foreach (var p in priorities_select)
-                                    {
-                                        <option>@p</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
         </div>
         <div class="card-actions justify-end">
             @* <button class="btn text-accent btn-primary">Buy Now</button> *@

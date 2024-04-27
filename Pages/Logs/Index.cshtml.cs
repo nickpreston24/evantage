@@ -80,7 +80,7 @@ public class Index : PageModel
 
         await Task.WhenAll(tasks);
         watch.Stop();
-        watch.PrintRuntime($"Done upserting {logRecords.Count} logs! ");
+        // watch.PrintRuntime($"Done upserting {logRecords.Count} logs! ");
         return logRecords;
     }
 

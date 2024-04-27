@@ -18,9 +18,13 @@ public class Index : PageModel
     public int tasks_related_to_projects { get; set; }
     public string Query { get; set; } = string.Empty;
 
-    public TodoistStats todoist_stats { get; set; } = new();
+    // public TodoistStats todoist_stats { get; set; } = new();
+    public TodoistStats todoist_stats => cached_todoist_stats;
+    private static TodoistStats cached_todoist_stats = new();
 
     public bool sort_by_priority { get; set; } = true;
+
+    public MyFullDay FullDay { get; set; }
     // public List<TodoistTask> SearchResults = new();
 
     private readonly ITodoistService todoist;
@@ -37,10 +41,17 @@ public class Index : PageModel
 
     public async Task OnGet()
     {
-        todoist_stats = await this.todoist.GetProjectsAndTasks();
+        cached_todoist_stats = await this.todoist.GetProjectsAndTasks();
         project_total_count = todoist_stats.TodoistProjects.Count;
         completed_tasks_count = todoist_stats.CompletedTasks.Count;
         all_tasks_count = todoist_stats.TodoistTasks.Count;
+    }
+
+    public async Task<IActionResult> OnGetFullDay()
+    {
+        Console.WriteLine(nameof(OnGetFullDay));
+        todoist_stats.TodoistTasks.FirstOrDefault()?.Dump("full day works?");
+        return Partial("_FullDayCard", this);
     }
 
     public async Task<IActionResult> OnGetSearch()
@@ -90,8 +101,7 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnGetAllTodoistTasks()
     {
-        todoist_stats = await this.todoist.GetProjectsAndTasks();
-        var todos = todoist_stats.TodoistTasks;
+        cached_todoist_stats = await this.todoist.GetProjectsAndTasks();
         return Partial("_TodoistTasksTable", this);
     }
 }

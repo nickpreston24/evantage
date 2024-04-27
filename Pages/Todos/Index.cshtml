@@ -5,6 +5,16 @@
 <div x-data="setup_todoist()" class="items-center justify-center flex flex-col">
 
     <ul class="menu menu-horizontal lg:menu-horizontal bg-transparent rounded-box opacity-50">
+
+        <span class="tooltip" data-tip="A Full Day">
+            <button @@click="blades.full_day.show = !blades.full_day.show" class="btn btn-md ">
+                <span class="text-sm">
+                    Full Day
+                </span>
+            </button>
+        </span>
+
+
         <span class="tooltip" data-tip="All Todos from Todoist">
             <button @@click="blades.todos_table.show = !blades.todos_table.show" class="btn btn-md ">
                 <span class="text-sm">
@@ -39,6 +49,12 @@
     </ul>
 
     <hydro-bento>
+
+        <div x-transition
+             x-show="blades.full_day.show" class="bento bento-shadow-blue p-4 col-span-2">
+            <partial name="FullDay"></partial>
+        </div>
+
         <div x-transition
              x-show="blades.todos_table.show" class="bento bento-shadow-blue p-4 col-span-2">
             <partial name="TodoistTasks"></partial>
@@ -151,8 +167,9 @@
             blades: {
                 stats: {show:false},     
                 projects_breakdown: {show:false},     
-                todos_table: {show:true},     
-                readme_table: {show:false},     
+                todos_table: {show:false},     
+                readme_table: {show:false},    
+                full_day: {show:true} 
             }
         }
     }

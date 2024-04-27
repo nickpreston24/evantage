@@ -1,7 +1,7 @@
 @using evantage.Pages.Todo
 @model List<CodeMechanic.Todoist.TodoistTask>
 @{
-    var rows = Model;
+    var rows = @Model;
 }
 @foreach (var row in rows)
 {

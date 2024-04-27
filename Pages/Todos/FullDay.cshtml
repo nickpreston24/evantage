@@ -1,0 +1,20 @@
+@model Index
+
+
+<div
+    x-transition
+    hx-get
+    hx-trigger="load"
+    hx-target="#full_day"
+    hx-indicator="#full_day_indicator"
+    hx-page-handler="FullDay">
+
+    @* <h1 class="text-lg text-secondary bg-content">Full Day</h1> *@
+    <div id="full_day"></div>
+
+    <span id="full_day_indicator"
+          class="htmx-indicator">
+        <label for="">loading todoist tasks...</label>
+        <img alt="bars" src="~/img/bars.svg"/>
+    </span>
+</div>

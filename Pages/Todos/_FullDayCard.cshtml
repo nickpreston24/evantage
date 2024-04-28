@@ -15,16 +15,22 @@
     @* figure usually goes here *@
     <div class="card-body">
         <h1 class="card-title text-3xl">Your Full Day</h1>
-        <div id="full_day_tasks" class="text-primary grid grid-cols-2 grid-rows-auto gap-4">
+        <div id="full_day_tasks" class="text-primary grid grid-cols-3 max-w-full grid-rows-auto gap-4">
 
-            <h2 class="text-2xl">LowHangingFruit</h2>
-            <partial name="_TaskList" model="full_day.LowHangingFruit"></partial>
+            <div>
+                <h2 class="text-2xl">LowHangingFruit</h2>
+                <partial name="_TaskList" model="full_day.LowHangingFruit"></partial>
+            </div>
 
-            <h2 class="text-2xl">Midday</h2>
-            <partial name="_TaskList" model="full_day.Midday"></partial>
+            <div>
+                <h2 class="text-2xl">Midday</h2>
+                <partial name="_TaskList" model="full_day.Midday"></partial>
+            </div>
 
-            <h2 class="text-2xl">Today's frogs:</h2>
-            <partial name="_TaskList" model="full_day.TodaysFrog"></partial>
+            <div>
+                <h2 class="text-2xl">Today's frogs:</h2>
+                <partial name="_TaskList" model="full_day.TodaysFrog"></partial>
+            </div>
 
         </div>
         <div class="card-actions justify-start" x-data="{enabled:true}" x-show="enabled">

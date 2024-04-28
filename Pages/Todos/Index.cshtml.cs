@@ -49,10 +49,19 @@ public class Index : PageModel
     public async Task OnGet()
     {
         // throw new Exception("some dingle-headed microsoft error");
-        cached_todoist_stats = await this.todoist.GetProjectsAndTasks();
-        project_total_count = todoist_stats.TodoistProjects.Count;
-        completed_tasks_count = todoist_stats.CompletedTasks.Count;
-        all_tasks_count = todoist_stats.TodoistTasks.Count;
+        // var stats = await this.todoist.GetProjectsAndTasks();
+        // stats.TodoistTasks = ApplyFilters(stats.TodoistTasks, new FilterOptions()
+        // {
+        //     sort_by_date = true,
+        //     sort_by_priority = true
+        // });
+        //
+        // cached_todoist_stats = stats;
+
+
+        // project_total_count = todoist_stats.TodoistProjects.Count;
+        // completed_tasks_count = todoist_stats.CompletedTasks.Count;
+        // all_tasks_count = todoist_stats.TodoistTasks.Count;
     }
 
     public async Task<IActionResult> OnGetFullDay()
@@ -90,7 +99,9 @@ public class Index : PageModel
             return Partial("_FullDayCard", this);
         }
 
-        var ids_to_exclude = cached_full_day.AllIds.Dump("ids to exclude");
+        var ids_to_exclude = cached_full_day.AllIds
+            // .Dump("ids to exclude")
+            ;
 
         var week = Enumerable.Range(1, 6).Aggregate(new List<MyFullDay>(), (list, next) =>
         {
@@ -98,21 +109,28 @@ public class Index : PageModel
             var today = new MyFullDay();
 
             var todays_frog = GetRandomTasks(FullDayOptions.Default
-                .With(fdo => fdo.excepted_todo_ids = ids_to_exclude)
+                .With(fdo => fdo.Filters.excepted_todo_ids = ids_to_exclude)
             );
 
             var low_hanging_fruit = GetRandomTasks(new FullDayOptions()
             {
                 priorities = new[] { 3, 4 },
                 take = 2,
-                excepted_todo_ids = ids_to_exclude
+                Filters = new FilterOptions()
+                {
+                    excepted_todo_ids = ids_to_exclude
+                }
             });
 
             var midday_tasks = GetRandomTasks(new FullDayOptions()
             {
                 take = 2,
                 priorities = new[] { 2, 3 },
-                excepted_todo_ids = ids_to_exclude
+                Filters = new FilterOptions()
+                {
+                    excepted_todo_ids = ids_to_exclude
+                }
+                // FilteringOptions.excepted_todo_ids = ids_to_exclude
             });
 
             today.TodaysFrog = todays_frog;
@@ -124,7 +142,7 @@ public class Index : PageModel
         });
 
         cached_full_week = week.ToList();
-        cached_full_week.Count.Dump("week count");
+        // cached_full_week.Count.Dump("week count");
 
         return Partial("_FullWeekHero", this);
     }
@@ -138,26 +156,56 @@ public class Index : PageModel
         if (options.priorities?.Length == 0)
             options.priorities = Enumerable.Range(3, 4).ToArray();
 
-        return cached_todoist_stats.TodoistTasks
+        var tasks = cached_todoist_stats.TodoistTasks
             .Where(todo => options.priorities
                 // for case where there's going to be more than one, e.g. priority 2 AND 3 tasks.
                 .TakeFirstRandom()
                 .AsList()
                 // must match the requested priorities.
                 .Contains(todo.priority.FixPriorityBug().Id))
-            // favor older tasks
-            .OrderBy(todo => todo.created_at.ToDateTime())
-            .ThenBy(todo => todo?.due?.date?.ToDateTime(fallback: DateTime.MinValue))
-            // Exclusions
-            .Where(todo => !options.excepted_todo_ids.Contains(todo.id))
-            // .Where(todo => !options.excepted_labels.Contains(todo.labels)) // todo: fix
-            .Where(todo => !options.excepted_projects.Contains(todo.project_id))
 
-            // Ensure unique results
-            .DistinctBy(todo => todo.id)
-            .DistinctBy(todo => todo.content)
             // get random (duh)
-            .TakeRandom(options.take)
+            .If(options.take_random_todos, todos => todos
+                .TakeRandom(options.take)
+            )
+            .ToList();
+
+        var filtered = ApplyFilters(tasks, new FilterOptions()
+        {
+        });
+
+        return filtered;
+    }
+
+    private static List<TodoistTask> ApplyFilters(List<TodoistTask> todoistTasks, FilterOptions options)
+    {
+        return todoistTasks
+            // favor older tasks
+            .If(options.sort_by_date, todos => todos
+                .OrderBy(todo => todo.created_at.ToDateTime())
+                .ThenBy(todo => todo?.due?.date?.ToDateTime(fallback: DateTime.MinValue))
+            )
+            .If(options.sort_by_priority,
+                todos => todos
+                    .OrderBy(todo => todo.priority))
+            // some Exclusions apply...
+            .If(options.excepted_todo_ids.Count > 0,
+                todos => todos
+                    .Where(todo => !options.excepted_todo_ids
+                        .Contains(todo.id)))
+            .If(options.excepted_projects.Count > 0,
+                todos => todos
+                    .Where(todo => !options.excepted_projects
+                        .Contains(todo.project_id))
+            )
+            // .Where(todo => !options.excepted_labels.Contains(todo.labels)) // todo: fix
+            .If(options.distinct_ids_only, todos => todos
+                .DistinctBy(todo => todo.id)
+            )
+            // Ensure unique results
+            .If(options.distinct_content_only, todos => todos
+                .DistinctBy(todo => todo.content)
+            )
             .ToList();
     }
 
@@ -209,17 +257,36 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnGetAllTodoistTasks()
     {
-        cached_todoist_stats = await this.todoist.GetProjectsAndTasks();
+        var stats = await this.todoist.GetProjectsAndTasks();
+
+        stats.TodoistTasks = ApplyFilters(stats.TodoistTasks, new FilterOptions()
+        {
+        });
+
+        cached_todoist_stats = stats;
+
         return Partial("_TodoistTasksTable", this);
     }
 }
 
-public record FullDayOptions
+public class FilterOptions
+{
+    public List<string> excepted_labels { get; set; } = new List<string>();
+    public List<string> excepted_todo_ids { get; set; } = new List<string>();
+    public List<string> excepted_projects { get; set; } = new List<string>();
+
+    public bool distinct_ids_only { get; set; } = false;
+    public bool distinct_content_only { get; set; } = false;
+    public bool sort_by_date { get; set; } = true;
+    public bool sort_by_priority { get; set; } = false;
+}
+
+public class FullDayOptions
 {
     public static FullDayOptions Default = new();
     public int take { get; set; } = 1;
     public int[] priorities { get; set; } = new[] { 1 };
-    public List<string> excepted_labels = new List<string>();
-    public List<string> excepted_todo_ids = new List<string>();
-    public List<string> excepted_projects = new List<string>();
+    public bool take_random_todos { get; set; } = true;
+
+    public FilterOptions Filters { get; set; } = new();
 }

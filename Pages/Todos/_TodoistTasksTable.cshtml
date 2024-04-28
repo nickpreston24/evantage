@@ -4,9 +4,9 @@
 @{
     int limit = 1000;
     var rows = @Model.todoist_stats.TodoistTasks
-        .If(@Model.sort_by_priority, tasks => tasks
-            .OrderByDescending(x => x.priority))
-        .ToList()
+        // .If(@Model.sort_by_priority, tasks => tasks
+        //     .OrderByDescending(x => x.priority))
+        // .ToList()
         // .OrderByDescending(x => x.priority.If(true))
         ;
     // var rows = Model.Take(limit).ToList();
@@ -41,9 +41,9 @@
                 <br/>
                 <span>Labels</span>
             </th>
-            <th>Details</th>
-            <th>Completed</th>
-            <th>Id</th>
+            @* <th>Details</th> *@
+            @* <th>Completed</th> *@
+            <th>Age</th>
         </tr>
         </thead>
         <tbody id="todoist_results">

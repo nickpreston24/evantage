@@ -1,4 +1,5 @@
 @using evantage.Pages.Todo
+@using CodeMechanic.Types
 @model List<CodeMechanic.Todoist.TodoistTask>
 @{
     var rows = @Model;
@@ -29,50 +30,73 @@
             </div>
         </td>
         <td>
-            <label>Priority:</label>
-            <span>@row.priority.FixPriorityBug()</span>
-            <br/>
-            @foreach (var label in @row.labels)
-            {
-                <span class="badge badge-ghost badge-sm">@label</span>
-            }
+            <div class="flex flex-col justify-center">
+
+                <label class="text-@row.priority_css ">
+                    Priority:
+                    <span class="">@row.priority.FixPriorityBug()</span>
+                </label>
+                <div>
+                    @foreach (var label in @row.labels)
+                    {
+                        <span class="badge badge-secondary badge-sm lg:badge-lg">@label</span>
+                    }
+                </div>
+            </div>
         </td>
-        <th>
-            <button
-                hx-get="@Url.Page("Index", "FindComment", new { task_id = row.id })"
-                hx-swap="innerHTML"
-                hx-target="#deets"
-                class="btn btn-ghost btn-xs" x-on:click="show_details=!show_details">
-                Details
-            </button>
 
-            @* <span id="@row.id" *@
-            @*       class="htmx-indicator"> *@
-            @*     <label for="">loading comments ...</label> *@
-            @*     <img alt="bars" src="~/img/bars.svg"/> *@
-            @* </span> *@
-            <td x-show="show_details">
+        <td>
+            <div class="flex flex-col gap-1 justify-center">
 
+                @* @Math.Round(@row.Age, 0) *@
+                @* <label for="">Friendly stuff</label> *@
+                @* <p> created on: @row.created_at</p> *@
+                @* <p> due: @row?.due?.date </p> *@
 
-                <span id="deets"></span>
-                @* hx-get *@
-                @* hx-page="Index" *@
-                @**@
-                @*  *@
-                @* hx-page-handler="FindComment" *@
-                @* <button *@
-                @*     hx-indicator="#@row.id" *@
-                @*     hx-trigger="init" *@
-                @*     hx-get="@Url.Page("Index", "FindComment")" *@
-                @*     hx-swap="outerHTML"> *@
-                @*     ... *@
-                @* </button> *@
+                <p> due: @row?.due?.humanized on @row?.due?.friendly_date
+                <p> age: @row?.due?.humanized_age </p>
+            </div>
+        </td>
 
-
-            </td>
-        </th>
-        <td>@row.is_completed</td>
-        <td>@row.id</td>
+        @* <th> *@
+        @* <template *@
+        @* *@
+        @*     x-if='false'> *@
+        @* *@
+        @*     <button *@
+        @*         hx-get="@Url.Page("Index", "FindComment", new { task_id = row.id })" *@
+        @*         hx-swap="innerHTML" *@
+        @*         hx-target="#deets" *@
+        @*         class="btn btn-ghost btn-xs" x-on:click="show_details=!show_details"> *@
+        @*         Details *@
+        @*     </button> *@
+        @* *@
+        @* </template> *@
+        @* <span id="@row.id" *@
+        @*       class="htmx-indicator"> *@
+        @*     <label for="">loading comments ...</label> *@
+        @*     <img alt="bars" src="~/img/bars.svg"/> *@
+        @* </span> *@
+        @* <td x-show="show_details"> *@
+        @* *@
+        @* *@
+        @*     <span id="deets"></span> *@
+        @*     $1$ hx-get #1# *@
+        @*     $1$ hx-page="Index" #1# *@
+        @*     $1$#1# *@
+        @*     $1$  #1# *@
+        @*     $1$ hx-page-handler="FindComment" #1# *@
+        @*     $1$ <button #1# *@
+        @*     $1$     hx-indicator="#@row.id" #1# *@
+        @*     $1$     hx-trigger="init" #1# *@
+        @*     $1$     hx-get="@Url.Page("Index", "FindComment")" #1# *@
+        @*     $1$     hx-swap="outerHTML"> #1# *@
+        @*     $1$     ... #1# *@
+        @*     $1$ </button> #1# *@
+        @* *@
+        @* *@
+        @* </td> *@
+        @* <td>@row.is_completed</td> *@
     </tr>
 }
 

@@ -1,3 +1,5 @@
+using CodeMechanic.Types;
+
 namespace CodeMechanic.Todoist;
 
 public class TodoistTask
@@ -37,5 +39,42 @@ public class TodoistTask
     public string url { get; set; } = string.Empty;
 
     public Duration duration { get; set; } = new();
-    // public double DaysOld => (due.date.ToDateTime(fallback: DateTime.Now) - created_at?.ToDateTime()).Value.TotalDays;
+
+    /* Computed */
+
+
+    public DateTime created_at_datetime => created_at.ToDateTime(fallback: DateTime.MinValue).Value;
+
+    public string friendly_created_at => created_at_datetime.ToFriendlyDateString();
+
+    public string priority_css
+    {
+        get
+        {
+            var value = priority.ToInt();
+            switch (value)
+            {
+                case 4:
+                    return "error";
+                case 3:
+                    return "warning";
+                case 2:
+                    return "info";
+                case 1:
+                default:
+                    return "ghost";
+            }
+        }
+    }
+
+    public double Age => (due?.date?.ToDateTime(fallback: DateTime.Now) - created_at?.ToDateTime())
+        .ToMaybe()
+        .IfSome(x => x.TotalDays
+            // src: https://www.c-sharpcorner.com/UploadFile/9b86d4/how-to-round-a-decimal-value-to-2-decimal-places-in-C-Sharp/
+            // .Map(days =>
+            // {
+            //     days = (int)Math.Round(days, 2);
+            //     return days;
+            // })
+        );
 }

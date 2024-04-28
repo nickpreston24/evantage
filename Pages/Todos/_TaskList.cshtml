@@ -7,41 +7,35 @@
 }
 
 <ul>
-
     @foreach (var task in Model)
     {
-        var days_old = (@task.due?.date?.ToDateTime(fallback: DateTime.Now) - @task.created_at?.ToDateTime())
-            .ToMaybe().IfSome(x => x.TotalDays);
-
-        <li class="grid grid-cols-2 gap-2" x-data="{show_updates:false}">
+        <li class="grid grid-cols-1 gap-2 max-w-md border-error border-2" x-data="{show_updates:false}">
             <a target="_blank" href="@task.url" class="text-lg text-secondary truncate">
                 @task.content
-
             </a>
 
             @if (task?.due != null && task.due.date.NotEmpty())
             {
-                <b class="text-warning">Due on: @task?.due?.date.ToDateTime(fallback: DateTime.Now)</b>
+                <b class="text-info">Due on: @task?.due?.date.ToDateTime(fallback: DateTime.Now)</b>
+                @* <b>Due: @task.due.humanized</b> *@
+                @* <b>age: @task.due.humanized_age</b> *@
             }
-            <b class="text-success">Created on: @task.created_at.ToDateTime(fallback: DateTime.MinValue)</b>
+            @* <b class="text-success">Created on: @task.created_at.ToDateTime(fallback: DateTime.MinValue)</b> *@
 
-            @if (@days_old > 0)
+            @if (@task.Age > 0)
             {
-                <b class="text-error">Days Old: @days_old</b>
+                <b class="text-error">Days Old: @Math.Round(@task.Age, 0)</b>
             }
 
-            <div>
-
+            <div class="flex flex-row border-2 border-success">
                 <button class="btn btn-accent btn-sm" x-on:click="show_updates=!show_updates">Actions</button>
                 <div x-show="show_updates" class="flex flex-col">
-
                     <div class="form-control">
                         <label class="cursor-pointer label">
                             <span class="label-text">Complete</span>
                             <input type="checkbox" class="checkbox checkbox-accent"/>
                         </label>
                     </div>
-
                     <select class="select select-accent w-full max-w-xs">
                         <option disabled selected>Choose Priority</option>
 
@@ -52,24 +46,20 @@
                     </select>
                 </div>
             </div>
-
-            <details class="text-info">
-                <div class="flex flex-col items-center justify-center gap-4">
-                    <b>created on: @task.created_at</b>
-                </div>
-            </details>
+            @* <details class="text-info"> *@
+            @*     <div class="flex flex-col items-center justify-center gap-4"> *@
+            @*         <b>created on: @task.created_at</b> *@
+            @*     </div> *@
+            @* </details> *@
         </li>
     }
 </ul>
 
-
 <style>
-    
     .truncate {
       width: 250px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-      
 </style>

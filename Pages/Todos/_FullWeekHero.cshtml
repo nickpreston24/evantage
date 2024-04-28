@@ -1,32 +1,43 @@
-@using CodeMechanic.Diagnostics
 @using CodeMechanic.Types
 @model Index
 @{
     var full_week = @Model.FullWeek;
 
-    var day1 = @Model.FullDay;
+    var now = DateTime.Now;
+    int day_counter = 0;
+    var week = Enumerable.Range(1, 6)
+        .Select(days => now.AddDays(days))
+        // .Dump("week")
+        .Select(day => new
+        {
+            friendly_name = day.ToFriendlyDateString()
+            , humanized_name = day.Humanize()
+            , date = day
+        })
+        .ToArray();
 
-    // var distinct_ids = @full_week ... 
-    full_week.TakeFirstRandom().TodaysFrog.Dump("random weekday");
+    // week.Dump(nameof(week));
 }
 
-<section id="full_week_section border-2 border-primary">
+<section id="full_week_section border-0 border-primary">
 
     <h1>Full Week</h1>
     @foreach (var full_day in full_week)
     {
-        <div id="full_day_tasks" class="grid grid-cols-1 grid-rows-auto gap-4">
-            <div class="card  border-2 border-primary">
-
-                <h2 class="text-2xl">LowHangingFruit</h2>
+        var current_day = week[day_counter++];
+        <div class="card border-0 border-primary grid grid grid-cols-3 grid-rows-auto gap-4">
+            <div>
+                <h1 class="text-2xl text-accent">@current_day.friendly_name</h1>
+                <h2 class="text-xl">Low Hanging Fruit</h2>
                 <partial name="_TaskList" model="full_day.LowHangingFruit"></partial>
-
-                <h2 class="text-2xl">Midday</h2>
+            </div>
+            <div>
+                <h2 class="text-xl">Midday</h2>
                 <partial name="_TaskList" model="full_day.Midday"></partial>
-
-                <h2 class="text-2xl">Today's frogs:</h2>
+            </div>
+            <div>
+                <h2 class="text-xl">Today's frogs:</h2>
                 <partial name="_TaskList" model="full_day.TodaysFrog"></partial>
-
             </div>
         </div>
     }

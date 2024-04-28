@@ -8,9 +8,14 @@
 <div>
     <hydro-hero>
         <slot name="title">Welcome Back!</slot>
-        @* <slot name="message">Pick an option</slot> *@
-        @* <slot name="button">hello thar</slot> *@
-
-        
+        <slot name="message">Pick an option</slot>
+        <slot name="buttons">
+            <a href="/Leads">
+                <button class="btn button-info text-success">Leads</button>
+            </a>
+            <a href="/Todos">
+                <button class="btn button-info text-primary">Todoist</button>
+            </a>
+        </slot>
     </hydro-hero>
 </div>

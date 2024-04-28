@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace evantage.Pages.Todo;
+namespace CodeMechanic.Todoist;
 
 public record TodoistLabel
 {

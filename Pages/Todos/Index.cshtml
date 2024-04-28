@@ -175,9 +175,9 @@
             blades: {
                 stats: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
                 projects_breakdown: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
-                todos_table: {show:true, get classname() {return !this.show? 'tooltip':special_hover_border}},     
+                todos_table: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
                 readme_table: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},    
-                full_day: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}} 
+                full_day: {show:true, get classname() {return !this.show? 'tooltip':special_hover_border}} 
             }
             // ,
             // save_blades(){

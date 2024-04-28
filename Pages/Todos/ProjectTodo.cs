@@ -1,5 +1,3 @@
-using evantage.Pages.Todo;
-
 namespace CodeMechanic.Todoist;
 
 public class ProjectTodo

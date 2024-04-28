@@ -25,8 +25,8 @@
     @foreach (var full_day in full_week)
     {
         var current_day = week[day_counter++];
-        <div class="border-0 border-primary grid grid grid-cols-3 grid-rows-auto gap-4">
-            <div class="">
+        <div class="border-0 border-primary grid grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols grid-rows-auto gap-4">
+            <div>
                 <h1 class="text-2xl text-accent">@current_day.friendly_name</h1>
                 <h2 class="text-xl">Low Hanging Fruit</h2>
                 <partial name="_TaskList" model="full_day.LowHangingFruit"></partial>

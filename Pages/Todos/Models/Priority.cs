@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using CodeMechanic.Types;
 
-namespace evantage.Pages.Todo;
+namespace CodeMechanic.Todoist;
 
 public class Priority : Enumeration
 {

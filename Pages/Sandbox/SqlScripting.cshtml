@@ -1,0 +1,57 @@
+@page
+@model evantage.Pages.Sandbox.SqlScripting
+@{
+}
+
+<section class="flex flex-col items-center">
+
+    <hydro-bento columns="3">
+
+        <bento-card class="col-span-2">
+
+            <slot name="title">Script from Model</slot>
+
+            <label>
+                <b>
+                    Source Folder:
+                </b>
+                @Model.InputFolder
+            </label>
+
+            <label>
+                <b>Target Folder:</b> @Model.OutputFolder
+            </label>
+
+            <label>
+                <b>Current folder:</b> @Model.CurrentWorkingDirectory
+            </label>
+
+        </bento-card>
+        <bento-card>
+
+
+            <slot name="title">
+                Target Files
+            </slot>
+
+            <div class="">
+
+                <ul>
+                    @foreach (var x in @Model.Targeted_files)
+                    {
+                        <li>@x</li>
+                    }
+                </ul>
+            </div>
+
+            <slot name="actions">
+                <button
+                    hx-get
+                    hx-page-handler="Generate"
+                    class="btn button-primary">
+                    1
+                </button>
+            </slot>
+        </bento-card>
+    </hydro-bento>
+</section>

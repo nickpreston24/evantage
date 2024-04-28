@@ -1,8 +1,4 @@
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Text;
-using CodeMechanic.Types;
-using Newtonsoft.Json;
 
 namespace CodeMechanic.Diagnostics;
 

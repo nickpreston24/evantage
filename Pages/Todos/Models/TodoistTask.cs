@@ -1,5 +1,3 @@
-using CodeMechanic.Types;
-
 namespace CodeMechanic.Todoist;
 
 public class TodoistTask

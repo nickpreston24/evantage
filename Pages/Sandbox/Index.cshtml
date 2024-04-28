@@ -1,5 +1,7 @@
 @page
 @using evantage.Pages.Leads
+@using Hydro
+@using evantage.Pages.Components
 @model evantage.Pages.Sandbox.Index
 
 @{
@@ -28,6 +30,18 @@
             Title = "Features"
             , Link = "Sandbox/Features"
             , Tip = "Features of this Project"
+        }
+        , new TooltipRoute()
+        {
+            Title = "SQL Scripting"
+            , Link = "Sandbox/SqlScripting"
+            , Tip = "SQL Script generation"
+        }
+        , new TooltipRoute()
+        {
+            Title = "MySQL CRUD"
+            , Link = "Sandbox/MySQLCrud"
+            , Tip = "Full MySQL Crud for testing and duplication"
         }
     };
 }

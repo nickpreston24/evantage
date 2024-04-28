@@ -44,6 +44,7 @@
         <PackageReference Include="CodeMechanic.Types" Version="1.0.8" />
         <PackageReference Include="Dapper" Version="2.1.35" />
         <PackageReference Include="Hydro" Version="0.10.0" />
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.4" />
         <PackageReference Include="MySqlConnector" Version="2.3.7" />
         <PackageReference Include="System.Runtime.Caching" Version="8.0.0" />
     </ItemGroup>

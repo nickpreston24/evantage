@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using CodeMechanic.Diagnostics;
-using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.Types;
 

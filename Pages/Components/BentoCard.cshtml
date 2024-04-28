@@ -1,0 +1,18 @@
+@model evantage.Pages.Components.BentoCard
+
+<div class="border-4 bento bento-shadow-green rounded-lg card w-96 p-4 bg-base-100 shadow-xl">
+    <figure>
+        @Model.Slot("image")
+    </figure>
+    <div class="card-body">
+        <h2 class="card-title">
+            @Model.Slot("title")
+        </h2>
+        @* <p class="text-primary"> *@
+        @Model.Slot()
+        @* </p> *@
+        <div class="card-actions justify-end">
+            @Model.Slot("actions")
+        </div>
+    </div>
+</div>

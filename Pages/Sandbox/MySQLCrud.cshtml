@@ -1,0 +1,27 @@
+@page
+@model evantage.Pages.Sandbox.MySQLCrud
+
+@{
+}
+
+<p>This is a test of Mysql full CRUD, using a service</p>
+
+<p>Meant to be duplicated for whatever</p>
+<button class="btn btn-neutral"
+        hx-swap="outerHTML"
+        hx-get hx-page-handler="CreateNotes">
+    Create Notes
+</button>
+
+<ul>
+    @foreach (var note in @Model.Notes)
+    {
+        <li>
+            <b>
+
+                @note.Name
+            </b>
+            <span>@note.Description</span>
+        </li>
+    }
+</ul>

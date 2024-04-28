@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.FileSystem;

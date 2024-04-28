@@ -1,6 +1,6 @@
 @model evantage.Pages.Components.HydroBento
 
-<div class="grid grid-cols-2 grid-rows-auto gap-2">
+<div class="grid grid-cols-@{@Model.columns} grid-rows-@{@Model.rows} gap-2">
     @Model.Slot()
 </div>
 
@@ -13,6 +13,14 @@
     }
     .bento-shadow-blue {
       box-shadow: 0 .25rem .75rem #00caff;
+    }
+    
+    .bento-shadow-green {
+      box-shadow: 0 .25rem .75rem #00ffca;
+    }
+    
+    .bento-shadow-red {
+      box-shadow: 0 .25rem .75rem #ff00ca;
     }
 
 </style>

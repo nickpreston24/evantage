@@ -43,8 +43,3 @@ public record ImageDownload
     public Uri source { get; set; }
     public string save_name { get; set; }
 }
-
-public interface IDownloadImages
-{
-    Task<bool> DownloadImages(params ImageDownload[] requested_downloads);
-}

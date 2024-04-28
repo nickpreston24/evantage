@@ -1,13 +1,12 @@
 using System.Reflection;
 using CodeMechanic.Airtable;
-using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
+using CodeMechanic.Sqlc;
 using CodeMechanic.Todoist;
 using evantage.Services;
 using IMarkdownService = evantage.Services.IMarkdownService;
-using MarkdownService = CodeMechanic.RazorHAT.Services.MarkdownService;
 
 var policyName = "_myAllowSpecificOrigins";
 
@@ -30,7 +29,7 @@ builder.Services.AddCors(options =>
 // Load and inject .env files & values
 DotEnv.Load();
 
-builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
+// builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
 builder.Services.AddSingleton<IMarkdownService, evantage.Services.MarkdownService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
@@ -39,7 +38,8 @@ builder.Services.AddSingleton<IDownloadImages, ImageDownloader>();
 builder.Services.AddSingleton<IAirtableServiceV2, AirtableServiceV2>();
 builder.Services.AddSingleton<ITodoistService, TodoistService>();
 builder.Services.AddTransient<IImageService, ImageService>();
-
+builder.Services.AddTransient<IGenerateSQLTypes, SQLCService>();
+builder.Services.AddTransient<INotesService, NotesService>();
 builder.Services.AddControllers();
 
 var main_assembly = Assembly.GetExecutingAssembly();
@@ -70,10 +70,9 @@ var app = builder.Build();
 // }
 
 
-
 app.UseDeveloperExceptionPage();
 // app.UseDatabaseErrorPage();
-            
+
 app.UseHttpsRedirection();
 
 //Others will be Okay

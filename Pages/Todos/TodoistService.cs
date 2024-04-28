@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Curl;
 using CodeMechanic.Diagnostics;
-using CodeMechanic.Types;
 using Newtonsoft.Json;
 
 namespace CodeMechanic.Todoist;

@@ -2,7 +2,6 @@ using System.Data;
 using System.Diagnostics;
 using System.Text;
 using CodeMechanic.Async;
-using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;

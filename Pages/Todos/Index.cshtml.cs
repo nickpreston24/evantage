@@ -1,4 +1,3 @@
-using System.Collections;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Todoist;

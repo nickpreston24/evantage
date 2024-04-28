@@ -1,5 +1,5 @@
 .env
-**/*.rest
+**/unsafe/*.rest
 .idea
 node_modules
 wwwroot/lib

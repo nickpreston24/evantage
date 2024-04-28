@@ -129,7 +129,7 @@ public class TodoistService : ITodoistService
         string filename = "todoist.rest";
         // var file_text = ReadResourceFile("TrashStack.Pages.Todos." + filename);
         string cwd = Directory.GetCurrentDirectory();
-        string file_path = Path.Combine(cwd, "Pages", "Todos", filename);
+        string file_path = Path.Combine(cwd, "rest", "safe", filename);
         string file_text = File.ReadAllText(file_path);
 
         // Update the curl string to always have the most updated bearer token (and not a sample, like most tutorials)

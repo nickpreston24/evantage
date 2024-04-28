@@ -1,5 +1,6 @@
 using System.Reflection;
 using CodeMechanic.Airtable;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
@@ -60,14 +61,20 @@ var app = builder.Build();
 // source: https://github.com/tutorialseu/sending-emails-in-asp/blob/main/Program.cs
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+// if (!app.Environment.Dump("asp environment").IsDevelopment())
+// {
+//     app.UseExceptionHandler("/Error");
+//     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//     app.UseHsts();
+// }
 
+app.UseDeveloperExceptionPage();
+// app.UseDatabaseErrorPage();
+            
 app.UseHttpsRedirection();
+
+//Others will be Okay
+
 app.UseCors(policyName);
 app.UseStaticFiles();
 

@@ -43,6 +43,7 @@ public class Index : PageModel
 
     public async Task OnGet()
     {
+        throw new Exception("some dingle-headed microsoft error");
         cached_todoist_stats = await this.todoist.GetProjectsAndTasks();
         project_total_count = todoist_stats.TodoistProjects.Count;
         completed_tasks_count = todoist_stats.CompletedTasks.Count;

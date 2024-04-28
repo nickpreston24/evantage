@@ -54,9 +54,16 @@ public class Index : PageModel
         Console.WriteLine(nameof(OnGetFullDay));
         // todoist_stats.TodoistTasks.FirstOrDefault()?.Dump("full day works?");
 
-        var todays_frog = GetRandomTasks(1, 1);
-        var low_hanging_fruit = GetRandomTasks(2, new[] { 3, 4 });
-        var midday_tasks = GetRandomTasks(2, new[] { 2, 3 });
+        var todays_frog = GetRandomTasks(FullDayOptions.Default);
+        var low_hanging_fruit = GetRandomTasks(new FullDayOptions()
+        {
+            priorities = new[] { 3, 4 }, take = 2
+        });
+
+        var midday_tasks = GetRandomTasks(new FullDayOptions()
+        {
+            take = 2, priorities = new[] { 2, 3 }
+        });
 
         cached_full_day.TodaysFrog = todays_frog;
         cached_full_day.LowHangingFruit = low_hanging_fruit;
@@ -65,15 +72,22 @@ public class Index : PageModel
         return Partial("_FullDayCard", this);
     }
 
-    private static List<TodoistTask> GetRandomTasks(int take = 1, params int[] priorities)
+    private static List<TodoistTask> GetRandomTasks(FullDayOptions options = default)
     {
-        if (priorities?.Length == 0)
-            priorities = Enumerable.Range(3, 4).ToArray();
+        if (options == default)
+            options = FullDayOptions.Default;
+
+        if (options.priorities?.Length == 0)
+            options.priorities = Enumerable.Range(3, 4).ToArray();
+
         return cached_todoist_stats.TodoistTasks
-            .Where(todo => priorities.Contains(todo.priority.FixPriorityBug().Id))
+            .Where(todo => options.priorities
+                .TakeFirstRandom()
+                .AsList() // for case where there's going to be more than one, e.g. priority 2 AND 3 tasks.
+                .Contains(todo.priority.FixPriorityBug().Id))
             .OrderBy(todo => todo.created_at.ToDateTime()) // favor older tasks
             .Dump("sorted by created date")
-            .TakeRandom(take)
+            .TakeRandom(options.take)
             .ToList();
     }
 
@@ -127,4 +141,13 @@ public class Index : PageModel
         cached_todoist_stats = await this.todoist.GetProjectsAndTasks();
         return Partial("_TodoistTasksTable", this);
     }
+}
+
+public record FullDayOptions
+{
+    public static FullDayOptions Default = new();
+    public int take { get; set; } = 1;
+    public int[] priorities { get; set; } = new[] { 1 };
+    public List<string> excepted_labels = new List<string>();
+    public List<string> excepted_projects = new List<string>();
 }

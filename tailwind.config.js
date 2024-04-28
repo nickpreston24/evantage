@@ -291,7 +291,31 @@ module.exports = {
     },
     plugins: [require("daisyui")],
     daisyui: {
-        themes: true, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+        // themes: true, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+        themes: [
+            {
+                clownworld: {
+
+                    "primary": "#00ff00",
+
+                    "secondary": "#ff00ff",
+
+                    "accent": "#00ff00",
+
+                    "neutral": "#00ff00",
+
+                    "base-100": "#ffffff",
+
+                    "info": "#ff00ff",
+
+                    "success": "#00ff00",
+
+                    "warning": "#00ff00",
+
+                    "error": "#ff0000",
+                },
+            },],
+
         darkTheme: "dark", // name of one of the included themes for dark mode
         base: true, // applies background color and foreground color for root element by default
         styled: true, // include daisyUI colors and design decisions for all components

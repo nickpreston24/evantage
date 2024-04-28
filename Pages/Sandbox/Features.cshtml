@@ -1,0 +1,41 @@
+@page
+@using CodeMechanic.RazorHAT.Services
+@using evantage.Pages.Components
+@using System.Text.RegularExpressions
+@using CodeMechanic.FileSystem
+@using CodeMechanic.Types
+@model evantage.Pages.Sandbox.Features
+@inject IImageService images_svc
+@{
+    var images = images_svc.GetAllImages()
+        .Where(image => image.FilePath.Contains(".gif"))
+        .Select(img => img
+            .With(i => i.description = Regex
+                .Replace(i.RelativePath.RemoveFileExtension(), @"^/img.*/", "")
+                .Replace("-", " ")
+            ))
+        .ToArray();
+}
+
+<section class="min-h-screen flex flex-col items-center">
+    <h1>Features Gallery</h1>
+    <div class="grid grid-cols-2">
+        @foreach (var image in images)
+        {
+            <div class="border-2 border-info rounded-lg h-auto w-full m-4 flex flex-col items-center justify-center">
+                <div class="card w-96 bg-base-100 shadow-xl image-full">
+                    <figure>
+                        <img alt="@image.alt" src="@image.RelativePath"/>
+                    </figure>
+                    <div class="card-body">
+                        <h2 class="card-title">@image.alt</h2>
+                        <p>@image.description</p>
+                        @* <div class="card-actions justify-end"> *@
+                        @*     <button class="btn btn-primary">Buy Now</button> *@
+                        @* </div> *@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

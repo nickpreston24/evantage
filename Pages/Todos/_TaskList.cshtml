@@ -1,3 +1,6 @@
+@using CodeMechanic.Types
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CodeMechanic.Diagnostics
 @model List<CodeMechanic.Todoist.TodoistTask>
 
 @{
@@ -8,10 +11,25 @@
 
     @foreach (var task in Model)
     {
+        var days_old = (@task.due?.date?.ToDateTime(fallback: DateTime.Now) - @task.created_at?.ToDateTime())
+            .ToMaybe().IfSome(x => x.TotalDays);
+
         <li class="grid grid-cols-2 gap-2" x-data="{show_updates:false}">
             <a target="_blank" href="@task.url" class="text-lg text-secondary truncate">
                 @task.content
+
             </a>
+
+            @if (task?.due != null && task.due.date.NotEmpty())
+            {
+                <b class="text-warning">Due on: @task?.due?.date.ToDateTime(fallback: DateTime.Now)</b>
+            }
+            <b class="text-success">Created on: @task.created_at.ToDateTime(fallback: DateTime.MinValue)</b>
+
+            @if (@days_old > 0)
+            {
+                <b class="text-error">Days Old: @days_old</b>
+            }
 
             <div>
 
@@ -39,7 +57,6 @@
             <details class="text-info">
                 <div class="flex flex-col items-center justify-center gap-4">
                     <b>created on: @task.created_at</b>
-                    <b>due: @task?.due?.date</b>
                 </div>
             </details>
         </li>

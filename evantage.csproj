@@ -38,7 +38,7 @@
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.2" />
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.4" />
-        <PackageReference Include="CodeMechanic.RazorHAT" Version="1.0.8" />
+        <PackageReference Include="CodeMechanic.RazorHAT" Version="1.0.9" />
         <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4" />
         <PackageReference Include="CodeMechanic.Regex" Version="1.0.2" />
         <PackageReference Include="CodeMechanic.Types" Version="1.0.8" />

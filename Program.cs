@@ -38,6 +38,7 @@ builder.Services.AddSingleton<IRazorRoutesService2, RazorRoutesService2>();
 builder.Services.AddSingleton<IDownloadImages, ImageDownloader>();
 builder.Services.AddSingleton<IAirtableServiceV2, AirtableServiceV2>();
 builder.Services.AddSingleton<ITodoistService, TodoistService>();
+builder.Services.AddTransient<IImageService, ImageService>();
 
 builder.Services.AddControllers();
 

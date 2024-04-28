@@ -1,0 +1,39 @@
+@using CodeMechanic.Diagnostics
+@using CodeMechanic.Types
+@model Index
+@{
+    var full_week = @Model.FullWeek;
+
+    var day1 = @Model.FullDay;
+
+    // var distinct_ids = @full_week ... 
+    full_week.TakeFirstRandom().TodaysFrog.Dump("random weekday");
+}
+
+<section id="full_week_section border-2 border-primary">
+
+    <h1>Full Week</h1>
+    @foreach (var full_day in full_week)
+    {
+        <div id="full_day_tasks" class="grid grid-cols-1 grid-rows-auto gap-4">
+            <div class="card  border-2 border-primary">
+
+                <h2 class="text-2xl">LowHangingFruit</h2>
+                <partial name="_TaskList" model="full_day.LowHangingFruit"></partial>
+
+                <h2 class="text-2xl">Midday</h2>
+                <partial name="_TaskList" model="full_day.Midday"></partial>
+
+                <h2 class="text-2xl">Today's frogs:</h2>
+                <partial name="_TaskList" model="full_day.TodaysFrog"></partial>
+
+            </div>
+        </div>
+    }
+
+    @* <button *@
+    @*     hx-get *@
+    @*     hx-page="Index" *@
+    @*     hx-page-handler="FullDay"> *@
+    @* </button> *@
+</section>

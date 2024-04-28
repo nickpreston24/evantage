@@ -1,3 +1,5 @@
+using CodeMechanic.Types;
+
 namespace CodeMechanic.Todoist;
 
 public class TodoistTask
@@ -37,4 +39,5 @@ public class TodoistTask
     public string url { get; set; } = string.Empty;
 
     public Duration duration { get; set; } = new();
+    // public double DaysOld => (due.date.ToDateTime(fallback: DateTime.Now) - created_at?.ToDateTime()).Value.TotalDays;
 }

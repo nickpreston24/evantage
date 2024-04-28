@@ -9,7 +9,7 @@
 <ul>
     @foreach (var task in Model)
     {
-        <li class="grid grid-cols-1 gap-2 max-w-md border-error border-2" x-data="{show_updates:false}">
+        <li class="grid grid-cols-1 gap-2 max-w-md border-error border-0" x-data="{show_updates:true}">
             <a target="_blank" href="@task.url" class="text-lg text-secondary truncate">
                 @task.content
             </a>
@@ -27,8 +27,8 @@
                 <b class="text-error">Days Old: @Math.Round(@task.Age, 0)</b>
             }
 
-            <div class="flex flex-row border-2 border-success">
-                <button class="btn btn-accent btn-sm" x-on:click="show_updates=!show_updates">Actions</button>
+            <div class="flex flex-row border-0 border-success">
+                @* <button class="btn btn-accent btn-sm" x-on:click="show_updates=!show_updates">Actions</button> *@
                 <div x-show="show_updates" class="flex flex-col">
                     <div class="form-control">
                         <label class="cursor-pointer label">

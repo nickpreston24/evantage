@@ -18,8 +18,10 @@ public class CurlRegex : Enumeration
         @"curl\s*((-X)?\s(?<execution_method>GET)?\s\\\s*)?""?(?<uri>https:\/\/.*?)""?\s*\\\s*-H(?<raw_headers>\s*""Authorization:\s*Bearer\s*(?<bearer_token>\$?\w+)"")");
 
     // https://regex101.com/r/QAkG7A/1
+    // @"^\s*\$?\s*curl\s*""https.*\s*\\\s*-X\s*(?<execution_method>GET|POST|DELETE)\s*\\\s*(--data(?<json_data>.*))?(?:\\)?\s*(?<raw_headers>(-H\s*""(?<header_name>[a-zA-Z-]+):(?<header_value>.*|(\s*Bearer\s(?<bearer_token>[a-zA-Z\d]+)))""\s*\\?)\s*)*"
     public static CurlRegex POST = new CurlRegex(2, nameof(POST),
-        @"^\s*\$?\s*curl\s*""https.*\s*\\\s*-X\s*(?<execution_method>GET|POST|DELETE)\s*\\\s*(--data(?<json_data>.*))?(?:\\)?\s*(?<raw_headers>(-H\s*""(?<header_name>[a-zA-Z-]+):(?<header_value>.*|(\s*Bearer\s(?<bearer_token>[a-zA-Z\d]+)))""\s*\\?)\s*)*");
+        @"(#*)(\s|\r\n)*curl\s""(?<uri>https://.*"")\s*\\?(\s|\r\n)*-X\s(?<execution_method>POST)\s*\\?(\s|\r\n)*--data\s'(?<data>.*)'\s*\\?(?<all_headers>(\s|\r\n)*-H.*)*"
+    );
 
     // todo: https://regex101.com/r/qYhFGD/1
     public static CurlRegex HEADERS = new CurlRegex(3, nameof(HEADERS),

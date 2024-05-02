@@ -27,8 +27,10 @@
         Credit:
         https://stackoverflow.com/questions/69258345/add-all-files-in-folder-including-sub-dir-as-embedded-resource
         -->
-        <EmbeddedResource Include="Pages\**\*.cypher"></EmbeddedResource>
-        <EmbeddedResource Include="Pages\**\*.sql"></EmbeddedResource>
+        <EmbeddedResource Include="**\*.cypher"></EmbeddedResource>
+        <EmbeddedResource Include="**\*.sql"></EmbeddedResource>
+        <EmbeddedResource Include="**\*.curl"></EmbeddedResource>
+        <EmbeddedResource Include="**\*.rest"></EmbeddedResource>
     </ItemGroup>
 
 

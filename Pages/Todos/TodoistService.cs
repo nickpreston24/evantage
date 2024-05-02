@@ -1,12 +1,15 @@
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.Caching;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Curl;
 using CodeMechanic.Diagnostics;
+using CodeMechanic.FileSystem;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace CodeMechanic.Todoist;
 
@@ -87,7 +90,7 @@ public class TodoistService : ITodoistService
     public async Task<List<TodoistComment>> GetTaskComments(string task_id)
     {
         string curl = $"""
-            curl "https://api.todoist.com/rest/v2/comments?task_id={ task_id}  " \
+            curl "https://api.todoist.com/rest/v2/comments?task_id={ task_id}                            " \
                 -H "Authorization: Bearer $token"
         """ ;
 
@@ -166,9 +169,85 @@ public class TodoistService : ITodoistService
         return stats;
     }
 
-    public Task<TodoistTask> UpdateTask(TodoistTask task)
+    public async Task<TodoistTask> UpdateTask(TodoistTask todo)
     {
-        throw new NotImplementedException();
+        bool debug = true;
+
+        todo.content = todo.content + "zzz";
+        todo.due = new Due() { date = DateTime.Now.ToString() };
+
+        string json = JsonConvert.SerializeObject(
+            todo,
+            Formatting.Indented,
+            new JsonSerializerSettings
+            {
+                // ContractResolver = new WritablePropertiesOnlyResolver(),
+                ContractResolver = new ExcludeCalculatedResolver(),
+                Converters = new List<JsonConverter>
+                {
+                    new Newtonsoft.Json.Converters.StringEnumConverter()
+                },
+                NullValueHandling = true
+                    ? NullValueHandling.Ignore
+                    : NullValueHandling.Include,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }
+        );
+
+        // // string task_id = updates.id;
+        // string filename = "post-todo.curl";
+        // // string curl = ReadResourceFile();
+        //
+        // var curl_files = new Grepper()
+        //     {
+        //         RootPath = Directory.GetCurrentDirectory(),
+        //         FileSearchMask = "*.curl"
+        //     }.GetFileNames().ToArray()
+        //     // .Dump("curl files found")
+        //     ;
+
+        // string curl = File.ReadAllText(curl_files.SingleOrDefault(x => x.Contains(filename)) ?? string.Empty);
+
+        // Console.WriteLine("raw curl:>> " + curl);
+        // Console.WriteLine("json updates :>> " + json);
+
+        // string todoist_task = JsonConvert.SerializeObject(updates);
+
+        // Console.WriteLine("serialized todo: " + todoist_task);
+
+
+        // var options = //GetClient(curl)
+        //         curl.Extract<CurlOptions>(@"curl\s""(?<uri>https://.*"")")
+        // https://regex101.com/r/b7c7jv/1
+        //             .Dump("curl bits")
+        //             .FirstOrDefault()
+        //     ;
+
+
+        // string uri = options.uri;
+        // string bearer_token = options.bearer_token;
+
+        // Console.WriteLine("uri :>> " + uri);
+
+
+        // Console.WriteLine(" extracted bearer token :>> " + bearer_token);
+        // return default;
+
+
+        string uri = "https://api.todoist.com/rest/v2/tasks/$task_id".Replace("$task_id", todo.id);
+
+        using HttpClient http = new HttpClient();
+        http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", api_key);
+        Console.WriteLine(uri);
+        var requestContent = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await http.PostAsync(uri, requestContent);
+        response.EnsureSuccessStatusCode();
+        var content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("content :>> " + content);
+        // if (debug)
+        //     Console.WriteLine("content :>> " + content);
+
+        return default;
     }
 
     private TodoistStats CreateStats(string[] responses)
@@ -305,6 +384,45 @@ public class TodoistService : ITodoistService
             {
                 return reader.ReadToEnd();
             }
+        }
+    }
+
+    /// <summary>
+    /// Source: https://stackoverflow.com/questions/18543482/is-there-a-way-to-ignore-get-only-properties-in-json-net-without-using-jsonignor
+    /// </summary>
+    sealed class WritablePropertiesOnlyResolver : DefaultContractResolver
+    {
+        protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
+        {
+            IList<JsonProperty> props = base.CreateProperties(type, memberSerialization);
+            return props.Where(p => p.Writable).ToList();
+        }
+    }
+
+    sealed class ExcludeCalculatedResolver : DefaultContractResolver
+    {
+        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+        {
+            var property = base.CreateProperty(member, memberSerialization);
+            property.ShouldSerialize = _ => ShouldSerialize(member);
+            return property;
+        }
+
+        internal static bool ShouldSerialize(MemberInfo memberInfo)
+        {
+            var propertyInfo = memberInfo as PropertyInfo;
+            if (propertyInfo == null)
+            {
+                return false;
+            }
+
+            if (propertyInfo.SetMethod != null)
+            {
+                return true;
+            }
+
+            var getMethod = propertyInfo.GetMethod;
+            return Attribute.GetCustomAttribute(getMethod, typeof(CompilerGeneratedAttribute)) != null;
         }
     }
 }

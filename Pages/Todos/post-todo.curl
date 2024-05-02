@@ -1,0 +1,7 @@
+###
+curl "https://api.todoist.com/rest/v2/tasks/$task_id" \
+        -X POST \
+        --data '$data' \
+        -H "Content-Type: application/json" \
+        -H "X-Request-Id: $(uuidgen)" \
+        -H "Authorization: Bearer $token"

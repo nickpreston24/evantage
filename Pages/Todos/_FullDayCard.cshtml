@@ -1,14 +1,14 @@
+@using CodeMechanic.Diagnostics
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Htmx.TagHelpers
 @model Index
 @{
     // var sample_fullday = new MyFullDay()
     // {
     //     TodaysFrog = new TodoistTask() { content = "create full day cards", priority = "1" }.AsList(),
     // };
-    @* @Model.todoist_stats.TodoistTasks.Count.Dump("total tasks") *@
 
     var full_day = @Model.FullDay;
-
-    Model.todoist_stats.TodoistTasks.Count.Dump("total tasks");
 }
 <div class="card card-compact w-128 bg-base-100 shadow-xl">
     @* figure usually goes here *@

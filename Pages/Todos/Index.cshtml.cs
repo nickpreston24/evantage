@@ -1,8 +1,10 @@
 using CodeMechanic.Advanced.Regex;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Todoist;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace evantage.Pages.Todos;
 
@@ -206,8 +208,60 @@ public class Index : PageModel
         return Partial("_TodoistTasksTable", this);
     }
 
+    public async Task<IActionResult> OnGetToggleCompleted(string task_id, bool completed = false)
+    {
+        Console.WriteLine(nameof(OnGetToggleCompleted));
+
+        if (task_id.IsEmpty())
+            return Content("Could not update an empty task id.");
+
+        try
+        {
+            // string json = 
+
+            // string json = "{}"; // (new TodoistTask() { id = task_id, is_completed = completed }).Serialize();
+
+            var todo = cached_todoist_stats.TodoistTasks
+                    .SingleOrDefault(t => t.id == task_id)
+                    .With(t =>
+                    {
+                        t.id = task_id;
+                        t.is_completed = completed;
+                    })
+                ;
+            
+            var result = await todoist.UpdateTask(todo);
+            return Content($"<p class='alert alert-success'>Task completed {task_id} set to {completed}<p>");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return Content($"<p class='alert alert-error'>{e.Message}</p>");
+        }
+    }
+
+
     public async Task<IActionResult> OnGetSetPriority(string task_id, string priority)
     {
-        return Content("Done.");
+        // Todo: needs fixing
+        Console.WriteLine(nameof(OnGetSetPriority));
+        // task_id.Dump(nameof(task_id));
+        // priority.Dump(nameof(priority));
+        if (task_id.IsEmpty())
+            return Content("Could not update an empty task id.");
+        if (priority.IsEmpty())
+            return Content("Could not update an empty priority.");
+
+        // try
+        // {
+        //     var result = await todoist.UpdateTask(new TodoistTask() { id = task_id, priority = priority });
+        //     return Content("Priority set to " + result.priority);
+        // }
+        // catch (Exception e)
+        // {
+        //     Console.WriteLine(e);
+        //     return Content($"<p class='alert alert-error'>{e.Message}</p>");
+        // }
+        return Content($"<p class='alert alert-success'>Task {task_id} set to Priority {priority}<p>");
     }
 }

@@ -7,6 +7,7 @@
 }
 
 <ul>
+    <li id="content"></li>
     @foreach (var task in Model)
     {
         <li class="grid grid-cols-1 gap-2 max-w-md border-error border-0" x-data="{show_updates:true}">
@@ -33,26 +34,54 @@
                     <div class="form-control">
                         <label class="cursor-pointer label">
                             <span class="label-text">Complete</span>
-                            <input type="checkbox" class="checkbox checkbox-accent"/>
+                            @* hx-get="@Url.Page("Index", "ToggleCompleted", new { task_id = @task.id, completed = !@task.is_completed })" *@
+                            <input
+                                hx-trigger="change"
+                                hx-get
+                                hx-target="#content"
+                                hx-page-handler="ToggleCompleted"
+                                hx-vals='{"task_id": "@task.id", "completed": "True"}'
+                                hx-swap="innerHTML"
+                                type="checkbox"
+                                class="checkbox checkbox-accent"/>
                         </label>
                     </div>
-                    <select class="select select-accent w-full max-w-xs"
-                            hx-trigger="selected"
-                            hx-get
-                            hx-page="Index"
-                            hx-target="#update_result"
-                            hx-page-handler="SetPriority">
-                        <option disabled selected>Choose Priority</option>
 
-                        @foreach (var priority in priorities_select)
-                        {
-                            <option
-                            >
-                                @priority
-                            </option>
-                        }
-                        <span id="update_result"></span>
-                    </select>
+                    @* <form class="border-0" *@
+                    @*       hx-get="@Url.Page("Index", "SetPriority", new { task_id = @task.id, priority = "4" })" *@
+                    @*       hx-swap="innerHTML" *@
+                    @*       hx-include='*' *@
+                    @*       hx-target="#content" *@
+                    @*       hx-trigger="input,change"> *@
+                    @*     <input type="text" name="search" id="search"> *@
+                    @*     <select name="category" id="category"> *@
+                    @*         <option value="">All</option> *@
+                    @*         @foreach (var priority in priorities_select) *@
+                    @*         { *@
+                    @*             <!--https://github.com/bigskysoftware/htmx/issues/1565 --> *@
+                    @*             <option value="@task.id">@priority</option> *@
+                    @*         } *@
+                    @* *@
+                    @*     </select> *@
+                    @* </form> *@
+
+
+                    @* <select id="options"> *@
+                    @*     <option disabled selected>Choose Priority</option> *@
+                    @* *@
+                    @*     @foreach (var priority in priorities_select) *@
+                    @*     { *@
+                    @*         <option *@
+                    @*             hx-trigger="change from:#options" *@
+                    @*             hx-target="#content" *@
+                    @*             hx-get="@Url.Page("Index", "SetPriority", new { task_id = @task.id, priority = @priority })" *@
+                    @*             value="@priority"> *@
+                    @*             @priority *@
+                    @*         </option> *@
+                    @*     } *@
+                    @* </select> *@
+                    @* *@
+
                 </div>
             </div>
             @* <details class="text-info"> *@
@@ -63,6 +92,7 @@
         </li>
     }
 </ul>
+
 
 <style>
     .truncate {

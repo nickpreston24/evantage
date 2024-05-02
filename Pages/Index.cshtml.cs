@@ -269,7 +269,7 @@ public class IndexModel : PageModel
                 )
             ;
         // var options = GetClient(raw_get);
-        options.Dump("extracted_curl_request");
+        // options.Dump("extracted_curl_request");
         return new List<Lead>();
 
         // Call

@@ -268,4 +268,25 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
 
 ### Portfolio page
 1. Create a scrolling, virtual resume that takes users through a timeline, describing what you do and where you're at now.
-2. 
+
+
+### Job Hunt 
+
+- [ ] Create a simple Service and 2 forms and 1 grid to track your applications
+- [ ] Create a basic stats panel and maybe a graph showing trends.
+- [ ] Create a grid specifically for applications over 30 days old (for reapplying)
+- [ ] Copy existing, raw airtable data and use a regex to parse it and load it to your Mysql server.
+
+### Project-Specific Grids
+
+- [ ] Create a re-useable grid that accepts a project name in the curl, and title of grid, and loads only that Todoist project.
+- [ ] Start using this for Job Hunting.
+
+
+### Show recently added Todoist and Older tasks and ask if they are done.
+
+I want to be able to see my latest Todos and tick them off, without creating a Reschedule problem.
+
+- [ ] Add a 'recently added' view
+- [ ] Add another 'older tasks' view, sorted by Priority
+- [ ] Fix the searchbar for the main table view.

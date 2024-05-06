@@ -1,0 +1,27 @@
+@page
+@model evantage.Pages.Jobs.Contacts
+
+@{
+}
+
+
+<section>
+
+    <p>Put an iframe here, listing Airtable contacts.. Also, a form, for now</p>
+
+    <button
+        hx-get
+        hx-page="Contacts"
+        hx-target="#contacts"
+        hx-trigger="revealed"
+        hx-indicator="#loading"
+        hx-page-handler="AllContacts">
+        Load Contacts
+    </button>
+
+    <span id="contacts">...</span>
+    <img
+        id="loading" alt="Result loading..."
+        class="htmx-indicator ml-4 md:w-6 sm:w-4"
+        src="~/img/bars.svg"/>
+</section>

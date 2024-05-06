@@ -1,0 +1,82 @@
+@page
+@using Hydro
+@using evantage.Pages.Components
+@using evantage.Models
+@model evantage.Pages.Jobs.Index
+
+@{
+    var main_routes = new List<TooltipRoute>()
+    {
+        new TooltipRoute()
+        {
+            Tip = "Jobs Home (sample link)"
+            , Link = "/Jobs"
+            , Title = "Jobs Home"
+        },
+        new TooltipRoute()
+        {
+            Tip = "Stats showing your progress"
+            , Link = "/Jobs/Statistics"
+            , Title = "Stats"
+        },
+        new TooltipRoute()
+        {
+            Tip = "See your Contacts"
+            , Link = "/Jobs/Contacts"
+            , Title = "Contacts"
+        }
+    };
+
+}
+
+
+<section>
+
+    <hydro-hero>
+        <slot name="title">Jobs</slot>
+
+        <ul x-show="true" class="menu menu-horizontal bg-base-200 rounded-box mt-6">
+            @foreach (var route in main_routes)
+            {
+                <li>
+                    <a class="tooltip"
+                       data-tip="Go to @route.Tip"
+                       href="@route.Link">
+                        @route.Title
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </a>
+                </li>
+            }
+        </ul>
+    </hydro-hero>
+
+
+    <section x-show="false" id="dashboard-contents" class="flex flex-row">
+        <div x-show="false" class="w-1/4">
+            <div class="bg-info/25">
+                <div class="border-info/25 border-0">
+                </div>
+            </div>
+        </div>
+
+        <div class="w-3/4">
+
+            <div x-show="false" class="bg-accent-content/25">
+                <div class="border-accent/25 border-0">
+                    <div class="max-w-3/4">
+                        @* Todo: Move this to its own RAzor page and refactor out a hydro component if it makes sense
+                            It doesn't work well as a partial with 3 services injected into it.*@
+                        @* <partial name="_NotesGraph"></partial> *@
+                    </div>
+
+                    @* <partial name="_CommissionCalculator" model="@commission"/> *@
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+</section>

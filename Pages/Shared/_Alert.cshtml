@@ -1,0 +1,10 @@
+@model Exception
+
+@{
+    var ex = Model;
+}
+
+<div>
+    <p class="lg:text-sm alert-error">@ex.Message</p>
+    <details class="text-warning">@ex.ToString()</details>
+</div>

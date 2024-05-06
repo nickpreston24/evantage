@@ -1,0 +1,15 @@
+@model List<Contact>
+@{
+    var contacts = @Model;
+}
+
+<section>
+    @foreach (var contact in contacts)
+    {
+        <div class="card">
+            <div class="card-body">
+                <p>@contact.Email</p>
+            </div>
+        </div>
+    }
+</section>

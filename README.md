@@ -246,10 +246,10 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
 
 ### Special Features todo page
 
-- [ ] Read `Readme.md` as a `string[]` - p2
+- [x] Read `Readme.md` as a `string[]` - p2
 - [ ] Extract out `p1`s thru `p4` and sort by priority, desc on the page. - p2
-- [ ] readonly, for now.  Easy way to track. :)
-- [ ] unmarked tasks at the bottom labeled (in red) "unsorted"
+- [x] readonly, for now.  Easy way to track. :)
+- [ ] unlabeled tasks at the bottom labeled (in red) "unsorted"
 - [ ] tasks that are checked, show at the bottom, disabled or crossed off. p3
 
 ### Offline Mode

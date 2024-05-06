@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Curl;
 using CodeMechanic.Diagnostics;
-using CodeMechanic.FileSystem;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

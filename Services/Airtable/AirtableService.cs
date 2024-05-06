@@ -62,12 +62,12 @@ public class AirtableServiceV2 : IAirtableServiceV2
         if (string.IsNullOrEmpty(search.table_name))
             search.table_name = typeof(T).Name + "s";
 
-        string airtable_pat = Environment.GetEnvironmentVariable("AIRTABLE_SALES_SPY_PAT") ?? "<AIRTABLE_SALES_SPY_PAT>";
-        // Console.WriteLine("api key:>>" + api_key);
-        Console.WriteLine("base id:>>" + base_id);
-        Console.WriteLine("pat:>>" + airtable_pat);
+        if (debug) Console.WriteLine("base id:>>" + base_id);
+        if (debug) Console.WriteLine("pat:>>" + search.airtable_pat);
+        if (debug) search.Dump(nameof(search));
+
         using HttpClient http_client = new HttpClient();
-        http_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", airtable_pat);
+        http_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", search.airtable_pat);
         // http_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", api_key);
         string url = search
                 // .With(s =>
@@ -78,16 +78,15 @@ public class AirtableServiceV2 : IAirtableServiceV2
                 .AsQuery()
             // .Dump("Full query:>>")
             ;
-        Console.WriteLine("url:>> " + url);
+        if (debug) Console.WriteLine("url:>> " + url);
         var response = await http_client.GetAsync(url);
 
-        if (debug)
-            response.Dump("raw response");
+        if (debug) response.Dump("raw response");
 
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
-        Console.WriteLine("Here's the raw JSON:");
+        if (debug) Console.WriteLine("Here's the raw JSON:");
         Console.WriteLine(json);
 
         // var list = new RecordList<T>(json);

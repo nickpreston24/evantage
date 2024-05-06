@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 using AirtableApiClient;
@@ -19,13 +18,14 @@ public class AirtableSearchV2
     )
     {
         debugMode = debug_mode;
-        this.base_id = baseId;
-        this.table_name = tableName;
+        this.base_id = baseId ?? throw new ArgumentNullException(nameof(baseId));
+        this.table_name = tableName ?? throw new ArgumentNullException(nameof(tableName));
         this.maxRecords = maxRecords;
     }
 
     // private static string[] prop_names = { };
-    private static PropertyInfo[] props { get; set; } = { };
+    // private static PropertyInfo[] props { get; set; } = { };
+    public string airtable_pat { get; set; } = string.Empty;
     public string base_id { get; set; } = string.Empty;
     public string table_name { get; set; } = string.Empty;
     public string offset { get; set; } = string.Empty;
@@ -93,10 +93,14 @@ public class AirtableSearchV2
         // if (debugMode) prop_values.Dump("All search values");
 
         var prop_values = this.ToDictionary();
+        // if (debugMode)
+        // prop_values.Dump(nameof(prop_values));
         var props = typeof(AirtableSearchV2).GetProperties();
         string[] prop_names = props.Select(p => p.Name).ToArray();
+        prop_names.Dump(nameof(prop_names));
         var blacklist = new[] { nameof(table_name), "sort", "fields" };
 
+        Console.WriteLine("base_id = " + base_id);
         string query =
             new StringBuilder($"https://api.airtable.com/v0/{base_id}/{table_name}?")
                 .AppendEach(
@@ -119,46 +123,6 @@ public class AirtableSearchV2
         return query;
     }
 }
-
-public static class ObjectToDictionaryHelper
-{
-    public static IDictionary<string, object> ToDictionary(this object source)
-    {
-        return source.ToDictionary<object>();
-    }
-
-    public static IDictionary<string, T> ToDictionary<T>(this object source)
-    {
-        if (source == null)
-            ThrowExceptionWhenSourceArgumentIsNull();
-
-        var dictionary = new Dictionary<string, T>();
-        foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(source))
-            AddPropertyToDictionary<T>(property, source, dictionary);
-
-        return dictionary;
-    }
-
-    private static void AddPropertyToDictionary<T>(PropertyDescriptor property, object source,
-        Dictionary<string, T> dictionary)
-    {
-        object value = property.GetValue(source);
-        if (IsOfType<T>(value))
-            dictionary.Add(property.Name, (T)value);
-    }
-
-    private static bool IsOfType<T>(object value)
-    {
-        return value is T;
-    }
-
-    private static void ThrowExceptionWhenSourceArgumentIsNull()
-    {
-        throw new ArgumentNullException("source",
-            "Unable to convert object to a dictionary. The source object is null.");
-    }
-}
-
 
 /// <summary>
 ///  todo : use this to get shapes of data if you have to:

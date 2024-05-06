@@ -1,4 +1,4 @@
-namespace evantage.Pages.Leads;
+namespace evantage.Models;
 
 public record TooltipRoute
 {

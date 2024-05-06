@@ -12,7 +12,7 @@ namespace evantage.Pages.CarCapital.Inventory;
 public class Index : PageModel
 {
     private readonly IEmbeddedResourceQuery embeddedResourceQuery;
-    private readonly IDriver driver;
+    // private readonly IDriver driver;
 
     // Search fields
     public string Name { get; init; } = string.Empty;
@@ -33,14 +33,15 @@ public class Index : PageModel
 
     public Index(
         IEmbeddedResourceQuery embeddedResourceQuery
-        , IDriver driver)
+        // , IDriver driver
+        )
     {
         this.embeddedResourceQuery = embeddedResourceQuery;
-        this.driver = driver;
+        // this.driver = driver;
         _cars.Count.Dump("inventory (cached)");
         AllCarInventory.Count.Dump("inventory");
     }
-
+    
     public async Task<IActionResult> OnPostValidate()
     {
         var cars_from_db = new List<Car>()

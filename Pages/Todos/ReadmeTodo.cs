@@ -1,18 +1,23 @@
+using CodeMechanic.Types;
+
 namespace CodeMechanic.Todoist;
 
-public class ProjectTodo
+public class ReadmeTodo
 {
     // properties
     public string Name { get; set; } = string.Empty;
+
     public string Description { get; set; } = string.Empty;
-    private bool Completed { get; set; }
+
+    public bool Completed =>
+        is_checked_raw.NotEmpty() && is_checked_raw.Contains("X", StringComparison.OrdinalIgnoreCase);
 
 
     // raw parsed values
     public string rest { get; set; } = string.Empty;
     public string tagged_words { get; set; } = string.Empty;
     public string full_line { get; set; } = string.Empty;
-    public bool is_checked_raw { get; set; }
+    public string is_checked_raw { get; set; } = string.Empty;
 
     public List<TodoistLabel> Labels { get; set; } = new();
 

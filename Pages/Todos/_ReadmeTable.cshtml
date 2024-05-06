@@ -1,0 +1,42 @@
+@using CodeMechanic.Types
+@model List<CodeMechanic.Todoist.ReadmeTodo>
+@{
+    var rows = Model;
+    int limit = 1000;
+}
+
+<div class="overflow-x-auto wrapper">
+    <b>Rows: @rows.Count</b>
+
+    <table class="table w-full">
+        <thead>
+        <tr>
+            <th>Is Complete</th>
+            <th>Is Checked (raw)</th>
+            <th>Description / Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var row in rows.Take(limit))
+        {
+            <tr x-data="{show_details: false}">
+                <th>
+                    <label>
+                        <input type="checkbox" class="checkbox" checked="@row.Completed"/>
+                    </label>
+                </th>
+                @* <td> *@
+                @*     <div class="flex items-center gap-3"> *@
+                @*         <div> *@
+                @*             <div class="text-lg text-primary">@row.is_checked_raw</div> *@
+                @*         </div> *@
+                @*     </div> *@
+                @* </td> *@
+                <td>
+                    @row.rest
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

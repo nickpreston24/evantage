@@ -4,7 +4,6 @@ using CodeMechanic.Todoist;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
 
 namespace evantage.Pages.Todos;
 
@@ -20,6 +19,11 @@ public class Index : PageModel
     public bool sort_by_priority { get; set; } = true;
 
     public int current_fullday_goal { get; set; } = 5;
+
+
+    private static bool get_all_todoist_on_load = false;
+    private static bool get_all_todoist_on_htmxevent = false;
+
 
     // public TodoistStats todoist_stats { get; set; } = new();
     public TodoistStats todoist_stats => cached_todoist_stats;
@@ -49,19 +53,21 @@ public class Index : PageModel
     public async Task OnGet()
     {
         // throw new Exception("some dingle-headed microsoft error");
-        var stats = await this.todoist.GetProjectsAndTasks();
-        stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
+        if (get_all_todoist_on_load)
         {
-            sort_by_date = true,
-            sort_by_priority = true
-        });
+            var stats = await this.todoist.GetProjectsAndTasks();
+            stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
+            {
+                sort_by_date = true,
+                sort_by_priority = true
+            });
 
-        cached_todoist_stats = stats;
+            cached_todoist_stats = stats;
 
-
-        project_total_count = todoist_stats.TodoistProjects.Count;
-        completed_tasks_count = todoist_stats.CompletedTasks.Count;
-        all_tasks_count = todoist_stats.TodoistTasks.Count;
+            project_total_count = todoist_stats.TodoistProjects.Count;
+            completed_tasks_count = todoist_stats.CompletedTasks.Count;
+            all_tasks_count = todoist_stats.TodoistTasks.Count;
+        }
     }
 
     public async Task<IActionResult> OnGetFullDay()
@@ -172,7 +178,7 @@ public class Index : PageModel
         return Content($"<b>{comment.content}</b>");
     }
 
-    public async Task<IActionResult> OnGetAllProjectTodos()
+    public async Task<IActionResult> OnGetAllReadmeTodos()
     {
         var readme_file = markdown
             // .Dump("all")
@@ -181,29 +187,41 @@ public class Index : PageModel
 
         string[] readme_lines = System.IO.File.ReadAllLines(readme_file.FilePath);
 
-        var priorities = readme_lines
-                .SelectMany(l => l.Extract<Priority>(Priority.Pattern))
-            // .Dump("priorities")
-            ;
+        Console.WriteLine("README.md line count :>> " + readme_lines.Length);
+        // var priorities = readme_lines
+        //         .SelectMany(l => l.Extract<Priority>(Priority.Pattern))
+        //     ;
 
+        // .Dump("priorities")
         // string readme_text = System.IO.File.ReadAllText(readme_file.FilePath);
         // Console.WriteLine(readme_text);
 
-        // var todos_from_readme = readme_text.Extract<ProjectTodo>(TodoPattern.ReadmeCheckbox.Pattern);
-        // todos_from_readme.Dump(nameof(todos_from_readme));
+        /*FILTERS*/
+        bool sort_by_checked = true;
+        var todos_from_readme = readme_lines
+            .SelectMany(line => line
+                .Extract<ReadmeTodo>(TodoPattern.ReadmeCheckbox.Pattern))
+            .If(sort_by_checked, r => r
+                .OrderByDescending(readmeTodo => readmeTodo.Completed))
+            .ToList();
 
-        return Partial("_ProjectsTable", new List<ProjectTodo>());
+        Console.WriteLine("total todos found in README.md: " + todos_from_readme.Count);
+
+        return Partial("_ReadmeTable", todos_from_readme);
     }
 
     public async Task<IActionResult> OnGetAllTodoistTasks()
     {
-        var stats = await this.todoist.GetProjectsAndTasks();
-
-        stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
+        if (get_all_todoist_on_htmxevent)
         {
-        });
+            var stats = await this.todoist.GetProjectsAndTasks();
 
-        cached_todoist_stats = stats;
+            stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
+            {
+            });
+
+            cached_todoist_stats = stats;
+        }
 
         return Partial("_TodoistTasksTable", this);
     }
@@ -229,7 +247,7 @@ public class Index : PageModel
                         t.is_completed = completed;
                     })
                 ;
-            
+
             var result = await todoist.UpdateTask(todo);
             return Content($"<p class='alert alert-success'>Task completed {task_id} set to {completed}<p>");
         }

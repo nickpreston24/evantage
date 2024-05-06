@@ -40,7 +40,6 @@
                 <span class="text-sm">
                     Stats
                 </span>
-
             </button>
         </span>
         <span :class="blades.projects_breakdown.classname" class="tooltip" data-tip="List of Todoist Projects">
@@ -64,9 +63,11 @@
             <partial name="TodoistTasks"></partial>
         </div>
 
-        <div x-transition x-show="blades.readme_table.show" class="bento  p-4 bento-shadow-blue col-span-2 md:col-span-1">
+        @* <template x-if="blades.readme_table.show"> *@
+        <div x-transition x-show="blades.readme_table.show" class="bento p-4 bento-shadow-blue col-span-2">
             <partial name="ReadmeTasks"></partial>
         </div>
+        @* </template> *@
 
         <section
             x-transition
@@ -176,8 +177,8 @@
                 stats: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
                 projects_breakdown: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
                 todos_table: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
-                readme_table: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},    
-                full_day: {show:true, get classname() {return !this.show? 'tooltip':special_hover_border}} 
+                readme_table: {show:true, get classname() {return !this.show? 'tooltip':special_hover_border}},    
+                full_day: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}} 
             }
             // ,
             // save_blades(){

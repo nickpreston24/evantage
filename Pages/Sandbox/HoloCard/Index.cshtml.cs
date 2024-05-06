@@ -8,7 +8,7 @@ using Neo4j.Driver;
 namespace evantage.Pages.CarCapital.Inventory;
 //Note: to remove all comments, replace this pattern with nothing:  // .*$
 
-[BindProperties]
+[BindProperties(SupportsGet = true)]
 public class Index : PageModel
 {
     private readonly IEmbeddedResourceQuery embeddedResourceQuery;
@@ -34,15 +34,17 @@ public class Index : PageModel
     public Index(
         IEmbeddedResourceQuery embeddedResourceQuery
         // , IDriver driver
-        )
+    )
     {
         this.embeddedResourceQuery = embeddedResourceQuery;
         // this.driver = driver;
-        _cars.Count.Dump("inventory (cached)");
-        AllCarInventory.Count.Dump("inventory");
+
+
+        // _cars.Count.Dump("inventory (cached)");
+        // AllCarInventory.Count.Dump("inventory");
     }
-    
-    public async Task<IActionResult> OnPostValidate()
+
+    public void OnGet()
     {
         var cars_from_db = new List<Car>()
         {
@@ -69,11 +71,16 @@ public class Index : PageModel
             }
         };
 
-        return Partial("CarCapitalCorpCard",
-            cars_from_db
-                .TakeFirstRandom()
-                .Dump("requested car"));
+        _cars = cars_from_db;
     }
+
+    // public async Task<IActionResult> OnPostValidate()
+    // {
+    //     return Partial("CarCapitalCorpCard",
+    //         _cars
+    //             .TakeFirstRandom()
+    //             .Dump("requested car"));
+    // }
 }
 
 

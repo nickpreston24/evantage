@@ -1,7 +1,9 @@
-@model evantage.Models.Hologram
+@model evantage.Pages.Shared.HydroHologramCard
+
 @{
-  var hologram = Model;
+    var hologram = Model;
 }
+
 
 <style>
     :root {
@@ -144,7 +146,7 @@
     }
     
     .screen > .screen-image {
-      background-image: url(@hologram.Image_Url);
+      background-image: url(@hologram.Src);
       height: 100%;
       width: 100%;
       position: absolute;
@@ -361,7 +363,6 @@
 
 <div class="screen">
     <div class="screen-image"></div>
-    @* <div class="screen-image" style="background-image: uri(@hologram.Image_Url);"></div> *@
     <div class="screen-overlay"></div>
     <div class="screen-content">
         <i class="screen-icon fa-brands fa-codepen"></i>

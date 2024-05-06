@@ -1,12 +1,42 @@
 @page
 @using evantage.Pages.CarCapital.Inventory
 @using evantage.Models
+@using CodeMechanic.Diagnostics
+@using CodeMechanic.Types
 @model evantage.Pages.CarCapital.Inventory.Index
 @{
-    var car = new Car();
+    // var car = new Car();
     var hologram = new Hologram();
 
+
+    var cars = Model.AllCarInventory;
+    // var holograms = Model.AllCarInventory
+    //     .Select(car => car.Map(c => new Hologram()
+    //     {
+    //         Image_Url = c.Image_Url,
+    //         Name = c.Name
+    //     }))
+    //     ;
+    // cars.Dump("ready");
 }
 
 
-<partial name="_HologramCard" model="@hologram"></partial>
+<section class="grid grid-cols-2 gap-4">
+
+
+    @foreach (var car in cars)
+    {
+        <holo-card name="@car.Name" src="@car.Image_Url">
+
+        </holo-card>
+    }
+</section>
+
+<template x-if="false">
+
+    <section class="grid grid-cols-2 gap-4">
+        <holo-card name="Foobar" src="@hologram.Image_Url"></holo-card>
+
+        <partial name="_HologramCard" model="@hologram"></partial>
+    </section>
+</template>

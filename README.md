@@ -290,3 +290,4 @@ I want to be able to see my latest Todos and tick them off, without creating a R
 - [ ] Add a 'recently added' view
 - [ ] Add another 'older tasks' view, sorted by Priority
 - [ ] Fix the searchbar for the main table view.
+- [ ] Add [FuzzySearch](https://github.com/JakeBayer/FuzzySharp) powered bar.

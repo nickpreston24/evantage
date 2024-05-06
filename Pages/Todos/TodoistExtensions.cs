@@ -62,7 +62,7 @@ public static class TodoistExtensions
             .If(options.excluded_labels.Count > 0,
                 todos => todos
                     .Where(todo => !options.excluded_labels
-                        .Dump("excluding these labels")
+                        // .Dump("excluding these labels")
                         .Intersect(todo.labels).Any()))
             .If(options.excluded_projects.Count > 0,
                 todos => todos

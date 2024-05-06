@@ -41,10 +41,48 @@ public class TodoistTask
     public Duration duration { get; set; } = new();
 
     
-    /** API stuff (https://developer.todoist.com/rest/v2/?shell#update-a-task)
-     *
-     *
-     * JSON body parameters
+    public DateTime created_at_datetime => created_at.ToDateTime(fallback: DateTime.MinValue).Value;
+
+    public string friendly_created_at => created_at_datetime.ToFriendlyDateString();
+
+    public string priority_css
+    {
+        get
+        {
+            var value = priority.ToInt();
+            switch (value)
+            {
+                case 4:
+                    return "error";
+                case 3:
+                    return "warning";
+                case 2:
+                    return "info";
+                case 1:
+                default:
+                    return "ghost";
+            }
+        }
+    }
+
+    /* Computed */
+    
+    public double Age => (due?.date?.ToDateTime(fallback: DateTime.Now) - created_at?.ToDateTime())
+        .ToMaybe()
+        .IfSome(x => x.TotalDays
+            // src: https://www.c-sharpcorner.com/UploadFile/9b86d4/how-to-round-a-decimal-value-to-2-decimal-places-in-C-Sharp/
+            // .Map(days =>
+            // {
+            //     days = (int)Math.Round(days, 2);
+            //     return days;
+            // })
+        );
+}
+
+/** API stuff (https://developer.todoist.com/rest/v2/?shell#update-a-task)
+   *
+   *
+   * JSON body parameters
 Parameter	Required	Description
 content
 String
@@ -79,48 +117,10 @@ No	A positive (greater than zero) integer for the amount of duration_unit the ta
 duration_unit
 String
 No	The unit of time that the duration field above represents, or null to unset. Must be either minute or day. If specified, duration must be defined as well.
-     */
+   */
     
     
     
     
     
     
-    /* Computed */
-
-
-    public DateTime created_at_datetime => created_at.ToDateTime(fallback: DateTime.MinValue).Value;
-
-    public string friendly_created_at => created_at_datetime.ToFriendlyDateString();
-
-    public string priority_css
-    {
-        get
-        {
-            var value = priority.ToInt();
-            switch (value)
-            {
-                case 4:
-                    return "error";
-                case 3:
-                    return "warning";
-                case 2:
-                    return "info";
-                case 1:
-                default:
-                    return "ghost";
-            }
-        }
-    }
-
-    public double Age => (due?.date?.ToDateTime(fallback: DateTime.Now) - created_at?.ToDateTime())
-        .ToMaybe()
-        .IfSome(x => x.TotalDays
-            // src: https://www.c-sharpcorner.com/UploadFile/9b86d4/how-to-round-a-decimal-value-to-2-decimal-places-in-C-Sharp/
-            // .Map(days =>
-            // {
-            //     days = (int)Math.Round(days, 2);
-            //     return days;
-            // })
-        );
-}

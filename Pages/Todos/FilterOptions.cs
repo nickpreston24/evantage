@@ -6,7 +6,7 @@ public class FilterOptions
 {
     public List<string> excluded_labels { get; set; } = new() { "bank", "coding", "computer", "guns" };
     public List<string> excluded_todo_ids { get; set; } = new();
-    public List<string> excluded_projects { get; set; } = new();
+    public List<string> excluded_projects { get; set; } = new() { "Coding", "Guns" };
 
     public bool distinct_ids_only { get; set; } = false;
     public bool distinct_content_only { get; set; } = false;

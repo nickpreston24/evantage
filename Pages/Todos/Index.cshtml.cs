@@ -1,6 +1,7 @@
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Todoist;
 using CodeMechanic.Types;
+using evantage.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -20,8 +21,8 @@ public class Index : PageModel
     public int current_fullday_goal { get; set; } = 5;
 
 
-    private static bool get_all_todoist_on_load = false;
-    private static bool get_all_todoist_on_htmxevent = false;
+    private static bool get_all_todoist_on_load = true;
+    private static bool get_all_todoist_on_htmxevent = true;
 
 
     // public TodoistStats todoist_stats { get; set; } = new();
@@ -39,14 +40,17 @@ public class Index : PageModel
 
     private readonly ITodoistService todoist;
     private readonly evantage.Services.IMarkdownService markdown;
+    private IReadmeService readme_service;
 
     public Index(
         ITodoistService todos
         , evantage.Services.IMarkdownService markdown
+        , IReadmeService readme
     )
     {
         todoist = todos;
         this.markdown = markdown;
+        readme_service = readme;
     }
 
     public async Task OnGet()
@@ -57,8 +61,8 @@ public class Index : PageModel
             var stats = await this.todoist.GetProjectsAndTasks();
             stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
             {
-                sort_by_date = true,
-                sort_by_priority = true
+                sort_by_date = new SortByDate(),
+                sort_by_priority = new SortByPriority()
             });
 
             cached_todoist_stats = stats;
@@ -115,7 +119,7 @@ public class Index : PageModel
             var current_tasks = cached_todoist_stats.TodoistTasks;
 
             var todays_frog = current_tasks.GetRandomFullDay(FullDayOptions.Default
-                .With(fdo => fdo.Filters.excepted_todo_ids = ids_to_exclude)
+                .With(fdo => fdo.Filters.excluded_todo_ids = ids_to_exclude)
             );
 
             var low_hanging_fruit = current_tasks.GetRandomFullDay(new FullDayOptions()
@@ -124,7 +128,7 @@ public class Index : PageModel
                 take = 2,
                 Filters = new FilterOptions()
                 {
-                    excepted_todo_ids = ids_to_exclude
+                    excluded_todo_ids = ids_to_exclude
                 }
             });
 
@@ -134,9 +138,9 @@ public class Index : PageModel
                 priorities = new[] { 2, 3 },
                 Filters = new FilterOptions()
                 {
-                    excepted_todo_ids = ids_to_exclude
+                    excluded_todo_ids = ids_to_exclude
                 }
-                // FilteringOptions.excepted_todo_ids = ids_to_exclude
+                // FilteringOptions.excluded_todo_ids = ids_to_exclude
             });
 
             today.TodaysFrog = todays_frog;
@@ -179,35 +183,13 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnGetAllReadmeTodos()
     {
-        var readme_file = markdown
-            // .Dump("all")
-            .GetAllMarkdownFiles()
-            .FirstOrDefault(x => x.FilePath.Contains("README", StringComparison.InvariantCultureIgnoreCase));
-
-        string[] readme_lines = System.IO.File.ReadAllLines(readme_file.FilePath);
-
-        Console.WriteLine("README.md line count :>> " + readme_lines.Length);
-        // var priorities = readme_lines
-        //         .SelectMany(l => l.Extract<Priority>(Priority.Pattern))
-        //     ;
-
-        // .Dump("priorities")
-        // string readme_text = System.IO.File.ReadAllText(readme_file.FilePath);
-        // Console.WriteLine(readme_text);
-
-        /*FILTERS*/
-        bool sort_by_checked = true;
-        var todos_from_readme = readme_lines
-            .SelectMany(line => line
-                .Extract<ReadmeTodo>(TodoPattern.ReadmeCheckbox.Pattern))
-            .If(sort_by_checked, r => r
-                .OrderByDescending(readmeTodo => readmeTodo.Completed))
-            .ToList();
+        var todos_from_readme = await readme_service.GetAllTodosFromReadme();
 
         Console.WriteLine("total todos found in README.md: " + todos_from_readme.Count);
 
         return Partial("_ReadmeTable", todos_from_readme);
     }
+
 
     public async Task<IActionResult> OnGetAllTodoistTasks()
     {

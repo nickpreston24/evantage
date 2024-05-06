@@ -14,6 +14,17 @@
             <a target="_blank" href="@task.url" class="text-lg text-secondary truncate">
                 @task.content
             </a>
+            <div class="flex flex-row gap-1 items-center justify-start">
+                @foreach (var label in @task.labels.Take(5))
+                {
+                    <p class="badge badge-info max-w-12">@label</p>
+                }
+                @* @if(@task.labels.Length > 5){ *@
+                @*     <detail> *@
+                @*          *@
+                @*     </detail> *@
+                @* } *@
+            </div>
 
             @if (task?.due != null && task.due.date.NotEmpty())
             {

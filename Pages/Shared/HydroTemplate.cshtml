@@ -1,0 +1,5 @@
+@using CodeMechanic.Extensions
+@model evantage.Pages.Shared.HydroTemplate
+<template x-if="@Model.Show.AsJSON()">
+    @Model.Slot()
+</template>

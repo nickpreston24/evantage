@@ -1,3 +1,4 @@
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 using Newtonsoft.Json;
 
@@ -45,24 +46,29 @@ public static class TodoistExtensions
     {
         return todoistTasks
             // favor older tasks
-            .If(options.sort_by_date, todos => todos
-                .OrderBy(todo => todo.created_at.ToDateTime())
-                .ThenBy(todo => todo?.due?.date?.ToDateTime(fallback: DateTime.MinValue))
+            .If(options.sort_by_date.Enabled && options.sort_by_date.Direction == SortDirection.Ascending, todos =>
+                todos
+                    .OrderBy(todo => todo.created_at.ToDateTime())
+                    .ThenBy(todo => todo?.due?.date?.ToDateTime(fallback: DateTime.MinValue))
             )
-            .If(options.sort_by_priority,
+            .If(options.sort_by_priority.Enabled && options.sort_by_priority.Direction == SortDirection.Ascending,
                 todos => todos
                     .OrderBy(todo => todo.priority))
             // some Exclusions apply...
-            .If(options.excepted_todo_ids.Count > 0,
+            .If(options.excluded_todo_ids.Count > 0,
                 todos => todos
-                    .Where(todo => !options.excepted_todo_ids
+                    .Where(todo => !options.excluded_todo_ids
                         .Contains(todo.id)))
-            .If(options.excepted_projects.Count > 0,
+            .If(options.excluded_labels.Count > 0,
                 todos => todos
-                    .Where(todo => !options.excepted_projects
-                        .Contains(todo.project_id))
-            )
-            // .Where(todo => !options.excepted_labels.Contains(todo.labels)) // todo: fix
+                    .Where(todo => !options.excluded_labels
+                        .Dump("excluding these labels")
+                        .Intersect(todo.labels).Any()))
+            .If(options.excluded_projects.Count > 0,
+                todos => todos
+                    .Where(todo => !options.excluded_projects
+                        .Contains(todo.project_id)))
+            // .Where(todo => !options.excluded_labels.Contains(todo.labels)) // todo: fix
             .If(options.distinct_ids_only, todos => todos
                 .DistinctBy(todo => todo.id)
             )

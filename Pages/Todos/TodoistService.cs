@@ -171,8 +171,6 @@ public class TodoistService : ITodoistService
     public async Task<TodoistTask> UpdateTask(TodoistTask todo)
     {
         bool debug = true;
-
-        todo.content = todo.content + "zzz";
         todo.due = new Due() { date = DateTime.Now.ToString() };
 
         string json = JsonConvert.SerializeObject(
@@ -193,46 +191,6 @@ public class TodoistService : ITodoistService
             }
         );
 
-        // // string task_id = updates.id;
-        // string filename = "post-todo.curl";
-        // // string curl = ReadResourceFile();
-        //
-        // var curl_files = new Grepper()
-        //     {
-        //         RootPath = Directory.GetCurrentDirectory(),
-        //         FileSearchMask = "*.curl"
-        //     }.GetFileNames().ToArray()
-        //     // .Dump("curl files found")
-        //     ;
-
-        // string curl = File.ReadAllText(curl_files.SingleOrDefault(x => x.Contains(filename)) ?? string.Empty);
-
-        // Console.WriteLine("raw curl:>> " + curl);
-        // Console.WriteLine("json updates :>> " + json);
-
-        // string todoist_task = JsonConvert.SerializeObject(updates);
-
-        // Console.WriteLine("serialized todo: " + todoist_task);
-
-
-        // var options = //GetClient(curl)
-        //         curl.Extract<CurlOptions>(@"curl\s""(?<uri>https://.*"")")
-        // https://regex101.com/r/b7c7jv/1
-        //             .Dump("curl bits")
-        //             .FirstOrDefault()
-        //     ;
-
-
-        // string uri = options.uri;
-        // string bearer_token = options.bearer_token;
-
-        // Console.WriteLine("uri :>> " + uri);
-
-
-        // Console.WriteLine(" extracted bearer token :>> " + bearer_token);
-        // return default;
-
-
         string uri = "https://api.todoist.com/rest/v2/tasks/$task_id".Replace("$task_id", todo.id);
 
         using HttpClient http = new HttpClient();
@@ -242,9 +200,8 @@ public class TodoistService : ITodoistService
         var response = await http.PostAsync(uri, requestContent);
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
-        Console.WriteLine("content :>> " + content);
         // if (debug)
-        //     Console.WriteLine("content :>> " + content);
+        Console.WriteLine("content :>> " + content);
 
         return default;
     }

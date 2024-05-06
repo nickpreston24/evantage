@@ -29,28 +29,6 @@ Problem:  The Eisenhower Matrix is great and all, and so are priorities and view
     - [ ] See if there's an easy golang+pocketbase web app tutorial.  I might be interested in switching, b/c I"m bored and I just wanna make things.
 - [ ] Scaffold each of these Ideas as method stubs.
 
-### Fun Ideas
-
-- [ ] on each tab in a cshtml form, call a `hx-get` to save the partially filled form to the db, so that there's always a session to come back to on internet failure.
-- [ ] Hyper Grep serivce that can search keywords across multiple drives (incl google drive) asynchronously and give a breakdown of a) files, b) extensions, directories and c) file contents matching each kind. (use multiple greps and set a range of extensions and  key root dirs to search, like Google Drive)
-- [ ] Build your own /obsidian tab that uses the hyper grep and renders Markdown in a similar fashion.
-- [ ] I want to be able to search for any phrase across my drive and organize my folders better, including backing up to USB.  Linux is great, but greps and shell scripts are syncronous, while C# and golang are async and can utilize mutliple cores.
-- [ ] I also want a hypergrep service as a NugetPackage, so I can easily parse for Scriptures inside files (TPOT Links)
-- [ ] Dockerize this app - Once I can properly Dockerize my many apps, I should have no trouble keeping them all federated (separated) from each other, while still running on localhost.  That way, I can make all my data AND apps portable.  So far, they are not, and that sucks.  I'm also sick of APIs and paying for Airtable, so I must get crafty and hacky.
-- [ ] I also want the ability to dump all Pocketbase data to a USB anytime (like in an emergency)
-- [ ] I'd also like an Airtable-like layer on top of Pocketbase, if it exists.  Maintaing data thru Airtable is grand, but expensive.
-- [x] I'd also like Todoist integration (WiP)
-  > Neo4j is optional at this point.  It was really more effective as a recommendation engine.
-
-- [ ] Use Google Maps to find main streets and businesses off the beaten path (idk, say, 150+ feet away from the road, maybe the corner businesses not facing the main st., etc.)
-- [ ] Using the HyperGrep, I'd like to...
-  - [ ] Find all occurences of a string.
-  - [ ] Edit the first file with that occurrence.
-  - [ ] Preview other files it might affect, while typing.
-  - [ ] Replacment support for that regex.
-  - [ ] Chunked transforms: Find specific lines using a start and ending regex (already built.) and perform specific transforms from start to end.  Usually replacements, but can be something like code generation, mass corrections to malformed data, finding dups (like Airtable does).
-  - [ ] Allow user to queue the replacements and transforms.
-  - [ ] Update the Hydrolizer to create C# props from alpinejs variables it discovers within script tags.
 
 ## Features
 
@@ -291,3 +269,42 @@ I want to be able to see my latest Todos and tick them off, without creating a R
 - [ ] Add another 'older tasks' view, sorted by Priority
 - [ ] Fix the searchbar for the main table view.
 - [ ] Add [FuzzySearch](https://github.com/JakeBayer/FuzzySharp) powered bar.
+
+
+### May 6th, Goals
+
+- [ ] Contacts form and table.
+- [ ] Exclude Todoist tasks & projects labeled with "fun", "someday", or the like.  Include some things, like certain gun tasks and most of my buy list.
+- [ ] Create a bumping method in TodoistService that bumps priority up to p3 if it's p4 and 30 days old, p2 if 60, and p1 if 90.  This will help you sort things out in the long run.
+- [ ] Create a sample stats (progress %) list showing the ratios of your job applications.
+  - [ ] *Bonus* Animate as folding tiles (like venetian blinds, or Portal tiles)
+- [ ] *Bonus* I want to have all my emails back to 0 in Gmail, and have a basic Puppeteer scraper API ready to save prospective Junior level jobs for application.  These can be parsed from the emails themselves (links to the jobs) and can be 
+- [ ] Word wrap the Job Hunt descriptions (names).
+- [ ] Update Name to Description in Job Hunt? (they appear to be flipped)
+- [ ] Prioritize P1 tasks in the Full Day / Schedule.
+- [ ] Create an Instacart Page displaying simple runs calculator and sample (real) calculations.
+
+
+## Fun Ideas
+
+- [ ] Using an existing RegexService, parse all your .CS files for regex101 link s an the regex patterns that follow.  Store to MySql. :)
+- [ ] on each tab in a cshtml form, call a `hx-get` to save the partially filled form to the db, so that there's always a session to come back to on internet failure.
+- [ ] Hyper Grep serivce that can search keywords across multiple drives (incl google drive) asynchronously and give a breakdown of a) files, b) extensions, directories and c) file contents matching each kind. (use multiple greps and set a range of extensions and  key root dirs to search, like Google Drive)
+- [ ] Build your own /obsidian tab that uses the hyper grep and renders Markdown in a similar fashion.
+- [ ] I want to be able to search for any phrase across my drive and organize my folders better, including backing up to USB.  Linux is great, but greps and shell scripts are syncronous, while C# and golang are async and can utilize mutliple cores.
+- [ ] I also want a hypergrep service as a NugetPackage, so I can easily parse for Scriptures inside files (TPOT Links)
+- [ ] Dockerize this app - Once I can properly Dockerize my many apps, I should have no trouble keeping them all federated (separated) from each other, while still running on localhost.  That way, I can make all my data AND apps portable.  So far, they are not, and that sucks.  I'm also sick of APIs and paying for Airtable, so I must get crafty and hacky.
+- [ ] I also want the ability to dump all Pocketbase data to a USB anytime (like in an emergency)
+- [ ] I'd also like an Airtable-like layer on top of Pocketbase, if it exists.  Maintaing data thru Airtable is grand, but expensive.
+- [x] I'd also like Todoist integration (WiP)
+  > Neo4j is optional at this point.  It was really more effective as a recommendation engine.
+
+- [ ] Use Google Maps to find main streets and businesses off the beaten path (idk, say, 150+ feet away from the road, maybe the corner businesses not facing the main st., etc.)
+- [ ] Using the HyperGrep, I'd like to...
+  - [ ] Find all occurences of a string.
+  - [ ] Edit the first file with that occurrence.
+  - [ ] Preview other files it might affect, while typing.
+  - [ ] Replacment support for that regex.
+  - [ ] Chunked transforms: Find specific lines using a start and ending regex (already built.) and perform specific transforms from start to end.  Usually replacements, but can be something like code generation, mass corrections to malformed data, finding dups (like Airtable does).
+  - [ ] Allow user to queue the replacements and transforms.
+  - [ ] Update the Hydrolizer to create C# props from alpinejs variables it discovers within script tags.

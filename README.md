@@ -283,11 +283,27 @@ I want to be able to see my latest Todos and tick them off, without creating a R
 - [ ] Update Name to Description in Job Hunt? (they appear to be flipped)
 - [ ] Prioritize P1 tasks in the Full Day / Schedule.
 - [ ] Create an Instacart Page displaying simple runs calculator and sample (real) calculations.
-
+- [ ] Create simple markdown file search; any links to path opens that md file.
+- [ ] Create a method in ReadmeService that lets you associate Readme.md tasks with pages, and list them in a small table panel.
+- [ ] Create a basic login service using mysql and email/pwd.  It should also allow a 'demo' mode for interviewers.  This demo mode can have roles/access, too.
+- [ ] Create a linux daeomon in C# that does the following:
+  - [ ] Sends you and Mom an email, with a list of todoist or readme tasks completed today.
+  - [ ] Sends a notification at breakfast, lunch, dinner.
+  - [ ] Sends me a random scripture or TPOT from all the .json and .md files I have on drive.
+  - [ ] Performs the Priority bumping
+- [ ] Use the Bash command + grepper to find all Git repos, and read their statuses in a GitHub Service.
+- [ ] Create an ObsidianService.cs that uses IMarkdownService and can do a simple live search on files using Grepper.  Make a panel that can easily render markdown.
+- [ ] Create a typeahead on main Index.cshtml page that OmniSearches through all cshtml files and their code content for what you typed, and provides links, so you can jump to the relevant page.  See OpticsPlanet for inspiration.
+  - [ ] This requires that you update your RazorRoutesService to properly generate links (with optional tooltips, see associated Model)
+- [ ] upgrade your ReadmeService to print out and update specific tasks, on their exact line and SaveAs to README.md.
 
 ## Fun Ideas
 
+- [ ] Colored console logs: https://github.com/tomakita/Colorful.Console - p4
 - [ ] Using an existing RegexService, parse all your .CS files for regex101 link s an the regex patterns that follow.  Store to MySql. :)
+- [ ] Prioritize Todoist Tasks based on Distributions, like duration, how many times completed (streaks), etc.
+  - [ ] https://www.youtube.com/watch?v=V3Qxj2C7rP0
+  - [ ] https://www.youtube.com/watch?v=bPFNxD3Yg6U
 - [ ] on each tab in a cshtml form, call a `hx-get` to save the partially filled form to the db, so that there's always a session to come back to on internet failure.
 - [ ] Hyper Grep serivce that can search keywords across multiple drives (incl google drive) asynchronously and give a breakdown of a) files, b) extensions, directories and c) file contents matching each kind. (use multiple greps and set a range of extensions and  key root dirs to search, like Google Drive)
 - [ ] Build your own /obsidian tab that uses the hyper grep and renders Markdown in a similar fashion.

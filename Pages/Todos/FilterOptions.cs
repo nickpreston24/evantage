@@ -4,7 +4,7 @@ namespace CodeMechanic.Todoist;
 
 public class FilterOptions
 {
-    public List<string> excluded_labels { get; set; } = new() { "bank", "coding", "computer", "guns" };
+    public List<string> excluded_labels { get; set; } = new() { "someday", "anytime", "coding", "computer", "guns" };
     public List<string> excluded_todo_ids { get; set; } = new();
     public List<string> excluded_projects { get; set; } = new() { "Coding", "Guns" };
 

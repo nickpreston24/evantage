@@ -1,10 +1,20 @@
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
+using FuzzySharp;
 
 namespace CodeMechanic.FileSystem;
 
 public static class FS
 {
+    public static void OpenWith(this string filepath, string program)
+    {
+        if (!Path.HasExtension(filepath)) throw new ArgumentException("File type not supported");
+        if (System.IO.File.Exists(filepath))
+        {
+            System.Diagnostics.Process.Start(program, filepath);
+        }
+    }
+
     public static FileInfo SaveAs(SaveAs saveAs, params string[] lines)
     {
         if (saveAs == null) throw new ArgumentNullException(nameof(saveAs));

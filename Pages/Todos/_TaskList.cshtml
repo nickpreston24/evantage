@@ -8,22 +8,22 @@
 
 <ul>
     <li id="content"></li>
-    @foreach (var task in Model)
+    @foreach (var (task, index) in Model.WithIndex())
     {
         <li class="grid grid-cols-1 gap-2 max-w-md border-error border-0" x-data="{show_updates:true}">
+            <span>@index</span>
             <a target="_blank" href="@task.url" class="text-lg text-secondary truncate">
                 @task.content
             </a>
             <div class="flex flex-row gap-1 items-center justify-start">
-                @foreach (var label in @task.labels.Take(5))
-                {
-                    <p class="badge badge-info max-w-12">@label</p>
-                }
-                @* @if(@task.labels.Length > 5){ *@
-                @*     <detail> *@
-                @*          *@
-                @*     </detail> *@
-                @* } *@
+                <div class="flex-shrink ">
+
+                    @foreach (var label in @task.labels)
+                    {
+                        <p class="badge badge-info max-w-12">@label</p>
+                    }
+                </div>
+
             </div>
 
             @if (task?.due != null && task.due.date.NotEmpty())

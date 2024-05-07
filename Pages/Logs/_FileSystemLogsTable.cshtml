@@ -1,22 +1,25 @@
-@model List<evantage.Models.LogRecord>
+@model List<CodeMechanic.FileSystem.Grepper.GrepResult>
 @{
     var rows = Model;
     int limit = 100;
+    string SelectedProgram = "code-insiders";
 }
 
-<section id="splunky_logs" class="vertical-padding">
+<section id="filesystem_logs" class="vertical-padding">
     <div class="overflow-x-auto wrapper">
         <b>Rows: @rows.Count</b>
 
         <table class="table w-full">
             <thead>
             <tr>
-                <th></th>
+                <th>
+                    <input type="checkbox" class="checkbox"/>
+                </th>
                 <th>Table</th>
                 <th>Exception</th>
                 <th>Diff</th>
                 <th>Params</th>
-                <th>Details</th>
+                <th>Options</th>
             </tr>
             </thead>
             <tbody>
@@ -32,28 +35,27 @@
                         <div class="flex items-center gap-3">
                             <div class="avatar">
                                 <div class="bg-neutral text-neutral-content rounded-full w-12">
-                                    <span class="text-3xl">@row.database_name.ToUpperInvariant()[0]</span>
+                                    <span class="text-3xl">@row.FileName.ToUpperInvariant()[0]</span>
                                 </div>
                             </div>
                             <div>
-                                <div class="font-bold text-secondary">@row.operation_name</div>
-                                <div class="text-sm opacity-50 text-primary">@row.table_name</div>
+                                <div class="font-bold text-secondary">@row.FileName</div>
                             </div>
                         </div>
                     </td>
-                    <td>
-                        @row.exception_message
-                        <br/>
-                        <span class="badge badge-ghost badge-sm">@row.exception_severity</span>
-                    </td>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                     <th>
-                        <button class="btn btn-ghost btn-xs" x-on:click="show_details=!show_details">
-                            Details
+                        <button class="btn btn-accent"
+                                hx-get
+                                hx-swap="none"
+                                hx-vals='{"filepath": "@row.FilePath", "program": "@SelectedProgram"}'
+                                hx-page-handler="OpenInExplorer">
+                            Open In File Explorer
                         </button>
-                        <td x-text="show_details" x-show="show_details">@row.exception_message</td>
+
                     </th>
-                    <td>@row.diff</td>
-                    <td>@row.sql_parameters</td>
                 </tr>
             }
             </tbody>

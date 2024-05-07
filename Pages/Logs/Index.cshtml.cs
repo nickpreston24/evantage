@@ -2,20 +2,62 @@ using System.Data;
 using System.Diagnostics;
 using System.Text;
 using CodeMechanic.Async;
+using CodeMechanic.FileSystem;
 using CodeMechanic.Types;
 using Dapper;
+using evantage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySqlConnector;
 
 namespace evantage.Pages.Logs;
 
+[BindProperties(SupportsGet = true)]
 public class Index : PageModel
 {
     private static string connectionString;
+    // public string SelectedProgram { get; set; } = "code-insiders";
 
     public void OnGet()
     {
+    }
+
+    public async Task OnGetOpenInExplorer(string filepath, string program)
+    {
+        Console.WriteLine("opening file :>> " + filepath);
+        FS.OpenWith(filepath, program);
+        // if (System.IO.File.Exists(filepath))
+        // {
+        //     Process.Start(program, filepath);
+        // }
+    }
+
+    public async Task<IActionResult> OnGetLocalLogFiles()
+    {
+        try
+        {
+            string mask = @"*.log";
+            string cwd = Directory.GetCurrentDirectory().GoUp(0);
+            Console.WriteLine("looking for logs in :>>" + cwd);
+            var grepper = new Grepper()
+            {
+                RootPath = cwd, FileSearchMask = mask, Recursive = true, FileNamePattern = ".*.log",
+                FileSearchLinePattern = ".*"
+            };
+
+            var results = grepper.GetMatchingFiles().ToList();
+            int count = results.Count;
+            string message = $"Found {count} files";
+            Console.WriteLine(message);
+            // return Content(message);
+            return Partial("_FileSystemLogsTable", results);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return Partial("_Alert", e);
+            // throw;
+        }
     }
 
     public async Task<IActionResult> OnGetAllLogs()
@@ -168,33 +210,4 @@ public class Index : PageModel
         Console.WriteLine("writing to :>> " + filepath);
         System.IO.File.WriteAllText(filepath, content);
     }
-}
-
-public sealed class LogRecord
-{
-    public string id { get; set; } = string.Empty;
-    public string exception_text { get; set; } = string.Empty;
-    public string exception_message { get; set; } = "OOOPS!"; // = string.Empty;
-
-    public string exception_severity { get; set; } = "HIGH";
-
-    public string sql_parameters { get; set; } = string.Empty;
-    public string payload { get; set; } = string.Empty;
-    public string diff { get; set; } = "{}";
-    public string operation_name { get; set; } = string.Empty;
-    public string breadcrumb { get; set; } = string.Empty;
-    public string table_name { get; set; } = string.Empty;
-    public string server_name { get; set; } = string.Empty;
-    public string database_name { get; set; } = "railway"; // = string.Empty;
-    public string application_name { get; set; } = string.Empty;
-    public string modified_by { get; set; } = string.Empty;
-    public string created_by { get; set; } = string.Empty;
-    public DateTime modified_at { get; set; }
-    public DateTime created_at { get; set; }
-
-    public string commit_url { get; set; } = string.Empty;
-    public string issue_url { get; set; } = string.Empty;
-    public bool is_deleted { get; set; }
-    public bool is_archived { get; set; }
-    public bool is_enabled { get; set; }
 }

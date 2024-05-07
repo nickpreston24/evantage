@@ -4,15 +4,59 @@
 @{
 }
 
-<div>
-    <section
-        hx-get
-        hx-trigger="load"
-        hx-page-handler="AllLogs"
-        hx-target="#all_logs">
-        <label>
-            All logs, Sorted by created_at:
-        </label>
-        <span id="all_logs"></span>
+<section class="grid grid-cols-3 gap-4">
+
+    <div
+        class="col-span-2"
+        hx-indicator="#test">
+        <section
+            hx-get
+            hx-trigger="load"
+            hx-page-handler="AllLogs"
+            hx-target="#all_logs">
+            <label>
+                All logs, Sorted by created_at:
+            </label>
+            <span id="all_logs"></span>
+        </section>
+
+        @* <hydro-bars htmx_target_id="test" message="loading from db ... "></hydro-bars> *@
+
+        <section
+            hx-get
+            hx-trigger="load"
+
+            hx-page-handler="LocalLogFiles">
+            <label>
+                Log files from system
+            </label>
+            @* <span id="all_logs"></span> *@
+        </section>
+
+        <hydro-bars htmx_target_id="test"></hydro-bars>
+
+
+    </div>
+
+    <section x-data="logs_setup()">
+        <h1>Options</h1>
+
+        <template x-cloak x-for="[key, value] of Object.entries(log_options)">
+            <div :data-tip="value.tip" class="tooltip tooltip-bottom tooltip-accent flex-col flex items-center justify-center gap-2">
+                <label class="text-primary text-sm" x-text="value.label"></label>
+                <button x-text="value.button_text" class="btn btn-sm btn-tahiti"></button>
+            </div>
+        </template>
     </section>
-</div>
+</section>
+
+<script >
+    function logs_setup(){
+        return {
+            log_options: [
+                {tip: "push local logs to MySql Database", label: "push local logs to MySql Database", button_text: "Push"},
+                // {tip: "", label: "", button_text: ""}
+            ]
+        }
+    }
+</script>

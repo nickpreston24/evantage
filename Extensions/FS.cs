@@ -1,6 +1,5 @@
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
-using FuzzySharp;
 
 namespace CodeMechanic.FileSystem;
 

@@ -7,6 +7,11 @@ using NSpecifications;
 
 namespace evantage.Services;
 
+public interface IRazorRoutesService2
+{
+    RazorRoute[] GetAllRoutes(string current_folder = "/Pages");
+}
+
 public class RazorRoutesService2 : IRazorRoutesService2
 {
     private readonly bool dev_mode;
@@ -14,22 +19,25 @@ public class RazorRoutesService2 : IRazorRoutesService2
 
     public RazorRoutesService2(
         // string [] blacklist,
-        bool dev_mode = false)
+        bool dev_mode = false
+    )
     {
         // razor_page_routes = GetAllRoutes();
         this.dev_mode = dev_mode;
     }
 
-    public RazorRoute[] GetAllRoutes(string current_folder = "/")
+    public RazorRoute[] GetAllRoutes(string current_folder)
     {
-        string current_directory = Directory.GetCurrentDirectory() + "/Pages" + current_folder;
-        if (dev_mode)
-            Console.WriteLine("CWD2 :>> " + current_directory);
+        var cwd = Directory.GetCurrentDirectory();
+        Console.WriteLine("current working dir :>> " + cwd);
+        string current_page_folder_path = Path.Combine(cwd, "Pages", current_folder);
+        current_page_folder_path.Dump(nameof(current_page_folder_path));
 
+        return Array.Empty<RazorRoute>();
 
         var grepper = new Grepper()
         {
-            RootPath = current_directory,
+            RootPath = current_page_folder_path,
             FileSearchMask = "*.cshtml",
             Recursive = true,
         };
@@ -48,17 +56,17 @@ public class RazorRoutesService2 : IRazorRoutesService2
         var regex = new Regex(@"(?<subdirectory>\/?(\w+\/)*)(?<file_name>.*\.(?<extension>cshtml|cs))",
             options);
 
-        Console.WriteLine(current_directory);
-        var directories = GetDirectories(current_directory);
+        Console.WriteLine(current_page_folder_path);
+        var directories = GetDirectories(current_page_folder_path);
         directories.Dump("dirs");
 
         var routes = grepper.GetFileNames()
                 .Where(!is_blacklisted)
                 .Where(path => !path.Contains("/Components"))
-                .Where(path => path.StartsWith(current_directory) || path.Equals("/")
-                                                                  || directories.Contains(path)
+                .Where(path => path.StartsWith(current_page_folder_path) || path.Equals("/")
+                                                                         || directories.Contains(path)
                 )
-                .Select(p => p.Replace(current_directory, ""))
+                .Select(p => p.Replace(current_page_folder_path, ""))
                 .SelectMany(p => p.Extract<RazorRoute>(regex))
                 .DistinctBy(rr => rr.file_name)
             ;

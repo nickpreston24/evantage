@@ -4,9 +4,9 @@ namespace CodeMechanic.Todoist;
 
 public class FilterOptions
 {
-    public List<string> excluded_labels { get; set; } = new() { "someday", "anytime", "coding", "computer", "guns" };
+    public List<string> excluded_labels { get; set; } = new() {"hobby", "workout", "buy", "cooking", "someday", "anytime", "coding", "computer", "guns", "wont_do" };
     public List<string> excluded_todo_ids { get; set; } = new();
-    public List<string> excluded_projects { get; set; } = new() { "Coding", "Guns" };
+    public List<string> excluded_projects { get; set; } = new() {"Food","Recipes", "Coding", "Guns" };
 
     public bool distinct_ids_only { get; set; } = false;
     public bool distinct_content_only { get; set; } = false;

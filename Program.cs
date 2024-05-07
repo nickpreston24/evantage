@@ -41,6 +41,7 @@ builder.Services.AddSingleton<ITodoistService, TodoistService>();
 builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IGenerateSQLTypes, SQLCService>();
 builder.Services.AddTransient<INotesService, NotesService>();
+builder.Services.AddSingleton<ICopyPastaService, CopyPastaService>();
 builder.Services.AddControllers();
 
 var main_assembly = Assembly.GetExecutingAssembly();

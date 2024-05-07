@@ -11,7 +11,7 @@
     @foreach (var (task, index) in Model.WithIndex())
     {
         <li class="grid grid-cols-1 gap-2 max-w-md border-error border-0" x-data="{show_updates:true}">
-            <span>@index</span>
+            <!-- <span>@index</span> -->
             <a target="_blank" href="@task.url" class="text-lg text-secondary truncate">
                 @task.content
             </a>

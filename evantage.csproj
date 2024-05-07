@@ -12,15 +12,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Watch Include="**\*.config.json"/>
-        <Watch Include="/Pages/**/*.json"/>
-        <Watch Include="/Services/**/*.cs"/>
-        <Watch Include="**\*.sql"/>
-        <Watch Include="**\*.env"/>
-        <Watch Include="**\*.cypher"/>
-        <Watch Include="**\*.css"/>
-        <Watch Include="**\*.js" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*"/>
+        <Watch Include="**\*.cshtml" />
+        <Watch Include="**\*.config.json" />
+        <Watch Include="/Pages/**/*.json" />
+        <Watch Include="**\*.sql" />
+        <Watch Include="**\*.cypher" />
+        <Watch Include="**\*.css" />
     </ItemGroup>
+
 
     <ItemGroup>
         <!-- The following should embed every query file into the assembly
@@ -29,7 +28,6 @@
         -->
         <EmbeddedResource Include="**\*.cypher"></EmbeddedResource>
         <EmbeddedResource Include="**\*.sql"></EmbeddedResource>
-        <EmbeddedResource Include="sql\**\*.sql"></EmbeddedResource>
         <EmbeddedResource Include="**\*.curl"></EmbeddedResource>
         <EmbeddedResource Include="**\*.rest"></EmbeddedResource>
     </ItemGroup>

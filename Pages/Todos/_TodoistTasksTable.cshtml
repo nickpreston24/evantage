@@ -1,19 +1,45 @@
 @* @model List<CodeMechanic.Todoist.TodoistTask> *@
+@using CodeMechanic.Types
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Index
 @{
     int limit = 1000;
-    var rows = @Model.todoist_stats.TodoistTasks
-        // .If(@Model.sort_by_priority, tasks => tasks
-        //     .OrderByDescending(x => x.priority))
-        // .ToList()
-        // .OrderByDescending(x => x.priority.If(true))
-        ;
-    // var rows = Model.Take(limit).ToList();
-    // rows.Dump("rowss");
+    var rows = @Model.todoist_stats.TodoistTasks;
+    var distinct_labels = rows.SelectMany(row => row.labels).Distinct().ToList();
 }
 
+<div class="flex flex-col justify-center items-center text-sm text-info gap-10">
+
+    <div class="flex flex-row gap-6">
+        <div class="indicator">
+            <span class="indicator-item indicator-bottom badge badge-sm badge-secondary">@rows.Count</span>
+            <h2 class="text-accent text-lg">Todoist Tasks</h2>
+        </div>
+        <div class="indicator">
+            <span class="indicator-item indicator-bottom badge badge-sm badge-secondary">@distinct_labels.Count</span>
+            <h2 class="text-accent text-lg">Labels</h2>
+        </div>
+    </div>
+
+
+    <div class="">
+        <div class="grid grid-rows-4 grid-cols-5">
+
+            @foreach (var batch in @distinct_labels.Batch(10))
+            {
+                @foreach (var label in batch)
+                {
+                    <span class="badge badge-danger">@label</span>
+                }
+            }
+        </div>
+
+    </div>
+    @* <h2>Labels: </h2> *@
+</div>
 <div class="overflow-x-auto wrapper">
-    <b>Rows: @rows.Count</b>
+    @* <b>Rows: @rows.Count</b> *@
+
 
     <input
         disabled

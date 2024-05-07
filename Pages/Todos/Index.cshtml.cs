@@ -56,8 +56,10 @@ public class Index : PageModel
     public async Task OnGet()
     {
         // throw new Exception("some dingle-headed microsoft error");
+        cached_todoist_stats.Clear();
         if (get_all_todoist_on_load)
         {
+            Console.WriteLine(nameof(OnGet));
             var stats = await this.todoist.GetProjectsAndTasks();
             stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
             {

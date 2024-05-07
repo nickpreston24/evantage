@@ -9,16 +9,9 @@
 
 @inject IRazorRoutesService2 routesService2
 @{
+    var razor_routes = routesService2.GetAllRoutes("Sandbox", debug: false);
+    // razor_routes.Take(5).Dump("sample rr");
 
-    var razor_routes = routesService2.GetAllRoutes();
-    razor_routes.TakeFirstRandom().Dump("sample rr");
-    
-    
-    
-    
-    
-    
-    
     var main_routes = new List<TooltipRoute>()
     {
         new TooltipRoute()
@@ -64,40 +57,85 @@
             , Tip = "Hologram Card"
         }
     };
+
+    int batch_size = 3;
+
 }
+
 
 <section>
 
     <hydro-hero>
         <slot name="title">Sandbox</slot>
 
-        <partial name="_TooltipMenu" model="main_routes"/>
+        <div class="grid grid-cols-1 grid-rows-auto gap-@batch_size">
+
+
+            <div class="text-info">
+                <h1>Source Copier</h1>
+
+                <button
+                    class="btn btn-tahiti"
+                    hx-get
+                    hx-trigger="click"
+                    hx-page-handler="CloneMyCode">
+                    @* Look sir, Clones! *@
+                    @* <!-- Duplicate --> *@
+                    Clone Code
+                </button>
+            </div>
+
+            <div id="raw_routes" class="grid grid-cols-3">
+                @foreach (var batch in razor_routes.Batch(@batch_size))
+                {
+                    <ul>
+                        @foreach (var route in batch)
+                        {
+                            <hydro-card>
+                                <slot title="import success!"></slot>
+                            </hydro-card>
+                            @* *@
+                            <li>@route.file_name</li>
+                            @* <li>@route.subdirectory</li> *@
+                            @* <span class="badge badge-primary">@route.extension</span> *@
+                        }
+                    </ul>
+                }
+            </div>
+
+            <div id="raw_routes" class="grid grid-rows-@batch_size">
+                @foreach (var batch in main_routes.Batch(@batch_size))
+                {
+                    <partial name="_TooltipMenu" model="@batch.ToList()"/>
+                }
+            </div>
+        </div>
     </hydro-hero>
 
 
-    <section x-show="false" id="dashboard-contents" class="flex flex-row">
-        <div x-show="false" class="w-1/4">
-            <div class="bg-info/25">
-                <div class="border-info/25 border-0">
-                </div>
-            </div>
-        </div>
-
-        <div class="w-3/4">
-
-            <div x-show="false" class="bg-accent-content/25">
-                <div class="border-accent/25 border-0">
-                    <div class="max-w-3/4">
-                        @* Todo: Move this to its own RAzor page and refactor out a hydro component if it makes sense
-                            It doesn't work well as a partial with 3 services injected into it.*@
-                        @* <partial name="_NotesGraph"></partial> *@
-                    </div>
-
-                    @* <partial name="_CommissionCalculator" model="@commission"/> *@
-                </div>
-            </div>
-
-
-        </div>
-    </section>
+    @* <section x-show="false" id="dashboard-contents" class="flex flex-row"> *@
+    @*     <div x-show="false" class="w-1/4"> *@
+    @*         <div class="bg-info/25"> *@
+    @*             <div class="border-info/25 border-0"> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* *@
+    @*     <div class="w-3/4"> *@
+    @* *@
+    @*         <div x-show="false" class="bg-accent-content/25"> *@
+    @*             <div class="border-accent/25 border-0"> *@
+    @*                 <div class="max-w-3/4"> *@
+    @*                     @* Todo: Move this to its own RAzor page and refactor out a hydro component if it makes sense *@
+    @*                         It doesn't work well as a partial with 3 services injected into it.*@
+    @*                     $1$ <partial name="_NotesGraph"></partial> #1# *@
+    @*                 </div> *@
+    @* *@
+    @*                 $1$ <partial name="_CommissionCalculator" model="@commission"/> #1# *@
+    @*             </div> *@
+    @*         </div> *@
+    @* *@
+    @* *@
+    @*     </div> *@
+    @* </section> *@
 </section>

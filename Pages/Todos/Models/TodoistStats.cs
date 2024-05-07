@@ -7,4 +7,15 @@ public class TodoistStats
     public List<CompletedTodoistTask> CompletedTasks { get; set; } = new();
 
     public List<TodoistComment> Comments = new();
+
+    public int Clear()
+    {
+        TodoistProjects.Clear();
+        TodoistTasks.Clear();
+        CompletedTasks.Clear();
+        Comments.Clear();
+
+        // todo: return count of all cleared.
+        return -1;
+    }
 }

@@ -3,44 +3,46 @@ using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
+using CodeMechanic.Types;
 using NSpecifications;
 
 namespace evantage.Services;
 
 public interface IRazorRoutesService2
 {
-    RazorRoute[] GetAllRoutes(string current_folder = "/Pages");
+    RazorRoute[] GetAllRoutes(string current_folder, bool debug);
 }
 
 public class RazorRoutesService2 : IRazorRoutesService2
 {
-    private readonly bool dev_mode;
     // private static RazorRoute[] razor_page_routes;
 
     public RazorRoutesService2(
         // string [] blacklist,
-        bool dev_mode = false
     )
     {
         // razor_page_routes = GetAllRoutes();
-        this.dev_mode = dev_mode;
     }
 
-    public RazorRoute[] GetAllRoutes(string current_folder)
+    public RazorRoute[] GetAllRoutes(string current_folder, bool debug = false)
     {
+        if (current_folder.IsEmpty()) throw new ArgumentNullException(nameof(current_folder));
+
         var cwd = Directory.GetCurrentDirectory();
+        if (debug) current_folder.Dump("requested folder");
         Console.WriteLine("current working dir :>> " + cwd);
         string current_page_folder_path = Path.Combine(cwd, "Pages", current_folder);
-        current_page_folder_path.Dump(nameof(current_page_folder_path));
+        if (debug) current_page_folder_path.Dump(nameof(current_page_folder_path));
 
-        return Array.Empty<RazorRoute>();
 
         var grepper = new Grepper()
         {
             RootPath = current_page_folder_path,
             FileSearchMask = "*.cshtml",
             Recursive = true,
+            FileSearchLinePattern = "@page"
         };
+
 
         var is_blacklisted = new Spec<string>(
             filepath =>
@@ -56,22 +58,24 @@ public class RazorRoutesService2 : IRazorRoutesService2
         var regex = new Regex(@"(?<subdirectory>\/?(\w+\/)*)(?<file_name>.*\.(?<extension>cshtml|cs))",
             options);
 
-        Console.WriteLine(current_page_folder_path);
         var directories = GetDirectories(current_page_folder_path);
-        directories.Dump("dirs");
+        if (debug) directories.Dump(nameof(directories));
 
-        var routes = grepper.GetFileNames()
-                .Where(!is_blacklisted)
-                .Where(path => !path.Contains("/Components"))
-                .Where(path => path.StartsWith(current_page_folder_path) || path.Equals("/")
-                                                                         || directories.Contains(path)
-                )
-                .Select(p => p.Replace(current_page_folder_path, ""))
+        var routes = grepper.GetMatchingFiles();
+        var route_names = routes.Select(rr => rr.FilePath)
+                // var routes = grepper.GetFileNames()
+                //         .Where(!is_blacklisted)
+                //         .Where(path => !path.Contains("/Components"))
+                //         .Where(path => path.StartsWith(current_page_folder_path) || path.Equals("/")
+                //                                                                  || directories.Contains(path)
+                //         )
+                //         .Select(p => p.Replace(current_page_folder_path, ""))
                 .SelectMany(p => p.Extract<RazorRoute>(regex))
-                .DistinctBy(rr => rr.file_name)
+                //         .DistinctBy(rr => rr.file_name)
+                .ToArray()
             ;
 
-        return routes.ToArray();
+        return route_names;
     }
 
     public string[] GetBreadcrumbsForPage(string page_name)

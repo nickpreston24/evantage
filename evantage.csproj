@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Watch Include="**\*.cshtml.js"/>
+        <!--        <Watch Include="**\*.cshtml.js"/>-->
         <Watch Include="**\*.config.json"/>
         <Watch Include="/Pages/**/*.json"/>
         <Watch Include="/Services/**/*.cs"/>

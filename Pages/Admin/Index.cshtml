@@ -1,14 +1,9 @@
 @page
-@using evantage.Services
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model evantage.Pages.Admin.Index
-@inject IRazorRoutesService2 routesService2
 @{
-    var allRazorLinks = routesService2.GetAllRazorLinks("Sandbox", debug: false);
 }
 
-@* <partial name="_LinkTree" model="allRazorLinks"/> *@
-@* <partial name="_LinkList" model="allRazorLinks"/> *@
-
-<hydro-link-tree></hydro-link-tree>
-<hydro-link-list></hydro-link-list>
+@* <link-tree></link-tree> *@
+<link-list
+    folder="Admin">
+</link-list>

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace evantage.Pages.Admin;
 
-[HtmlTargetElement("hydro-link-tree")]
+[HtmlTargetElement("link-tree")]
 public class HydroLinkTree : HydroView
 {
-   
+    public string Folder { get; set; } // e.g. 'Sandbox'
 }

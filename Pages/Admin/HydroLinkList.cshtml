@@ -1,10 +1,11 @@
 @page
 @using CodeMechanic.Types
+@using evantage.Services
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model evantage.Pages.Admin.HydroLinkList
-
+@inject IRazorRoutesService2 routesService2
 @{
-    var allRazorLinks = Model.Links;
+    var allRazorLinks = routesService2.GetAllRazorLinks(Model.Folder, debug: false);
     int row_count = Model.GridRows;
     bool grid_mode = Model.GridMode;
 }

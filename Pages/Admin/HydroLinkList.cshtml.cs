@@ -1,10 +1,13 @@
 using evantage.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Hydro;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace evantage.Pages.Admin;
 
-public class HydroLinkList : PageModel
+[HtmlTargetElement("link-list")]
+public class HydroLinkList : HydroView
 {
+    public string Folder { get; set; } = "Sandbox"; // e.g. 'Sandbox'
     public RazorLink[] Links { get; set; }
     public int GridRows { get; set; } = 1; // # of grid rows desired.
     public bool GridMode => GridRows > 1;

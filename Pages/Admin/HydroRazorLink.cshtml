@@ -1,0 +1,15 @@
+@model evantage.Pages.Admin.HydroRazorLink
+
+@{
+    var razorlink = Model.razorLink;
+}
+
+<a class="tooltip flex gap-2"
+   data-tip="Go to @razorlink.razorRoute.file_name"
+   href="@razorlink.link">
+    <button>
+        @razorlink.razorRoute.file_name
+    </button>
+    @* svg is the default slot *@
+    @Model.Slot()
+</a>

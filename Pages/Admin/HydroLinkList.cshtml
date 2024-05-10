@@ -1,0 +1,34 @@
+@page
+@using CodeMechanic.Types
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model evantage.Pages.Admin.HydroLinkList
+
+@{
+    var allRazorLinks = Model.Links;
+    int row_count = Model.GridRows;
+    bool grid_mode = Model.GridMode;
+}
+
+@if (grid_mode)
+{
+    <div class="flex flex-wrap gap-2">
+        @foreach (var batch in allRazorLinks
+            .OrderBy(l => l.razorRoute.file_name)
+            .Batch(row_count))
+        {
+            @foreach (var route in @allRazorLinks)
+            {
+                <partial name="_RazorLink" model="@route"></partial>
+            }
+        }
+    </div>
+}
+else if (!grid_mode)
+{
+    <div class="flex flex-wrap gap-2">
+        @foreach (var route in @allRazorLinks)
+        {
+            <partial name="_RazorLink" model="@route"></partial>
+        }
+    </div>
+}

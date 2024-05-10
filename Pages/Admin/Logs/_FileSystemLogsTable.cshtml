@@ -47,13 +47,16 @@
                     <th></th>
                     <th></th>
                     <th>
-                        <button class="btn btn-accent"
-                                hx-get
-                                hx-swap="none"
-                                hx-vals='{"filepath": "@row.FilePath", "program": "@SelectedProgram"}'
-                                hx-page-handler="OpenInExplorer">
-                            Open In File Explorer
-                        </button>
+                        <span data-tip="Open In File Explorer" class="tooltip tooltip-accent">
+
+                            <button class="btn btn-accent"
+                                    hx-get
+                                    hx-swap="none"
+                                    hx-vals='{"filepath": "@row.FilePath", "program": "@SelectedProgram"}'
+                                    hx-page-handler="OpenInExplorer">
+                                Open
+                            </button>
+                        </span>
 
                     </th>
                 </tr>

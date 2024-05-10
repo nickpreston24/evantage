@@ -16,32 +16,32 @@
     @* @if (use_cdn_links) *@
     @* { *@
     <!-- HTMX -->
-        @* asp-fallback-src="https://unpkg.com/htmx.org@latest" *@
-    <script 
-            src="~/lib/htmx.org/dist/htmx.min.js"
-            asp-fallback-test="window.htmx"
-            crossorigin="anonymous">
+    @* asp-fallback-src="https://unpkg.com/htmx.org@latest" *@
+    <script
+        src="~/lib/htmx.org/dist/htmx.min.js"
+        asp-fallback-test="window.htmx"
+        crossorigin="anonymous">
         </script>
 
     <!-- Chart JS  -->
-        @* src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.min.js" *@
-    <script 
-            src="~/lib/chart.js/dist/chart.umd.js"></script>
+    @* src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.min.js" *@
+    <script
+        src="~/lib/chart.js/dist/chart.umd.js"></script>
 
     <!--  DaisyUI -->
-    @* href="https://cdn.jsdelivr.net/npm/daisyui@2.47.0/dist/full.css"  *@
+    @* href="~/lib/daisyui/dist/full.css" *@
     <link
-        href="~/lib/daisyui/dist/full.css"
+        href="https://cdn.jsdelivr.net/npm/daisyui@2.47.0/dist/full.css"
         rel="stylesheet" type="text/css"/>
 
-    @* href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" *@
+    @* href="~/lib/tailwindcss/tailwind.css" *@
     <link
-        href="~/lib/tailwindcss/tailwind.css"
+        href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"
         rel="stylesheet" type="text/css"/>
 
     <!-- Alpine Plugins -->
     @* <script defer *@
-            @* src='https://cdn.jsdelivr.net/npm/@@alpinejs/persist@3.x.x/dist/cdn.min.js'></script> *@
+    @* src='https://cdn.jsdelivr.net/npm/@@alpinejs/persist@3.x.x/dist/cdn.min.js'></script> *@
     @* <script src="https://unpkg.com/htmx.org@latest/dist/ext/alpine-morph.js"></script> *@
     @* <script defer src="https://unpkg.com/@@alpinejs/morph@3.x.x/dist/cdn.min.js"></script> *@
 
@@ -68,7 +68,7 @@
 
     @* @if (!use_cdn_links) *@
     @* { *@
-    <link rel="stylesheet" href="~/css/site.css">
+    @* <link rel="stylesheet" href="~/css/site.css"> *@
     @* } *@
 
 </head>
@@ -103,7 +103,7 @@
                 <a href="/Sandbox">🏖️ Sandbox</a>
             </li>
             <li>
-                <a href="/Logs">⏳ Logs</a>
+                <a href="/Admin/Logs">⏳ Logs</a>
             </li>
         </slot>
 

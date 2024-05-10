@@ -349,5 +349,5 @@ I want to be able to see my latest Todos and tick them off, without creating a R
 - [ ] GET all Jobs from Job Hunt Airtable.
 - [ ] Show a random Proverb on /Scriptures.
 - [ ] Sort README.md tasks by length of tabs, and by priority.  If no priority exists, default to the count of tabs % 4.
+- [x] Start and /Admin folder.
 - [ ] Start on a View for your CodeMechanic base and tree structure, versions of nuget pkgs, etc.
-- [ ] Start and /Admin folder.

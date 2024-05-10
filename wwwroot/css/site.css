@@ -2510,8 +2510,17 @@ details.collapse summary::-webkit-details-marker {
   isolation: isolate;
 }
 
+.link-primary {
+  --tw-text-opacity: 1;
+  color: var(--fallback-p,oklch(var(--p)/var(--tw-text-opacity)));
+}
+
 @supports (color:color-mix(in oklab,black,black)) {
   @media (hover:hover) {
+    .link-primary:hover {
+      color: color-mix(in oklab,var(--fallback-p,oklch(var(--p)/1)) 80%,black);
+    }
+
     .link-accent:hover {
       color: color-mix(in oklab,var(--fallback-a,oklch(var(--a)/1)) 80%,black);
     }

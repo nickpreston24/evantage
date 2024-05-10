@@ -1,0 +1,50 @@
+@using evantage.Services
+@model evantage.Pages.Admin.HydroLinkTree
+@inject IRazorRoutesService2 routesService2
+@{
+    var allRazorLinks = routesService2.GetAllRazorLinks("Sandbox", debug: false);
+    // int row_count = 5; //allRazorLinks.Length % 10;
+    var tree = allRazorLinks
+        .OrderBy(l => l.razorRoute.file_name)
+        .GroupBy(rl => rl.razorRoute.subdirectory);
+}
+
+<div class="grid grid-cols-3 grid-rows-auto gap-2">
+    @foreach (var tier in tree)
+    {
+        @* <div class="card w-auto"> *@
+        <div class="card-body border-2 border-warning">
+
+            <h1 class="text-info">@tier.Key:</h1>
+            @foreach (var route in tier)
+            {
+                <razor-link razor-link="@route">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                </razor-link>
+                    @* <partial name="_RazorLink" model="@route"></partial> *@
+            }
+        </div>
+        // </div>
+    }
+</div>
+
+@* <div class="grid grid-cols-1 grid-rows-auto gap-2"> *@
+@*     @foreach (var tier in tree) *@
+@*     { *@
+@*         <div class="card"> *@
+@*             <div class="card-body"> *@
+@* *@
+@*                 <h1 class="text-info">@tier.Key:</h1> *@
+@*                 @foreach (var route in tier) *@
+@*                 { *@
+@*                     <razor-link razor-link="@route"></razor-link> *@
+@*                     $1$ <partial name="_RazorLink" model="@route"></partial> #1# *@
+@*                 } *@
+@*             </div> *@
+@*         </div> *@
+@*     } *@
+@* </div> *@

@@ -4,6 +4,7 @@ using CodeMechanic.Diagnostics;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Types;
+using evantage.Models;
 using NSpecifications;
 
 namespace evantage.Services;
@@ -11,6 +12,7 @@ namespace evantage.Services;
 public interface IRazorRoutesService2
 {
     RazorRoute[] GetAllRoutes(string current_folder, bool debug);
+    RazorLink[] GetAllRazorLinks(string current_folder, bool debug = false);
 }
 
 public class RazorRoutesService2 : IRazorRoutesService2
@@ -23,6 +25,16 @@ public class RazorRoutesService2 : IRazorRoutesService2
     {
         // razor_page_routes = GetAllRoutes();
     }
+
+    public RazorLink[] GetAllRazorLinks(string current_folder, bool debug = false)
+    {
+        var routes = GetAllRoutes(current_folder, debug = false);
+        var links = routes.Select(rr => new RazorLink(rr)).ToArray();
+        if (debug)
+            links.Dump(nameof(links));
+        return links;
+    }
+
 
     public RazorRoute[] GetAllRoutes(string current_folder, bool debug = false)
     {
@@ -55,14 +67,17 @@ public class RazorRoutesService2 : IRazorRoutesService2
         RegexOptions options = RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace |
                                RegexOptions.IgnoreCase;
 
-        var regex = new Regex(@"(?<subdirectory>\/?(\w+\/)*)(?<file_name>.*\.(?<extension>cshtml|cs))",
+        // https://regex101.com/r/qoYQzO/1
+        var regex = new Regex(@"Pages/(?<subdirectory>\/?(\w+\/)*)(?<file_name>.*)\.(?<extension>cshtml)",
             options);
 
-        var directories = GetDirectories(current_page_folder_path);
-        if (debug) directories.Dump(nameof(directories));
+        // var directories = GetDirectories(current_page_folder_path);
+        // if (debug) directories.Dump(nameof(directories));
 
         var routes = grepper.GetMatchingFiles();
-        var route_names = routes.Select(rr => rr.FilePath)
+        // routes.Take(2).Dump("first route");
+
+        var razor_routes = routes.Select(rr => rr.FilePath)
                 // var routes = grepper.GetFileNames()
                 //         .Where(!is_blacklisted)
                 //         .Where(path => !path.Contains("/Components"))
@@ -75,7 +90,8 @@ public class RazorRoutesService2 : IRazorRoutesService2
                 .ToArray()
             ;
 
-        return route_names;
+        // razor_routes.Take(2).Dump("first extracted routes");
+        return razor_routes;
     }
 
     public string[] GetBreadcrumbsForPage(string page_name)

@@ -15,7 +15,6 @@
         <Watch Include="**\*.config.json" />
         <Watch Include="/Pages/**/*.json" />
         <Watch Include="**\*.sql" />
-        <Watch Include="**\*.cypher" />
         <Watch Include="**\*.css" />
     </ItemGroup>
 
@@ -47,7 +46,6 @@
         <PackageReference Include="MySqlConnector" Version="2.3.7" />
         <PackageReference Include="System.Runtime.Caching" Version="8.0.0" />
     </ItemGroup>
-
 
     <ItemGroup>
         <Folder Include="Styles" />

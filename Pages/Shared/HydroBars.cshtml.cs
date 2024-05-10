@@ -8,5 +8,5 @@ namespace evantage.Pages.Shared;
 public class HydroBars : HydroView
 {
     public string message { get; set; } = "loading ... ";
-    public string htmx_target_id { get; set; } = "loading";
+    public string id { get; set; } = "loading";
 }

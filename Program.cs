@@ -29,19 +29,20 @@ builder.Services.AddCors(options =>
 // Load and inject .env files & values
 DotEnv.Load();
 
-// builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
+// builder.Services.AddSingleton<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
-builder.Services.AddSingleton<IMarkdownService, evantage.Services.MarkdownService>();
-builder.Services.AddSingleton<IReadmeService, ReadmeService>();
+builder.Services.AddTransient<IMarkdownService, evantage.Services.MarkdownService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
-builder.Services.AddSingleton<IRazorRoutesService2, RazorRoutesService2>();
-builder.Services.AddSingleton<IDownloadImages, ImageDownloader>();
-builder.Services.AddSingleton<IAirtableServiceV2, AirtableServiceV2>();
-builder.Services.AddSingleton<ITodoistService, TodoistService>();
+builder.Services.AddTransient<IReadmeService, ReadmeService>();
+builder.Services.AddTransient<IScriptureService, ScriptureService>();
+builder.Services.AddTransient<IRazorRoutesService2, RazorRoutesService2>();
+builder.Services.AddTransient<IDownloadImages, ImageDownloader>();
+builder.Services.AddTransient<IAirtableServiceV2, AirtableServiceV2>();
+builder.Services.AddTransient<ITodoistService, TodoistService>();
 builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IGenerateSQLTypes, SQLCService>();
 builder.Services.AddTransient<INotesService, NotesService>();
-builder.Services.AddSingleton<ICopyPastaService, CopyPastaService>();
+builder.Services.AddTransient<ICopyPastaService, CopyPastaService>();
 builder.Services.AddControllers();
 
 var main_assembly = Assembly.GetExecutingAssembly();

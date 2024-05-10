@@ -16,7 +16,7 @@ public class CopyPastaService : ICopyPastaService
 
         var local_dirs = cwd
                 .AsDirectory()
-                .GoToDirectory(copyOptions.source_dir)
+                .GoUpToDirectory(copyOptions.source_dir)
             ;
 
         await foreach (var current_subdir in local_dirs.DiscoverDirectories(directory_regex))
@@ -29,23 +29,17 @@ public class CopyPastaService : ICopyPastaService
 
             var grep_results_batch = grepper.GetMatchingFiles();
 
-            foreach (var file_path in grep_results_batch.Select(res => res.FilePath))
-            {
-                var lines = File.ReadAllLines(file_path);
-                int lines_of_code = lines.Length;
-                lines_of_code.Dump();
+            //  TODO: Copy / saveas each file (outside this loop, preferably)
+            // foreach (var file_path in grep_results_batch.Select(res => res.FilePath))
+            // {
+            //     var lines = File.ReadAllLines(file_path);
+            //     int lines_of_code = lines.Length;
+            //     lines_of_code.Dump(nameof(lines_of_code));
+            //
+            // }
 
-                // string save_path = file_path;
-                // FS.SaveAs(new SaveAs())
-
-
-            }
-            
             yield return grep_results_batch.ToList();
-
-            // yield return current_subdir;
         }
-
     }
 }
 

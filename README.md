@@ -299,6 +299,7 @@ I want to be able to see my latest Todos and tick them off, without creating a R
 
 ## Fun Ideas
 
+- [ ] *Optional* Upgrade your Personal Daemon service to watch for code changes in a target dir, and control the Hot Reload process (including rude edits)
 - [ ] Colored console logs: https://github.com/tomakita/Colorful.Console - p4
 - [ ] Using an existing RegexService, parse all your .CS files for regex101 link s an the regex patterns that follow.  Store to MySql. :)
 - [ ] Prioritize Todoist Tasks based on Distributions, like duration, how many times completed (streaks), etc.
@@ -324,3 +325,29 @@ I want to be able to see my latest Todos and tick them off, without creating a R
   - [ ] Chunked transforms: Find specific lines using a start and ending regex (already built.) and perform specific transforms from start to end.  Usually replacements, but can be something like code generation, mass corrections to malformed data, finding dups (like Airtable does).
   - [ ] Allow user to queue the replacements and transforms.
   - [ ] Update the Hydrolizer to create C# props from alpinejs variables it discovers within script tags.
+
+
+### GMail Support
+
+- [ ] Investigate: https://developers.google.com/api-client-library/dotnet/apis/gmail/v1 - p3
+- [ ] https://www.youtube.com/watch?v=0fTSKtPBLUc
+- [ ] ..
+- [ ] ..
+- [ ] ..
+
+### Applications - Generators
+
+- [ ] Form for generating a specific Email greeting for different job titles (Vue)
+- [ ] Copy/paste button for emai
+
+### May 9th goals
+- [ ] Rescheduler fix: update all your breakfast tasks as done, between the due date and now.  Scedule a new breakfast for tomorrow. Run w/ a button
+- [ ] try making a GET request to Airtable using your new chrome extension.
+- [ ] tes t your Controllers to see if you can ping them in prod; save down to mysql
+- [ ] Finish your first ScriptClassAsTable implementation and add to CodeMechanic so you can use it.
+- [ ] Upload all README.md tasks to its own db in Mysql, then render the table from there, not from README.md.  re-Populate on startup, and only show the latest.  This will help prioritize coding goals in one easy place.  Also, make a search box, using your ToString() trick.
+- [ ] GET all Jobs from Job Hunt Airtable.
+- [ ] Show a random Proverb on /Scriptures.
+- [ ] Sort README.md tasks by length of tabs, and by priority.  If no priority exists, default to the count of tabs % 4.
+- [ ] Start on a View for your CodeMechanic base and tree structure, versions of nuget pkgs, etc.
+- [ ] Start and /Admin folder.

@@ -324,5 +324,5 @@ module.exports = {
         logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
         themeRoot: ":root", // The element that receives theme color CSS variables
     },
-    content: ["./Pages/**/*.{cshtml}", "./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"]
+    content: ["./Pages/**/*.cshtml", "./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"]
 };

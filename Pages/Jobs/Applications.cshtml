@@ -2,15 +2,24 @@
 @model evantage.Pages.Jobs.Applications
 
 @{
-    Layout = null;
 }
 
-<p>Manage your current applications here, as opposed to Airtable</p>
+@* *@
+@* <div x-data="{show: false}"> *@
+@*     <h1 class="text-primary">Header 1</h1> *@
+@*     <button @@click="show=!show">Show</button> *@
+@*     <span x-show="show">Content</span> *@
+@* </div> *@
 
-<ul>
-    <li>Click on an application to apply on external link</li>
-    <li>When I return to the page, ask if I applied, then update my Airtable with the answer</li>
-    <a href="/Jobs/Stats">See Stats here</a>
-    
-    <li>Also, show any possible duplicates by using the LIKE() method to make comparisons</li>
-</ul>
+<div class="">
+
+    <p>Manage your current applications here, as opposed to Airtable</p>
+
+    <ul>
+        <li>Click on an application to apply on external link</li>
+        <li>When I return to the page, ask if I applied, then update my Airtable with the answer</li>
+        <a href="/Jobs/Stats">See Stats here</a>
+
+        <li>Also, show any possible duplicates by using the LIKE() method to make comparisons</li>
+    </ul>
+</div>

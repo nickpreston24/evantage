@@ -1,0 +1,44 @@
+@page
+@model evantage.Pages.Scriptures.Index
+
+@{
+    var scriptures = Model.Scriptures;
+    var scripture_files = Model.ScriptureFiles;
+}
+
+<section class="h-screen grid grid-rows-auto">
+    <div class="text-green-300">
+
+        <h2>Discover all local scripture files and render them below</h2>
+
+        @* Search bar *@
+        <input id="scriptures_search"
+               hx-get
+               hx-swap="innerHTML"
+               hx-page="Index"
+               hx-trigger="keyup changed delay:250ms"
+               hx-target="#scriptures"
+               hx-page-handler="SearchScriptures"/>
+
+        @* Rendered list initializer *@
+        <div id="scriptures_list"
+             hx-get
+             hx-swap="innerHTML"
+             hx-page="Index"
+             hx-trigger="revealed"
+             hx-target="#scripture_files"
+             hx-page-handler="AllLocalScriptures">
+
+        </div>
+
+        @* loader bars *@
+        <hydro-bars></hydro-bars>
+
+        @* actual rendered list *@
+        <span id="scripture_files">
+            <partial name="_ScriptureFilesList" model="@scripture_files"></partial>
+        </span>
+
+    </div>
+
+</section>

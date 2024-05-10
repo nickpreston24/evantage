@@ -1,0 +1,10 @@
+@model List<evantage.Models.ScriptureFile>
+
+@foreach (var file in @Model)
+{
+    <div class="card">
+        <div class="card-body">
+            <span>@file.file_name</span>
+        </div>
+    </div>
+}

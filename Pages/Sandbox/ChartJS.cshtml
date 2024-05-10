@@ -1,0 +1,27 @@
+@page
+@model evantage.Pages.Sandbox.ChartJS
+
+@{
+    // TODO: figure out how to load this crummy npm package without using a CDN.  Currenly having trouble loading it as a module b/c of some stupid 'kurkle' error, explained here:
+    // https://stackoverflow.com/questions/76024418/chart-js-uncaught-typeerror-failed-to-resolve-module-specifier-kurkle-color
+}
+
+<div x-data="setup()" class="flex flex-col items-center justify-center">
+    <h1 class="text-5xl" x-text="message"></h1>
+
+    <div style="width: 800px;">
+        <canvas id="acquisitions"></canvas>
+
+        <script type="script" src="~/js/acquisitions.js"></script>
+
+    </div>
+
+
+</div>
+<script >
+    function setup() {
+        return {
+            message: 'HELLO'
+        }
+    }
+</script>

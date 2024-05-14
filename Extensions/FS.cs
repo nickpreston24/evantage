@@ -33,8 +33,8 @@ public static class FS
         Console.WriteLine("saving to path :>> " + save_path);
 
         // handle both single and double lines in one method without being retarded <3
-        if (lines.Length > 1)
-            File.WriteAllLines(save_path, lines);
+        // if (lines.Length > 1)
+        File.WriteAllLines(save_path, lines);
         // if (lines.Length == 1)
         //     File.WriteAllText(save_path, lines[0]);
 

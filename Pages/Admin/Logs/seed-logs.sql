@@ -280,9 +280,9 @@ call SearchLogs(null, null, null, null);
    */
 
 # 
-# select *
-             # from logs
-      # where exception_text
-      #           REGEXP 'Arg.*'
-      #     and issue_url REGEXP 'jira2'
-      # ;
+select *
+             from logs
+      where exception_text
+                REGEXP 'Arg.*'
+          and issue_url REGEXP 'jira2'
+      ;

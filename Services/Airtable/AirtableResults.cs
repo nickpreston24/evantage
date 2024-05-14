@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace CodeMechanic.Airtable;
 
 public class AirtableResults<TResult>

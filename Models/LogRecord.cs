@@ -1,3 +1,5 @@
+using System;
+
 namespace evantage.Models;
 
 public sealed class LogRecord

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using CodeMechanic.Advanced.Regex;
 
 namespace  CodeMechanic.Sqlc;

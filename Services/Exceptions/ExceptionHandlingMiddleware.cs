@@ -1,7 +1,11 @@
+using System;
+using System.Threading.Tasks;
 using CodeMechanic.Types;
 using evantage.Models;
 using evantage.Pages.Logs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 public class ExceptionHandlingMiddleware
 {

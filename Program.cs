@@ -9,6 +9,9 @@ using CodeMechanic.Sqlc;
 using CodeMechanic.Todoist;
 using evantage.Pages.Logs;
 using evantage.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var policyName = "_myAllowSpecificOrigins";
 

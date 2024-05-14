@@ -1,5 +1,10 @@
-﻿using System.Net.Http.Headers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Airtable;
 using CodeMechanic.Curl;
@@ -11,6 +16,7 @@ using Htmx;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using AirtableSearchV2 = CodeMechanic.Airtable.AirtableSearchV2;
 
 namespace evantage.Pages;

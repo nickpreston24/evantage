@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using evantage.Pages.Components
+@using Hydro
 @{
     string base_id = Environment.GetEnvironmentVariable("AIRTABLE_SALES_SPY_BASE_ID") ?? "<base_id>";
     string api_reference = $"https://airtable.com/{base_id}/api/docs#curl/table:interactions:list";

@@ -2,14 +2,13 @@ using System.Reflection;
 using CodeMechanic.Airtable;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
-using CodeMechanic.Extensions;
 using CodeMechanic.FileSystem;
 using CodeMechanic.RazorHAT.Services;
+using CodeMechanic.Scriptures;
 using CodeMechanic.Sqlc;
 using CodeMechanic.Todoist;
 using evantage.Pages.Logs;
 using evantage.Services;
-using IMarkdownService = evantage.Services.IMarkdownService;
 
 var policyName = "_myAllowSpecificOrigins";
 
@@ -36,7 +35,7 @@ builder.Services.AddProblemDetails();
 
 // builder.Services.AddSingleton<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
-builder.Services.AddTransient<IMarkdownService, evantage.Services.MarkdownService>();
+builder.Services.AddTransient<IMarkdownService, MarkdownService>();
 builder.Services.AddTransient<IGlobalLoggingService, GlobalLoggingService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
 builder.Services.AddTransient<IReadmeService, ReadmeService>();

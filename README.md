@@ -341,6 +341,7 @@ I want to be able to see my latest Todos and tick them off, without creating a R
 - [ ] Copy/paste button for emai
 
 ### May 9th goals
+- [ ] P1:  Use Import Maps to fix the HUGE LOAD of Javascript into Chrome: [Here](https://khalidabuhakmeh.com/javascript-import-maps-for-aspnet-core-developers)
 - [ ] Rescheduler fix: update all your breakfast tasks as done, between the due date and now.  Scedule a new breakfast for tomorrow. Run w/ a button
 - [ ] try making a GET request to Airtable using your new chrome extension.
 - [ ] tes t your Controllers to see if you can ping them in prod; save down to mysql

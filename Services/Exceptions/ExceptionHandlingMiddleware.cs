@@ -1,10 +1,7 @@
-using System.Net;
-using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 using evantage.Models;
 using evantage.Pages.Logs;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 public class ExceptionHandlingMiddleware
 {

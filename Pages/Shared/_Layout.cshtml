@@ -2,7 +2,6 @@
 @{
     string base_id = Environment.GetEnvironmentVariable("AIRTABLE_SALES_SPY_BASE_ID") ?? "<base_id>";
     string api_reference = $"https://airtable.com/{base_id}/api/docs#curl/table:interactions:list";
-    // bool use_cdn_links = true;
 }
 
 <!DOCTYPE html>
@@ -13,63 +12,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Evantage</title>
 
-    @* @if (use_cdn_links) *@
-    @* { *@
-    <!-- HTMX -->
-    @* asp-fallback-src="https://unpkg.com/htmx.org@latest" *@
-    <script
-        src="~/lib/htmx.org/dist/htmx.min.js"
-        asp-fallback-test="window.htmx"
-        crossorigin="anonymous">
-        </script>
+    <script src="https://unpkg.com/htmx.org@latest"
+            asp-fallback-src="~/lib/htmx.org/dist/htmx.min.js"
+            asp-fallback-test="window.htmx"
+            crossorigin="anonymous">
+       </script>
 
-    <!-- Chart JS  -->
-    @* src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.min.js" *@
-    <script
-        src="~/lib/chart.js/dist/chart.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.min.js"
+            asp-fallback-src="~/lib/chartjs"></script>
 
-    <!--  DaisyUI -->
-    @* href="~/lib/daisyui/dist/full.css" *@
-    <link
-        href="https://cdn.jsdelivr.net/npm/daisyui@2.47.0/dist/full.css"
-        rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.47.0/dist/full.css" rel="stylesheet" type="text/css"/>
 
-    @* href="~/lib/tailwindcss/tailwind.css" *@
-    <link
-        href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"
-        rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>
 
     <!-- Alpine Plugins -->
-    @* <script defer *@
-    @* src='https://cdn.jsdelivr.net/npm/@@alpinejs/persist@3.x.x/dist/cdn.min.js'></script> *@
-    @* <script src="https://unpkg.com/htmx.org@latest/dist/ext/alpine-morph.js"></script> *@
-    @* <script defer src="https://unpkg.com/@@alpinejs/morph@3.x.x/dist/cdn.min.js"></script> *@
+    <script defer
+            src='https://cdn.jsdelivr.net/npm/@@alpinejs/persist@3.x.x/dist/cdn.min.js'
+            asp-fallback-src="~/lib/@@alpinejs"></script>
+    <script src="https://unpkg.com/htmx.org@latest/dist/ext/alpine-morph.js"></script>
+    <script defer src="https://unpkg.com/@@alpinejs/morph@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Alpine Core -->
-    @* asp-fallback-src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" *@
-    <script defer
-            src="~/lib/alpinejs/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- ThreeJS -->
-    @* src="//unpkg.com/three" *@
-    <script
-    ></script>
+    <script src="//unpkg.com/three"></script>
 
-    <!-- 3D Force Graphs -->
-    @* src="//unpkg.com/3d-force-graph" *@
-    <script
-    ></script>
+    <script src="//unpkg.com/3d-force-graph"></script>
 
-    <!-- Tesseract OCR v5 -->
-    @* src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js' *@
-    <script
-    ></script>
-    @* } *@
+    <!-- v5 -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
 
-    @* @if (!use_cdn_links) *@
-    @* { *@
+    <script type="module" src="~/js/main.js"></script>
+    @* <script src="~/dist/index.js" type="module"></script> *@
+
     @* <link rel="stylesheet" href="~/css/site.css"> *@
-    @* } *@
 
 </head>
 

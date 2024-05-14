@@ -1,6 +1,5 @@
 using CodeMechanic.Diagnostics;
-using evantage.Models;
-using evantage.Services;
+using CodeMechanic.Scriptures;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

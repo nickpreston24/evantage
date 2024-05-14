@@ -11,6 +11,7 @@
     "hotreloadprofile": {
       "commandName": "Project",
       "launchBrowser": true,
+      "browsers": ["firefox"],
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -11,7 +11,7 @@ MySqlConnector.MySqlException (0x80004005): Unknown column 'exception_message' i
    at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
    at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
    at Dapper.SqlMapper.Query[T](IDbConnection cnn, String sql, Object param, IDbTransaction transaction, Boolean buffered, Nullable`1 commandTimeout, Nullable`1 commandType) in /_/Dapper/SqlMapper.cs:line 815
-   at evantage.Pages.Logs.GlobalLoggingService.UpsertLogs(IEnumerable`1 logRecords, Boolean debug_mode)insert into logs (application_name
+   at evantage.Pages.Logs.GlobalLoggingService.UpsertLogs(IEnumerable`1 logRecords, Boolean debug_mode) in /home/nick/Desktop/projects/personal/evantage/Pages/Admin/Logs/GlobalLoggingService.cs:line 123insert into logs (application_name
 , breadcrumb
 , commit_url
 , created_at
@@ -36,7 +36,7 @@ MySqlConnector.MySqlException (0x80004005): Unknown column 'exception_message' i
 
  VALUES ( ''
 , ''
-, 'GetFileNames() -- Can&quot;t find RootPath!'
+, 'GetFileNames() -- Can&apos;t find RootPath!'
 , 'HIGH'
 , ''
 , ''

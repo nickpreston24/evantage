@@ -1,4 +1,4 @@
-using CodeMechanic.Advanced.Regex;
+using CodeMechanic.Markdown;
 using CodeMechanic.Todoist;
 using CodeMechanic.Types;
 using evantage.Services;
@@ -39,12 +39,12 @@ public class Index : PageModel
     // public List<TodoistTask> SearchResults = new();
 
     private readonly ITodoistService todoist;
-    private readonly evantage.Services.IMarkdownService markdown;
     private IReadmeService readme_service;
+    private readonly IMarkdownService markdown;
 
     public Index(
         ITodoistService todos
-        , evantage.Services.IMarkdownService markdown
+        , IMarkdownService markdown
         , IReadmeService readme
     )
     {

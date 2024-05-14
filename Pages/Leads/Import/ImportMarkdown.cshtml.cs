@@ -1,5 +1,6 @@
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Diagnostics;
+using CodeMechanic.Markdown;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,12 +10,12 @@ namespace evantage.Pages.Leads.Import;
 [BindProperties(SupportsGet = true)]
 public class ImportFromMarkdown : PageModel
 {
-    private evantage.Services.IMarkdownService markdown;
+    private IMarkdownService markdown;
     public string MarkdownFolder = "/home/nick/Downloads/google-drive/EMG/";
-    public List<evantage.Services.MarkdownFile> LocalMarkdownFiles => _localMarkdownFiles;
-    private static List<evantage.Services.MarkdownFile> _localMarkdownFiles = new();
+    public List<MarkdownFile> LocalMarkdownFiles => _localMarkdownFiles;
+    private static List<MarkdownFile> _localMarkdownFiles = new();
 
-    public ImportFromMarkdown(evantage.Services.IMarkdownService mkdwn)
+    public ImportFromMarkdown(IMarkdownService mkdwn)
     {
         markdown = mkdwn;
     }

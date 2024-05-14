@@ -1,9 +1,6 @@
-using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
-using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Neo4j.Driver;
 
 namespace evantage.Pages.CarCapital.Inventory;
 //Note: to remove all comments, replace this pattern with nothing:  // .*$

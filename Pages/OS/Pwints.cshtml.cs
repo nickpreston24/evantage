@@ -2,6 +2,7 @@ using System.Diagnostics;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.FileSystem;
 using CodeMechanic.Types;
+using evantage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using evantage.Services;
@@ -27,12 +28,14 @@ public class Pwints : PageModel
         {
             Stopwatch watch = Stopwatch.StartNew();
 
-            Console.WriteLine("file_mask :>> " + file_mask);
+            if (debug)
+                Console.WriteLine("file_mask :>> " + file_mask);
             if (debug)
                 Console.WriteLine(nameof(OnGetGrepFiles));
 
             string root = root_directory.NotEmpty() ? root_directory : Directory.GetCurrentDirectory();
-            Console.WriteLine(root);
+            if (debug)
+                Console.WriteLine(root);
 
             var found_files = new Grepper()
                 {
@@ -44,12 +47,15 @@ public class Pwints : PageModel
                 .Where(dirname => !dirname.Contains("node_modules")
                                   && !dirname.Contains("wwwroot")
                 )
+                .Select(fp => fp.Map(path => new Pwint(path)))
                 .ToList();
 
             watch.Stop();
             var time = watch.ElapsedMilliseconds;
-
-            found_files.Dump(nameof(found_files));
+            if (debug)
+                Console.WriteLine("ms :" + time);
+            if (debug)
+                found_files.Dump(nameof(found_files));
 
             return Partial("_DriveFiles", found_files);
             // return Content(

@@ -1,18 +1,45 @@
 @using CodeMechanic.FileSystem
+@using CodeMechanic.Extensions
 @* @model List<Grepper.GrepResult> *@
-@model List<string>
+@model List<evantage.Models.Pwint>
 @{
     var files = @Model;
 }
 
 <div>
+    @* text-sm font-bold text-gray-900 *@
+    <p class='text-sm font-bold text-accent'>files: @files.Count</p>
 
-    <p class='text-lg text-accent'>total files found: @files.Count in folder</p>
-    <ul>
-
+    <ul class="list-disc space-y-2">
         @foreach (var file in files)
         {
-            <li>@file</li>
+            <li class="flex items-start">
+                <span class="h-6 flex items-center sm:h-7">
+                    <svg
+                        class="flex-shrink-0 h-5 w-5 text-cyan-500"
+                        viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                            fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd"/>
+                    </svg>
+                    <status-icon status="success"/>
+                </span>
+                <div data-tip="@file.file_path" class="tooltip tooltip-accent tooltip-bottom">
+                    <p class="ml-2">
+                        @(System.IO.Path.GetFileName(@file.file_path))
+                    </p>
+                </div>
+            </li>
         }
+
     </ul>
+    @* <ul> *@
+    @* *@
+    @*     @foreach (var file in files) *@
+    @*     { *@
+    @*         <li>@file</li> *@
+    @*     } *@
+    @* </ul> *@
 </div>

@@ -1,0 +1,146 @@
+@page
+@using CodeMechanic.Extensions
+@using evantage.Services
+@model evantage.Pages.OS.Pwints
+
+@{
+    string cwd = Directory.GetCurrentDirectory();
+    // var di = cwd.AsDirectory();
+
+    var pwint_options = new List<PwintOption>()
+    {
+        new PwintOption()
+        {
+            title = "STL_in_Downloads",
+            tooltip = "Find all STL files on a given drive",
+            file_mask = "*.stl"
+        },
+        new PwintOption()
+        {
+            title = "STL",
+            tooltip = "Find all STL files on a given drive",
+            file_mask = "*.stl"
+        },
+        new PwintOption()
+        {
+            title = "Markdown",
+            tooltip = "Find all Markdown files on a given drive",
+            file_mask = "*.md"
+        },
+    };
+}
+
+<div x-data="setup_pwints()" id="main_flex" class="flex flex-row">
+
+    <div class="border-primary-content/10 border-2 w-1/10 ">
+
+        <template x-cloak x-for="[key, value] of Object.entries(views)">
+            <div :data-tip="value.tip" class="tooltip tooltip-bottom tooltip-accent flex-col flex items-center justify-center gap-2">
+
+                <button
+                    x-on:click="value.enabled=!value.enabled"
+                    class="btn btn-primary join-item shadow-md shadow-secondary-400/50"
+                    :class="{'border-2 border-secondary btn-ghost': !value.enabled, 'border-2 border-accent': value.enabled }">
+                    <label
+                        x-text="key"
+                        class="form-label badge badge-sm"
+                        :asp-for='key'>
+                    </label>
+
+                    <input x-bind:name='key'
+                           x-bind:value='value.enabled'
+                           x-bind:checked="value.enabled"
+                           type="checkbox"
+                           :asp-for="key"
+                           class="form-control toggle toggle-primary">
+                </button>
+
+            </div>
+
+        </template>
+    </div>
+
+
+    <div class="grid grid-cols-1 grid-rows-2 w-9/10">
+
+
+        <template x-if="true">
+
+            <div x-transition x-show="views.SSE.enabled">
+
+                <h1>SSE Sample </h1>
+
+                <p>I want to stream in dirs / watch directory for updates</p>
+
+                <div class="d-flex justify-content-center">
+                    <div hx-sse="connect:/rn-updates" class="card mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-header bg-primary text-white">Featured Random Number</div>
+                        <div class="card-body">
+                            <h5 class="card-title">The Random Number is..</h5>
+                            <p class="card-text fa-4x"
+                               hx-trigger="sse:number"
+                               hx-get="@Url.Page("Pwints", "Random")">
+                                <span>@Number.Value</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </template>
+
+        <template x-if="views.DriveSearch.enabled">
+
+            <div x-transition>
+
+                @foreach ((var pwint, int index) in pwint_options.WithIndex())
+                {
+                    <div
+                        :key="@pwint.id"
+                        hx-get
+                        hx-indicator="#pwints_indicator_@pwint.id"
+                        hx-page="Pwints"
+                        hx-trigger="load, click delay:1s"
+                        hx-page-handler="GrepFiles"
+                        hx-vars="{file_mask: @pwint.file_mask.AsJSON()}"
+                        hx-target="#results_@pwint.id"
+
+                        class="border-2 border-accent-content/20">
+
+                        <h1 class="text-yellow-500"> @pwint.title</h1>
+                        <pre>target: #results_@pwint.id</pre>
+
+                        <span id="results_@pwint.id">...</span>
+
+                        <span id="pwints_indicator_@pwint.id" class="htmx-indicator">
+                            <label>loading ...</label>
+                            <img class="w-8" alt="bars" src="~/img/loaders/my_awesome_spinner.svg"/>
+                        </span>
+
+                        <button
+                            class="btn btn-ghost"
+                            hx-indicator="#pwints_indicator"
+                            hx-trigger="click delay:1s">
+                            Reload
+                        </button>
+
+                    </div>
+                }
+
+            </div>
+        </template>
+
+        <script>
+        function setup_pwints(){
+            return {
+                views: {
+                    SSE: { tip: 'Show SSE sample', enabled: false },
+                    DriveSearch: { tip: 'Search drive for files matching a mask', enabled: true }
+                }
+            }
+        }
+    </script>
+
+    </div>
+
+</div>

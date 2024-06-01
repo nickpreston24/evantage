@@ -16,6 +16,7 @@
         <Watch Include="/Pages/**/*.json" />
         <Watch Include="**\*.sql" Watch="true" />
         <Watch Include="**\*.css" />
+        <Watch Include=".env" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,11 +29,11 @@
         <EmbeddedResource Include="**\*.rest"></EmbeddedResource>
     </ItemGroup>
 
-
     <ItemGroup>
         <PackageReference Include="Bogus" Version="35.5.0" />
         <PackageReference Include="CodeMechanic.Async" Version="1.0.1" />
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.3" />
+        <PackageReference Include="CodeMechanic.Todoist" Version="1.0.2" />
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.10" />
         <PackageReference Include="CodeMechanic.Markdown" Version="1.0.0" />
@@ -43,19 +44,21 @@
         <PackageReference Include="Dapper" Version="2.1.35" />
         <PackageReference Include="FuzzySharp" Version="2.0.2" />
         <PackageReference Include="Hydro" Version="0.10.0" />
+        <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="9.0.0" />
         <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.4" />
         <PackageReference Include="MySqlConnector" Version="2.3.7" />
         <PackageReference Include="System.Runtime.Caching" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Pages\Todos\Models" />
+        <!--        <Folder Include="Pages\Todos\Models" />-->
         <Folder Include="Styles" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\code-mechanic\CodeMechanic.Scriptures\scriptures.csproj" />
-      <ProjectReference Include="..\code-mechanic\CodeMechanic.Todoist\Todoist.csproj" />
+        <ProjectReference Include="..\code-mechanic\CodeMechanic.Scriptures\CodeMechanic.Scriptures.csproj" />
+<!--        <ProjectReference Include="..\code-mechanic\CodeMechanic.Scriptures\scriptures.csproj" />-->
+        <!--      <ProjectReference Include="..\code-mechanic\CodeMechanic.Todoist\CodeMechanic.Todoist.csproj" />-->
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace CodeMechanic.Airtable;
 
 public interface IAirtableServiceV2

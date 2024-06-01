@@ -7,11 +7,8 @@ using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Scriptures;
 using CodeMechanic.Sqlc;
 using CodeMechanic.Todoist;
-using evantage.Pages.Logs;
 using evantage.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Lib.AspNetCore.ServerSentEvents;
 
 var policyName = "_myAllowSpecificOrigins";
 
@@ -33,15 +30,22 @@ builder.Services.AddCors(options =>
 
 // Load and inject .env files & values
 DotEnv.Load();
+
+// add dependencies to services collection
+builder.Services.AddHttpClient();
+
+
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 // builder.Services.AddSingleton<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
+// var md_svc = new CodeMechanic.Markdown.MarkdownService();
+// var readme_svc = new ReadmeService(md_svc);
 builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
-builder.Services.AddTransient<IMarkdownService, MarkdownService>();
+// builder.Services.AddSingleton<CodeMechanic.Markdown.IMarkdownService>(md_svc);
 builder.Services.AddTransient<IGlobalLoggingService, GlobalLoggingService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();
-builder.Services.AddTransient<IReadmeService, ReadmeService>();
+// builder.Services.AddSingleton<IReadmeService>(readme_svc);
 builder.Services.AddTransient<IScriptureService, ScriptureService>();
 builder.Services.AddTransient<IRazorRoutesService2, RazorRoutesService2>();
 builder.Services.AddTransient<IDownloadImages, ImageDownloader>();
@@ -68,6 +72,11 @@ builder.Services.AddSingleton<IEmbeddedResourceQuery>(
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+// dependencies for server sent events
+// credit: https://www.jetbrains.com/guide/dotnet/tutorials/htmx-aspnetcore/server-sent-events/
+builder.Services.AddServerSentEvents();
+builder.Services.AddHostedService<ServerEventsWorker>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment().Dump("is dev?"))
@@ -93,10 +102,16 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+// the connection for server events
+// credit: https://www.jetbrains.com/guide/dotnet/tutorials/htmx-aspnetcore/server-sent-events/
+app.MapServerSentEvents("/rn-updates");
+
 app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

@@ -1,11 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using CodeMechanic.Types;
 using evantage.Models;
 using evantage.Pages.Logs;
-using Microsoft.AspNetCore.Http;
+using evantage.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 public class ExceptionHandlingMiddleware
 {
@@ -42,7 +39,7 @@ public class ExceptionHandlingMiddleware
                 exception_message = exception.Message
             }.AsList();
 
-            var res = await global_logging_svc.BulkUpsertLogs(lrs);
+            // var res = await global_logging_svc.BulkUpsertLogs(lrs);
             // res.Dump("logs upserted");
 
             var problemDetails = new ProblemDetails

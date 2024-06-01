@@ -1,0 +1,18 @@
+@using CodeMechanic.FileSystem
+@* @model List<Grepper.GrepResult> *@
+@model List<string>
+@{
+    var files = @Model;
+}
+
+<div>
+
+    <p class='text-lg text-accent'>total files found: @files.Count in folder</p>
+    <ul>
+
+        @foreach (var file in files)
+        {
+            <li>@file</li>
+        }
+    </ul>
+</div>

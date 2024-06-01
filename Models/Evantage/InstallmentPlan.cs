@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 

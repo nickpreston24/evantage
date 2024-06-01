@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Markdown;

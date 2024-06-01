@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Scriptures;
 using Microsoft.AspNetCore.Mvc;
@@ -33,8 +31,8 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnGetAllLocalScriptures()
     {
-        var collection = await scriptures_svc.GetAllScriptureFiles();
-
+        string cwd = Directory.GetCurrentDirectory();
+        var collection = await scriptures_svc.GetAllScriptureFiles(cwd, "tpot");
 
         return Partial("_ScriptureFilesList", all_scripture_files);
     }

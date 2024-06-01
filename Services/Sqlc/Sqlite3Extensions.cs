@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Types;
 

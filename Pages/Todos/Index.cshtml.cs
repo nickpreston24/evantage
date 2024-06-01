@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CodeMechanic.Markdown;
 using CodeMechanic.Todoist;
 using CodeMechanic.Types;
-using evantage.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -43,18 +38,18 @@ public class Index : PageModel
     // public List<TodoistTask> SearchResults = new();
 
     private readonly ITodoistService todoist;
-    private IReadmeService readme_service;
-    private readonly IMarkdownService markdown;
+    // private readonly IReadmeService readme_service;
+    // private readonly IMarkdownService markdown;
 
     public Index(
         ITodoistService todos
-        , IMarkdownService markdown
-        , IReadmeService readme
+        // , IMarkdownService markdown
+        // , IReadmeService readme
     )
     {
         todoist = todos;
-        this.markdown = markdown;
-        readme_service = readme;
+        // this.markdown = markdown;
+        // readme_service = readme;
     }
 
     public async Task OnGet()
@@ -187,14 +182,15 @@ public class Index : PageModel
         return Content($"<b>{comment.content}</b>");
     }
 
-    public async Task<IActionResult> OnGetAllReadmeTodos()
-    {
-        var todos_from_readme = await readme_service.GetAllTodosFromReadme();
-
-        Console.WriteLine("total todos found in README.md: " + todos_from_readme.Count);
-
-        return Partial("_ReadmeTable", todos_from_readme);
-    }
+    // TODO :Uncomment and fix... I refactored the readme_service to be in CodeMechanic, which was a mistake.
+    // public async Task<IActionResult> OnGetAllReadmeTodos()
+    // {
+    //     var todos_from_readme = await readme_service.GetAllTodosFromReadme();
+    //
+    //     Console.WriteLine("total todos found in README.md: " + todos_from_readme.Count);
+    //
+    //     return Partial("_ReadmeTable", todos_from_readme);
+    // }
 
 
     public async Task<IActionResult> OnGetAllTodoistTasks()

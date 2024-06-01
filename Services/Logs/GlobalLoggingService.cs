@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using CodeMechanic.Airtable;
 using CodeMechanic.Async;
 using CodeMechanic.Diagnostics;
@@ -15,28 +10,37 @@ using Dapper;
 using evantage.Models;
 using MySqlConnector;
 
-namespace evantage.Pages.Logs;
+namespace evantage.Services;
 
 public class GlobalLoggingService : IGlobalLoggingService
 {
-    private async Task<List<CreateTableInfo>> GetTableSchema(string table_name)
+    public async Task<List<MySQLTableInfo>> GetTableExplanation(string table_name)
     {
-        // string query = $"EXPLAIN {table_name}";
-        string query = $"show create table {table_name}";
+        string query = $"EXPLAIN {table_name}";
+        var results = await QueryAsync(query);
+        results.Dump("table explanation");
+        return results;
+    }
 
-        string connectionstring = await GetConnectionString();
+    public async Task<List<MySQLTableInfo>> GetTableSchema(string table_name)
+    {
+        string query = $"show columns from {table_name}";
+        var results = await QueryAsync(query);
+        return results;
+    }
+
+    private async Task<List<MySQLTableInfo>> QueryAsync(string query)
+    {
+        string connectionstring = await GetMySQLConnectionString();
         using var connection = new MySqlConnection(connectionstring);
 
         var results = connection
-            .Query<CreateTableInfo>(query
+            .Query<MySQLTableInfo>(query
                 , commandType: CommandType.Text
             )
             .ToList();
-
-        results.Dump("table schema");
         return results;
     }
-    
 
 
     public async Task<List<LogRecord>> GetAllLogs()
@@ -54,7 +58,7 @@ public class GlobalLoggingService : IGlobalLoggingService
                     order by created_at asc, modified_at asc;
                 """
             ;
-        string connectionstring = await GetConnectionString();
+        string connectionstring = await GetMySQLConnectionString();
         using var connection = new MySqlConnection(connectionstring);
 
         var results = connection
@@ -67,7 +71,7 @@ public class GlobalLoggingService : IGlobalLoggingService
         return results;
     }
 
-    public async Task<string> GetConnectionString()
+    public async Task<string> GetMySQLConnectionString()
     {
         var connectionString = new MySqlConnectionStringBuilder()
         {
@@ -108,13 +112,13 @@ public class GlobalLoggingService : IGlobalLoggingService
     )
     {
         string table_name = "logs";
-        var schema = await GetTableSchema(table_name);
+        // var schema = await GetTableSchema(table_name);
 
-        var query = CreateBulkInsertQuery(logRecords, table_name);
+        var query = await CreateBulkInsertQueryV2(logRecords, table_name);
 
         // if (debug_mode)
-        Console.WriteLine("full bulk insert query :>> " + query);
-        logRecords.Count().Dump("total logs");
+        // Console.WriteLine("full bulk insert query :>> " + query);
+        // logRecords.Count().Dump("total logs");
 
         string safe_path = Directory.GetCurrentDirectory().GoUp(2);
         Console.WriteLine("safely saving out of hot reload's reach to: >> " + safe_path);
@@ -122,7 +126,7 @@ public class GlobalLoggingService : IGlobalLoggingService
 
         try
         {
-            var connectionString = await GetConnectionString();
+            var connectionString = await GetMySQLConnectionString();
             using var connection = new MySqlConnection(connectionString);
 
             var results = connection
@@ -141,17 +145,54 @@ public class GlobalLoggingService : IGlobalLoggingService
         }
     }
 
+
+    private async Task<string> CreateBulkInsertQueryV2(IEnumerable<LogRecord> logRecords, string table_name)
+    {
+        // var props = typeof(LogRecord).GetProperties().OrderBy(p => p.Name).ToList();
+        // var names = props.Select(p => p.Name).ToList();
+        // Console.WriteLine(names.Count() + " total prop names");
+        var schema = await GetTableSchema("logs");
+        schema.Dump(nameof(schema));
+
+        string query = """
+            VALUES ( 
+              @application_name
+            , @breadcrumb
+            , @commit_url
+            , @created_at
+            , @created_by
+            , @database_name
+            , @diff
+            , @exception_message
+            , @exception_severity
+            , @exception_text
+            , @id
+            , @is_archived
+            , @is_deleted
+            , @is_enabled
+            , @issue_url
+            , @modified_at
+            , @modified_by
+            , @operation_name
+            , @payload
+            , @server_name
+            , @sql_parameters
+            , @table_name)
+        """;
+        Console.WriteLine($"bulk insert values query: {query}");
+        return query;
+    }
+
+    [Obsolete("yeah, I messed up")]
     private string CreateBulkInsertQuery(IEnumerable<LogRecord> logRecords, string table_name)
     {
-        
-        
         var props = typeof(LogRecord).GetProperties().OrderBy(p => p.Name).ToList();
         var names = props.Select(p => p.Name).ToList();
-        names.Dump("ordered names: ");
+        // names.Dump("ordered names: ");
         //1. build aliased insert values query:
         // string insert_aliases = CreateAliases(names);
         string insert_names_subquery = CreateInsertNames(names);
-        Console.WriteLine("insert_names_subquery :>> " + insert_names_subquery);
+        // Console.WriteLine("insert_names_subquery :>> " + insert_names_subquery);
 
         string insert_into_subquery = $"insert into {table_name} {insert_names_subquery}";
 
@@ -278,7 +319,7 @@ public class SchemaInfo
     public string extra { get; set; } = string.Empty;
 }
 
-public class CreateTableInfo
+public class MySQLTableInfo
 {
     public string Create_Table { get; set; } = string.Empty;
     public string Table { get; set; } = string.Empty;

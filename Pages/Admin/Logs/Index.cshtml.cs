@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using CodeMechanic.FileSystem;
+using evantage.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -58,7 +54,9 @@ public class Index : PageModel
         Console.WriteLine("looking for logs in :>>" + cwd);
         var grepper = new Grepper()
         {
-            RootPath = cwd, FileSearchMask = mask, Recursive = true, FileNamePattern = ".*.log",
+            RootPath = cwd, FileSearchMask = mask, 
+            Recursive = true, 
+            FileNamePattern = ".*.log",
             FileSearchLinePattern = ".*"
         };
 

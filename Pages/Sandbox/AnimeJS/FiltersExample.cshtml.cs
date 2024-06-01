@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace evantage.Pages.Sandbox.AnimeJS;

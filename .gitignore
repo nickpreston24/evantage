@@ -1,5 +1,7 @@
+
 .env
 **/unsafe/*.rest
+rest/nugs.rest
 .idea
 node_modules
 wwwroot/lib

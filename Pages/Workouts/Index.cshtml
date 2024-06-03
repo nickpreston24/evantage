@@ -1,7 +1,187 @@
 @page
+@using CodeMechanic.Types
+@using Htmx.TagHelpers
+@using System.Text.RegularExpressions
+@using CodeMechanic.Advanced.Regex
+@using CodeMechanic.Diagnostics
+@using CodeMechanic.RegularExpressions
 @model evantage.Pages.Workouts.Index
 
 @{
+    var today = DateTime.Now;
+    var workout_days = Model.AllWorkoutDays;
+    var workout_batch = workout_days
+        // .AsList()
+        .Batch(3)
+        .ToList();
+
+
+
 }
 
-<h1>Workouts</h1>
+<section x-data="setup_workouts()" class="min-h-screen flex flex-col items-center gap-4">
+
+
+    <div class="menu menu-horizontal bg-base-200 rounded-box mt-6 gap-4">
+
+        <template x-cloak x-for="[key, value] of Object.entries(views)">
+            <div :data-tip="value.tip" class="tooltip tooltip-bottom tooltip-accent flex-col flex items-center justify-center gap-2">
+
+                <button
+                    x-on:click="value.enabled=!value.enabled"
+                    class="btn btn-primary join-item shadow-md shadow-secondary-400/50"
+                    :class="{'border-2 border-secondary btn-ghost': !value.enabled, 'border-2 border-accent': value.enabled }">
+                    <label
+                        x-text="key"
+                        class="form-label badge badge-sm"
+                        :asp-for='key'>
+                    </label>
+
+                    <input x-bind:name='key'
+                           x-bind:value='value.enabled'
+                           x-bind:checked="value.enabled"
+                           type="checkbox"
+                           :asp-for="key"
+                           class="form-control toggle toggle-primary">
+                </button>
+
+            </div>
+
+        </template>
+    </div>
+
+
+    <template x-if="views.workouts_calendar.enabled">
+
+        <div x-transition x-show="views.workouts_calendar.enabled">
+            <h1 class="text-3xl text-yellow-500">Workouts 📅</h1>
+
+            @foreach (var workout_week in workout_batch)
+            {
+                <div x-transition class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-auto gap-4 md:gap-2">
+
+                    @foreach ((var workout_day, int index) in workout_week.WithIndex())
+                    {
+                        <div class="card sm:w-72 w-96 bg-base-100 shadow-xl border-2 border-accent-content/20">
+
+                            <h1 class="card-title justify-center text-yellow-500"> @workout_day.day</h1>
+
+                            <div
+                                :key="@workout_day.id"
+                                hx-get
+                                hx-indicator="#workouts_indicator_@workout_day.id"
+                                hx-page="Index"
+                                hx-trigger="load, click delay:250ms"
+                                hx-page-handler="Workout"
+                                hx-vars="{workout_id: '@workout_day.id', debug: true}"
+                                hx-target="#results_@workout_day.id"
+
+                                class="card-body">
+
+                                @* <pre>target: #results_@workout_day.id</pre> *@
+
+                                <span id="results_@workout_day.id">...</span>
+
+
+                                <div card="card-actions justify-end">
+
+                                    <div class="flex flex-row">
+
+                                        @* <button *@
+                                        @*     x-show="false" *@
+                                        @*     class="btn btn-ghost" *@
+                                        @*     hx-indicator="#workouts_indicator_@workout_day.id" *@
+                                        @*     hx-trigger="click delay:1s"> *@
+                                        @*     Reload *@
+                                        @* *@
+                                        @* </button> *@
+                                        <span id="workouts_indicator_@workout_day.id" class="htmx-indicator">
+                                            <label>loading ...</label>
+                                            <img class="w-8" alt="bars" src="~/img/loaders/circle_bars.svg"/>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            }
+
+        </div>
+    </template>
+
+
+    <template x-if="views.exercise_names.enabled">
+        <div x-transition x-show="views.exercise_names.enabled">
+
+            <h2>Unique Exercises</h2>
+
+            <ul class="list-disc space-y-2">
+                @foreach (var exercise_name in @Model.UniqueExercises)
+                {
+                    <li class="flex items-center justify-start">
+                        <span class="h-6 flex items-center sm:h-7">
+                            <svg
+                                class="flex-shrink-0 h-5 w-5 text-cyan-500"
+                                viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"/>
+                            </svg>
+                            <status-icon status="success"/>
+                        </span>
+                        <div data-tip="@exercise_name" class="tooltip tooltip-accent tooltip-bottom">
+                            <p class="ml-2">
+                                @exercise_name
+                            </p>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </template>
+
+    <template x-if="views.regex_generator.enabled">
+
+        <div>
+
+            <div hx-get
+                 hx-page-handler="GenerateType"
+                 hx-indicator="#regex_indicator"
+                 hx-target="#generator_results">
+                <h3>RegexEnumerable to C# type generator</h3>
+                <p>Generate C# types from a given regex</p>
+
+                <label>sample: </label>
+
+                <span id="generator_results">...</span>
+                <button
+                    class="btn btn-accent"
+                    hx-trigger="click">
+                    Generate Type
+                </button>
+
+            </div>
+            <span id="regex_indicator" class="htmx-indicator">
+                <label>loading ...</label>
+                <img class="w-8" alt="bars" src="~/img/loaders/circle_bars.svg"/>
+            </span>
+        </div>
+    </template>
+
+    <script>
+        function setup_workouts(){
+            return {
+                views: {
+                    regex_generator: { tip: 'Show regex generation sample', enabled: true },
+                    workouts_calendar: { tip: 'My personal Workouts Calendar', enabled: false },
+                    exercise_names: { tip: 'Only the names of exercises', enabled: false}
+                }
+            }
+        }
+    </script>
+</section>

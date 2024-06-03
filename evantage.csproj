@@ -41,6 +41,7 @@
         <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4" />
         <PackageReference Include="CodeMechanic.Regex" Version="1.0.2" />
         <PackageReference Include="CodeMechanic.Types" Version="1.0.9" />
+        <PackageReference Include="CsvHelper" Version="32.0.3" />
         <PackageReference Include="Dapper" Version="2.1.35" />
         <PackageReference Include="FuzzySharp" Version="2.0.2" />
         <PackageReference Include="Hydro" Version="0.10.0" />
@@ -52,6 +53,7 @@
 
     <ItemGroup>
         <!--        <Folder Include="Pages\Todos\Models" />-->
+<!--        <Folder Include="**/*regex_to_csharp" />-->
         <Folder Include="Styles" />
     </ItemGroup>
 

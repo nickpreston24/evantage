@@ -1,0 +1,45 @@
+@page
+@model evantage.Pages.GitHub.Index
+
+@{
+    var rows = new List<string> { "row" };
+}
+
+<section class="flex flex-col items-center justify-center gap-2">
+
+    <div>
+        <hydro-hero>
+            <slot name="title">
+                GitHub
+            </slot>
+            <p>I want to be able to view all my Git repos dispersed around my drive and perform a `git status` on them</p>
+
+            <table class="table w-full">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" class="checkbox"/>
+                    </th>
+                    <th>Table</th>
+                    <th>Exception</th>
+                    <th>Diff</th>
+                    <th>Params</th>
+                    <th>Options</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var row in rows)
+                {
+                    <tr>@row</tr>
+                }
+                </tbody>
+            </table>
+
+            <slot name="buttons">
+                <button class="btn btn-circle btn-info">One</button>
+                <button class="btn btn-circle btn-info">Two</button>
+            </slot>
+        </hydro-hero>
+    </div>
+
+</section>

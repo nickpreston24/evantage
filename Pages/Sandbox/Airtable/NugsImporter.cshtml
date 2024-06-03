@@ -1,0 +1,46 @@
+@page
+@model evantage.Pages.Sandbox.Airtable.NugsImporter
+@{
+    // var parts = csv.ImportAs<Part>();
+}
+
+
+<section class="border-2">
+
+    <div
+        hx-get
+        hx-page="Airtable/NugsImporter"
+        hx-page-handler="PartsFromCSV"
+        hx-target="#parts">
+
+        <button hx-trigger="click">OK</button>
+
+        <span id="parts"></span>
+    </div>
+    @* <div *@
+    @*     hx-get *@
+    @*     hx-page="Airtable/NugsImporter" *@
+    @*     hx-page-handler="PartsFromCSV" *@
+    @*     hx-indicator="#parts_indicator" *@
+    @*     hx-trigger="load" *@
+    @*     hx-target="#parts"> *@
+    @* </div> *@
+    @* <span id="parts">...</span> *@
+    @* <span id="parts_indicator" class="htmx-indicator"> *@
+    @*     <label>loading ...</label> *@
+    @*     <img class="w-8" alt="bars" src="~/img/loaders/loader_10.svg"/> *@
+    @* </span> *@
+
+
+    @* todo: Write some sample crud using nugs or something. 
+  1. Create record
+   2. search for that specific record, validate it,
+   3. Get  record by id (saved from step 1) and then,
+   4. Update the record's values,
+   5. delete the updated record.  This tests the entire CRUD sequence without disturbing prod and is 0 sum.
+  *@
+    <div>
+
+    </div>
+
+</section>

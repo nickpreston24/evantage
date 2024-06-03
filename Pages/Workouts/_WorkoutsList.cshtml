@@ -1,19 +1,19 @@
-@using CodeMechanic.FileSystem
-@using CodeMechanic.Extensions
-@* @model List<Grepper.GrepResult> *@
-@model List<evantage.Models.Pwint>
+@model List<Workout>
+
 @{
-    var files = @Model;
+    var workouts = Model;
 }
 
+
 <div>
-    @* text-sm font-bold text-gray-900 *@
-    <p class='text-sm font-bold text-accent'>files: @files.Count</p>
+    <p class='text-sm font-bold text-accent'>workouts: @workouts.Count</p>
 
     <ul class="list-disc space-y-2">
-        @foreach (var file in files)
+        @foreach (var workout in workouts)
         {
-            <li class="flex items-start">
+            // if (workout.reps > 0 || workout.sets > 0)
+            // {
+            <li class="flex items-center justify-start">
                 <span class="h-6 flex items-center sm:h-7">
                     <svg
                         class="flex-shrink-0 h-5 w-5 text-cyan-500"
@@ -26,14 +26,15 @@
                     </svg>
                     <status-icon status="success"/>
                 </span>
-                <div data-tip="@file.file_path" class="tooltip tooltip-accent tooltip-bottom">
+                <div data-tip="@workout.exercise" class="tooltip tooltip-accent tooltip-bottom">
                     <p class="ml-2">
-                        @(System.IO.Path.GetFileName(@file.file_path))
+                        @workout
                     </p>
                 </div>
             </li>
+            // }
         }
 
     </ul>
-    
+
 </div>

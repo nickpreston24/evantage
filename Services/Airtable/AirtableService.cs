@@ -46,7 +46,7 @@ public class AirtableServiceV2 : IAirtableServiceV2
         string cacheKey = "FullName";
         string cachedData = "Nick Preston";
 
-        // Add data to the cache with an expiration time of 5 minutes
+        // Add data to the cache with an expiration time of 5 time_value
         CacheItemPolicy cachePolicy = new CacheItemPolicy
         {
             AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5)

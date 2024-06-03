@@ -42,6 +42,8 @@ builder.Services.AddProblemDetails();
 // var md_svc = new CodeMechanic.Markdown.MarkdownService();
 // var readme_svc = new ReadmeService(md_svc);
 builder.Services.AddSingleton<IJsonConfigService, JsonConfigService>();
+builder.Services.AddSingleton<IPropertyCache, PropertyCache>();
+builder.Services.AddSingleton<ICsvService, CsvService>();
 // builder.Services.AddSingleton<CodeMechanic.Markdown.IMarkdownService>(md_svc);
 builder.Services.AddTransient<IGlobalLoggingService, GlobalLoggingService>();
 builder.Services.AddSingleton<IInMemoryGraphService, InMemoryGraphService>();

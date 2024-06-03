@@ -33,6 +33,7 @@
         <PackageReference Include="Bogus" Version="35.5.0" />
         <PackageReference Include="CodeMechanic.Async" Version="1.0.1" />
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.3" />
+        <PackageReference Include="CodeMechanic.Scriptures" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.Todoist" Version="1.0.2" />
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.10" />
@@ -58,7 +59,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\code-mechanic\CodeMechanic.Scriptures\CodeMechanic.Scriptures.csproj" />
+<!--        <ProjectReference Include="..\code-mechanic\CodeMechanic.Scriptures\CodeMechanic.Scriptures.csproj" />-->
 <!--        <ProjectReference Include="..\code-mechanic\CodeMechanic.Scriptures\scriptures.csproj" />-->
         <!--      <ProjectReference Include="..\code-mechanic\CodeMechanic.Todoist\CodeMechanic.Todoist.csproj" />-->
     </ItemGroup>

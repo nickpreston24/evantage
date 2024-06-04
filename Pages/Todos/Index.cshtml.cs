@@ -1,4 +1,3 @@
-using CodeMechanic.Markdown;
 using CodeMechanic.Todoist;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +19,8 @@ public class Index : PageModel
     public int current_fullday_goal { get; set; } = 5;
 
 
-    private static bool get_all_todoist_on_load = true;
-    private static bool get_all_todoist_on_htmxevent = true;
+    private static bool get_all_todoist_on_load = false;
+    private static bool get_all_todoist_on_htmxevent = false;
 
 
     // public TodoistStats todoist_stats { get; set; } = new();
@@ -52,27 +51,26 @@ public class Index : PageModel
         // readme_service = readme;
     }
 
-    // public async Task OnGet()
-    // {
-    //     // throw new Exception("some dingle-headed microsoft error");
-    //     cached_todoist_stats.Clear();
-    //     if (get_all_todoist_on_load)
-    //     {
-    //         Console.WriteLine(nameof(OnGet));
-    //         var stats = await this.todoist.GetProjectsAndTasks();
-    //         stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
-    //         {
-    //             sort_by_date = new SortByDate(),
-    //             sort_by_priority = new SortByPriority()
-    //         });
-    //
-    //         cached_todoist_stats = stats;
-    //
-    //         project_total_count = todoist_stats.TodoistProjects.Count;
-    //         completed_tasks_count = todoist_stats.CompletedTasks.Count;
-    //         all_tasks_count = todoist_stats.TodoistTasks.Count;
-    //     }
-    // }
+    public async Task OnGet()
+    {
+        cached_todoist_stats.Clear();
+        if (get_all_todoist_on_load)
+        {
+            Console.WriteLine(nameof(OnGet));
+            var stats = await this.todoist.GetProjectsAndTasks();
+            stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
+            {
+                sort_by_date = new SortByDate(),
+                sort_by_priority = new SortByPriority()
+            });
+
+            cached_todoist_stats = stats;
+
+            project_total_count = todoist_stats.TodoistProjects.Count;
+            completed_tasks_count = todoist_stats.CompletedTasks.Count;
+            all_tasks_count = todoist_stats.TodoistTasks.Count;
+        }
+    }
 
     public async Task<IActionResult> OnGetFullDay()
     {

@@ -1,6 +1,5 @@
 using CodeMechanic.Types;
 using evantage.Models;
-using evantage.Pages.Logs;
 using evantage.Services;
 using Microsoft.AspNetCore.Mvc;
 

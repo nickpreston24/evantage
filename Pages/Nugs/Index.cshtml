@@ -1,0 +1,18 @@
+@page
+@using Htmx.TagHelpers
+@model evantage.Pages.Nugs.Index
+
+@{
+}
+
+<div>
+    <button
+        class="btn btn-accent"
+        hx-get
+        hx-page="Index"
+        hx-trigger="click"
+        hx-swap="outerHTML"
+        hx-page-handler="AllNugs">
+        Load Nugs
+    </button>
+</div>

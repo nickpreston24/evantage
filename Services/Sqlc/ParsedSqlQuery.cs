@@ -1,4 +1,4 @@
-using CodeMechanic.Advanced.Regex;
+using CodeMechanic.RegularExpressions;
 
 namespace  CodeMechanic.Sqlc;
 

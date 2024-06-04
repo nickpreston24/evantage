@@ -1,7 +1,6 @@
 @page
 @using CodeMechanic.Todoist
 @using evantage.Pages.Components
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Index
 
 <div x-data="setup_todoist()"
@@ -55,20 +54,20 @@
 
     <hydro-bento>
 
-        <div x-transition
-             x-show="blades.full_day.show" class="bento bento-shadow-blue p-4 col-span-2">
-            <partial name="FullDay"></partial>
-        </div>
+        @* <div x-transition *@
+        @*      x-show="blades.full_day.show" class="bento bento-shadow-blue p-4 col-span-2"> *@
+        @*     <partial name="FullDay"></partial> *@
+        @* </div> *@
 
-        <div x-transition
-             x-show="blades.todos_table.show" class="bento bento-shadow-blue p-4 col-span-2">
-            <partial name="TodoistTasks"></partial>
-        </div>
+        @* <div x-transition *@
+        @*      x-show="blades.todos_table.show" class="bento bento-shadow-blue p-4 col-span-2"> *@
+        @*     <partial name="TodoistTasks"></partial> *@
+        @* </div> *@
 
         @* <template x-if="blades.readme_table.show"> *@
-        <div x-transition x-show="blades.readme_table.show" class="bento p-4 bento-shadow-blue col-span-2">
-            <partial name="ReadmeTasks"></partial>
-        </div>
+        @* <div x-transition x-show="blades.readme_table.show" class="bento p-4 bento-shadow-blue col-span-2"> *@
+        @*     <partial name="ReadmeTasks"></partial> *@
+        @* </div> *@
         @* </template> *@
 
         <section
@@ -122,7 +121,6 @@
             {
                 var tasks_related_to_project = @Model.todoist_stats.FindTodosByProject(project);
                 var completed_tasks = @Model.todoist_stats.FindCompletedTodos(project);
-                // var done_percentage = MathExtensions.GetPercentChange(completed_tasks_count, related_tasks.Count);
 
                 <div class="card w-full bg-base-100 shadow-xl">
 
@@ -149,16 +147,9 @@
 
                         </div>
 
-                        @* <p>@project.view_style</p> *@
-                        @* <div class="card-actions justify-end"> *@
-                        @*     <div class="badge badge-outline">Fashion</div> *@
-                        @*     <div class="badge badge-outline">Products</div> *@
-                        @* </div> *@
+                        
                     </div>
                 </div>
-        @* <li>Name: @project.name</li> *@
-        @* <li>Name: @project.color</li> *@
-        @* <li>Name: @project.id</li> *@
             }
         </section>
 

@@ -52,7 +52,7 @@ builder.Services.AddTransient<IScriptureService, ScriptureService>();
 builder.Services.AddTransient<IRazorRoutesService2, RazorRoutesService2>();
 builder.Services.AddTransient<IDownloadImages, ImageDownloader>();
 builder.Services.AddTransient<IAirtableServiceV2, AirtableServiceV2>();
-builder.Services.AddTransient<ITodoistService, TodoistService>();
+builder.Services.AddSingleton<ITodoistService, TodoistService>();
 builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IGenerateSQLTypes, SQLCService>();
 builder.Services.AddTransient<INotesService, NotesService>();

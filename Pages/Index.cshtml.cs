@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
-using CodeMechanic.Advanced.Regex;
 using CodeMechanic.Airtable;
+using CodeMechanic.RegularExpressions;
 using CodeMechanic.Curl;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;

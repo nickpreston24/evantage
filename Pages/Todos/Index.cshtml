@@ -6,63 +6,31 @@
 <div x-data="setup_todoist()"
      class="items-center justify-center flex flex-col">
 
-    @* <pre x-text="localStorage.getItem('blade_state')"></pre> *@
-    @* x-effect="localStorage.setItem('blade_state', blades);" *@
-    <ul
 
-        class="menu menu-horizontal lg:menu-horizontal bg-transparent rounded-box opacity-50">
-
-        <span :class="blades.full_day.classname" data-tip="A Full Day">
-            <button @@click="blades.full_day.show = !blades.full_day.show" class="btn btn-md ">
-                <span class="text-sm">
-                    Full Day
-                </span>
-            </button>
-        </span>
-
-        <span :class="blades.todos_table.classname" class="tooltip" data-tip="All Todos from CodeMechanic.Todoist">
-            <button @@click="blades.todos_table.show = !blades.todos_table.show" class="btn btn-md ">
-                <span class="text-sm">
-                    Todos
-                </span>
-            </button>
-        </span>
-
-        <span :class="blades.readme_table.classname" class="tooltip" data-tip="Todos from Readme.md">
-            <button @@click="blades.readme_table.show = !blades.readme_table.show" class="btn btn-md">
-                <span class="text-sm">
-                    README
-                </span>
-            </button>
-        </span>
-
-        <span :class="blades.stats.classname" class="tooltip" data-tip="CodeMechanic.Todoist Stats">
-            <button @@click="blades.stats.show = !blades.stats.show" class="btn btn-md">
-                <span class="text-sm">
-                    Stats
-                </span>
-            </button>
-        </span>
-        <span :class="blades.projects_breakdown.classname" class="tooltip" data-tip="List of CodeMechanic.Todoist Projects">
-            <button @@click="blades.projects_breakdown.show = !blades.projects_breakdown.show" class="btn btn-md">
-                <span class="text-sm">
-                    Projects
-                </span>
-            </button>
-        </span>
+    <ul class="menu sm:menu-vertical menu-horizontal bg-base-200 rounded-box">
+        <template x-for="blade in blades">
+            <span :class="blade.classname" :data-tip="blade.tooltip">
+                <button @@click="blade.show = !blade.show" class="btn lg:btn-md btn-sm">
+                    <span class="text-sm">
+                        <h2 x-text="blade.title"></h2>
+                    </span>
+                </button>
+            </span>
+        </template>
     </ul>
+
 
     <hydro-bento>
 
-        @* <div x-transition *@
-        @*      x-show="blades.full_day.show" class="bento bento-shadow-blue p-4 col-span-2"> *@
-        @*     <partial name="FullDay"></partial> *@
-        @* </div> *@
+        <div x-transition
+             x-show="blades.full_day.show" class="bento bento-shadow-blue p-4 col-span-2">
+            <partial name="FullDay"></partial>
+        </div>
 
-        @* <div x-transition *@
-        @*      x-show="blades.todos_table.show" class="bento bento-shadow-blue p-4 col-span-2"> *@
-        @*     <partial name="TodoistTasks"></partial> *@
-        @* </div> *@
+        <div x-transition
+             x-show="blades.todos_table.show" class="bento bento-shadow-blue p-4 col-span-2">
+            <partial name="TodoistTasks"></partial>
+        </div>
 
         @* <template x-if="blades.readme_table.show"> *@
         @* <div x-transition x-show="blades.readme_table.show" class="bento p-4 bento-shadow-blue col-span-2"> *@
@@ -147,7 +115,7 @@
 
                         </div>
 
-                        
+
                     </div>
                 </div>
             }
@@ -159,19 +127,44 @@
 </div>
 
 <script>
-    let special_hover_border = 'tooltip border-2 rounded-lg border-info'
-    let previous_state = localStorage.getItem('blade_state');
+    // let previous_state = localStorage.getItem('blade_state');
     // !previous_state ??
     //  console.log('prev blade state:>> ', previous_state); // todo: save blade states on toggle events, then have it load into blades obj.
     
     function setup_todoist() {
         return {
             blades: {
-                stats: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
-                projects_breakdown: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},     
-                todos_table: {show:true, get classname() {return !this.show? 'tooltip':special_hover_border}},     
-                readme_table: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}},    
-                full_day: {show:false, get classname() {return !this.show? 'tooltip':special_hover_border}} 
+                // stats: {
+                //     title: 'Stats'
+                //     , show:false
+                //     , get classname() {
+                //         return !this.show? 'tooltip':'tooltip border-2 rounded-lg border-info'
+                //     }},     
+                // projects_breakdown: { 
+                //     title: 'Project Breakdown'
+                //     , show:false
+                //     , get classname() {return !this.show? 'tooltip':'tooltip border-2 rounded-lg border-info'
+                //     }
+                // },     
+                todos_table: {
+                    title: 'All Todos',
+                    show:true
+                    , get classname() {
+                         return !this.show? 'tooltip':'tooltip border-2 rounded-lg border-info'
+                     }},     
+                // readme_table: { 
+                //     title: 'Readme Tasks'
+                //     , show:false
+                //     , get classname() {
+                //         return !this.show? 'tooltip':'tooltip border-2 rounded-lg border-info'
+                //     }},    
+                // full_day: {
+                //      title: 'Full Day',
+                //      tooltip: 'Quick Full Day',
+                //      show:false, get classname() {
+                //          return !this.show? 'tooltip':'tooltip border-2 rounded-lg border-info'
+                //      }
+                // } 
             }
             // ,
             // save_blades(){

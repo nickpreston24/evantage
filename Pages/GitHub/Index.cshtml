@@ -1,12 +1,20 @@
 @page
 @using evantage.Pages.Components
+@using Hydro
 @model evantage.Pages.GitHub.Index
+@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using evantage.Models
 
 @{
-    var rows = new List<string> { "row" };
+    string url = HttpContext.Request.GetDisplayUrl();
+    bool is_localhost = url.IsLocalHost();
+    bool is_railway = url.IsRailway();
+
+    var rows = @Model.Updates;
 }
 
-<section class="flex flex-col items-center justify-center gap-2">
+<section class="flex flex-col items-center justify-center gap-2 border-2">
 
     <div>
         <hydro-hero>
@@ -15,33 +23,38 @@
             </slot>
             <p>I want to be able to view all my Git repos dispersed around my drive and perform a `git status` on them</p>
 
-            <table class="table w-full">
-                <thead>
-                <tr>
-                    <th>
-                        <input type="checkbox" class="checkbox"/>
-                    </th>
-                    <th>Table</th>
-                    <th>Exception</th>
-                    <th>Diff</th>
-                    <th>Params</th>
-                    <th>Options</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var row in rows)
-                {
-                    <tr>@row</tr>
-                }
-                </tbody>
-            </table>
+            <pre for="">Localhost? @is_localhost</pre>
+            <pre for="">Railway? @is_railway</pre>
 
+            <partial name="_PackmuttTableRows" model="@rows"/>
+            @* </div> *@
             <slot name="buttons">
-                <button class="btn btn-circle btn-info">One</button>
-                <button class="btn btn-circle btn-info">Two</button>
-                <button class="btn btn-circle btn-info">Three</button>
+                @* <button class="btn btn-circle btn-info">One</button> *@
+                @* <button class="btn btn-circle btn-info">Two</button> *@
+                @* <button class="btn btn-circle btn-info">Three</button> *@
+                @* <a href="Pages/GitHub/PackmuttDashboard"> *@
+                @*     <button class="btn btn-circle btn-info">Packmutt Dashboard</button> *@
+                @* </a> *@
             </slot>
         </hydro-hero>
     </div>
 
 </section>
+@* *@
+@* *@
+@* <table class="table w-full"> *@
+@*     <thead> *@
+@*     <tr> *@
+@*         <th> *@
+@*             <input type="checkbox" class="checkbox"/> *@
+@*         </th> *@
+@*         <th>Table</th> *@
+@*         <th>Exception</th> *@
+@*         <th>Diff</th> *@
+@*         <th>Params</th> *@
+@*         <th>Options</th> *@
+@*     </tr> *@
+@*     </thead> *@
+@*     <tbody> *@
+@*     </tbody> *@
+@* </table> *@

@@ -1,0 +1,23 @@
+@{
+    string[] shadow_types = new string[]
+    {
+        "basic"
+        , "letterpress"
+        , "hard"
+        , "double"
+        , "distant"
+        , "pop"
+        , "inset"
+        , "glowing"
+        , "super-hero"
+        , "multi-light"
+        , "soft-emboss"
+    };
+}
+
+@foreach (string shadow_type in shadow_types)
+{
+    <shadow shadow-type="@shadow_type">
+        <h1 class="text-3xl">@shadow_type</h1>
+    </shadow>
+}

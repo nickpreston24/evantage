@@ -1,0 +1,35 @@
+@model List<CsProjUpdate>
+
+@{
+    var rows = Model ?? new List<CsProjUpdate>();
+    // var is_localhost = Globals.IsLocalHost();
+}
+
+<div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+
+    @foreach (var update in @rows)
+    {
+        <div class="card md:w-96 sm:w-48 bg-base-100 shadow-xl">
+
+            <div class="card-body">
+                <h2 class="card-title">@update.Package.Name</h2>
+
+                <div x-data="{ open: false }">
+                    <button class="text-xs w-24 btn btn-accent" x-on:click="open = !open">See Versions</button>
+
+                    <span x-show="open">
+                        All Versions:
+                        <ul>
+                            @foreach (var version in @update.Package.versions)
+                            {
+                                <li>@version</li>
+                            }
+                        </ul>
+
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>

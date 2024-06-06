@@ -1,18 +1,21 @@
 @using Htmx.TagHelpers
+@* *@
 <div
     x-transition
     hx-get
     hx-trigger="intersect once"
     hx-target="#todoist_todos"
     hx-indicator="#todoist_indicator"
-    hx-page-handler="AllCodeMechanic.TodoistTasks">
+    hx-page-handler="AllTodoistTasks">
 
-    @* <h1 class="text-lg text-secondary bg-content">CodeMechanic.Todoist Tasks</h1> *@
+    @* <h1 class="text-lg text-secondary bg-content">Todoist Tasks</h1> *@
     <div id="todoist_todos"></div>
 
     <span id="todoist_indicator"
           class="htmx-indicator">
         <label for="">loading todoist tasks...</label>
-        <img alt="bars" src="~/img/bars.svg"/>
+        <img alt="bars" src="~/img/loaders/bars.svg"/>
     </span>
+
+    <button hx-trigger='click'>Load</button>
 </div>

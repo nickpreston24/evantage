@@ -53,23 +53,23 @@ public class Index : PageModel
 
     public async Task OnGet()
     {
+        Console.WriteLine(nameof(OnGet));
         cached_todoist_stats.Clear();
-        if (get_all_todoist_on_load)
-        {
-            Console.WriteLine(nameof(OnGet));
-            var stats = await this.todoist.GetProjectsAndTasks();
-            stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
-            {
-                sort_by_date = new SortByDate(),
-                sort_by_priority = new SortByPriority()
-            });
-
-            cached_todoist_stats = stats;
-
-            project_total_count = todoist_stats.TodoistProjects.Count;
-            completed_tasks_count = todoist_stats.CompletedTasks.Count;
-            all_tasks_count = todoist_stats.TodoistTasks.Count;
-        }
+        // if (get_all_todoist_on_load)
+        // {
+        //     var stats = await this.todoist.GetProjectsAndTasks();
+        //     stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
+        //     {
+        //         sort_by_date = new SortByDate(),
+        //         sort_by_priority = new SortByPriority()
+        //     });
+        //
+        //     cached_todoist_stats = stats;
+        //
+        //     project_total_count = todoist_stats.TodoistProjects.Count;
+        //     completed_tasks_count = todoist_stats.CompletedTasks.Count;
+        //     all_tasks_count = todoist_stats.TodoistTasks.Count;
+        // }
     }
 
     public async Task<IActionResult> OnGetFullDay()
@@ -193,16 +193,17 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnGetAllTodoistTasks()
     {
-        if (get_all_todoist_on_htmxevent)
-        {
-            var stats = await this.todoist.GetProjectsAndTasks();
-
-            stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
-            {
-            });
-
-            cached_todoist_stats = stats;
-        }
+        Console.WriteLine(nameof(OnGetAllTodoistTasks));
+        // if (get_all_todoist_on_htmxevent)
+        // {
+        //     var stats = await this.todoist.GetProjectsAndTasks();
+        //
+        //     stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
+        //     {
+        //     });
+        //
+        //     cached_todoist_stats = stats;
+        // }
 
         return Partial("_TodoistTasksTable", this);
     }

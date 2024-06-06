@@ -1,0 +1,344 @@
+
+{
+  "_date": 638531100141048116,
+  "packages": [
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Async",
+      "versions": [
+        "1.0.0",
+        "1.0.1",
+        "1.0.2"
+      ],
+      "dates": [
+        638188694581458630,
+        638189424265114254,
+        638530574083296711
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Bash",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638520336550264160
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Diagnostics",
+      "versions": [
+        "1.0.0",
+        "1.0.1",
+        "1.0.2",
+        "1.0.3"
+      ],
+      "dates": [
+        638188645444465420,
+        638188662415694818,
+        638445267032681295,
+        638445268139756599
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Embeds",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638189760148765550
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.FileSystem",
+      "versions": [
+        "1.0.0",
+        "1.0.1",
+        "1.0.2",
+        "1.0.3",
+        "1.0.4",
+        "1.0.5",
+        "1.0.6",
+        "1.0.7",
+        "1.0.8",
+        "1.0.9",
+        "1.0.10",
+        "1.0.11",
+        "1.0.12",
+        "1.1.0",
+        "1.1.1"
+      ],
+      "dates": [
+        638531051588324253,
+        638189245494619287,
+        638189251082144672,
+        638189384525945348,
+        638196980610870310,
+        638429847830076334,
+        638429853414765762,
+        638443203575966062,
+        638531051611137459,
+        638531051596449316,
+        638530591912029623,
+        638531051607856528,
+        638531051582230140,
+        638531051593480439,
+        638531051599919238
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Markdown",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638513190825199626
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Math",
+      "versions": [
+        "1.0.0",
+        "1.0.1"
+      ],
+      "dates": [
+        638250708016089523,
+        638250709854453364
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Maths",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638260969639148014
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Migrations",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638458131518522879
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Neo4j",
+      "versions": [
+        "1.0.1",
+        "1.0.2",
+        "1.0.3"
+      ],
+      "dates": [
+        638371684827445360,
+        638371713276381211,
+        638371713272474985
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Pacmutt",
+      "versions": [
+        "1.0.0",
+        "1.0.1"
+      ],
+      "dates": [
+        638516313169874367,
+        638516313166749636
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Puppeteer",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638445833194661908
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.RazorHAT",
+      "versions": [
+        "1.0.0",
+        "1.0.1",
+        "1.0.2",
+        "1.0.3",
+        "1.0.4",
+        "1.0.5",
+        "1.0.6",
+        "1.0.7",
+        "1.0.8",
+        "1.0.9"
+      ],
+      "dates": [
+        638189710709250552,
+        638238847966450238,
+        638364571192354691,
+        638498730103345083,
+        638498730100376144,
+        638498730116526734,
+        638498730096918031,
+        638498730106782798,
+        638498730113213214,
+        638498730109931731
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Reflection",
+      "versions": [
+        "1.0.2",
+        "1.0.3",
+        "1.0.4"
+      ],
+      "dates": [
+        638188695956318999,
+        638189284527547294,
+        638371654342964200
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Regex",
+      "versions": [
+        "1.0.2",
+        "1.0.3",
+        "1.0.5",
+        "1.0.6"
+      ],
+      "dates": [
+        638530549274954817,
+        638530549283868605,
+        638530527110538531,
+        638530549281204953
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.RegularExpressions",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638530549278236405
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Scriptures",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638516280804213062
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Shargs",
+      "versions": [
+        "1.0.0",
+        "1.0.1"
+      ],
+      "dates": [
+        638189458501055103,
+        638353947688721818
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Sharpify.CLI",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638189468101376569
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Sharpify",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638372309256367364
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Systemd.Daemons",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638516173127585651
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Todoist",
+      "versions": [
+        "1.0.2"
+      ],
+      "dates": [
+        638513281821590814
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "CodeMechanic.Types",
+      "versions": [
+        "1.0.0",
+        "1.0.2",
+        "1.0.5",
+        "1.0.6",
+        "1.0.7",
+        "1.0.8",
+        "1.0.9"
+      ],
+      "dates": [
+        638499299848177941,
+        638499299860877351,
+        638189449672259450,
+        638189454708019267,
+        638499299864297663,
+        638499299853492336,
+        638499299856971214
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "neo4j-extensions",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638244794314281714
+      ]
+    },
+    {
+      "packagetype": "nuget",
+      "id": "scriptures",
+      "versions": [
+        "1.0.0"
+      ],
+      "dates": [
+        638512996354233702
+      ]
+    }
+  ]
+}

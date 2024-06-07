@@ -1,4 +1,5 @@
 @* @model List<Grepper.GrepResult> *@
+@using System.Text.RegularExpressions
 @model List<evantage.Models.Pwint>
 @{
     var files = @Model;
@@ -11,6 +12,7 @@
     <ul class="list-disc space-y-2">
         @foreach (var file in files)
         {
+            bool is_video_type = Regex.IsMatch(file.file_path, "(mp4|webm)");
             <li class="flex items-start">
                 <span class="h-6 flex items-center sm:h-7">
                     <svg
@@ -29,9 +31,17 @@
                         @(System.IO.Path.GetFileName(@file.file_path))
                     </p>
                 </div>
+
+                @if (is_video_type)
+                {
+                    // todo: make a server for this one...  https://stackoverflow.com/questions/42393063/load-local-html-on-iframe
+                    @* <figure> *@
+                    @*     $1$ <iframe src="@file.file_path" frameborder="0"></iframe> #1# *@
+                    @* </figure> *@
+                }
             </li>
         }
 
     </ul>
-    
+
 </div>

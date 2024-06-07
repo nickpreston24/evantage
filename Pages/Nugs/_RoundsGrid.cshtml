@@ -1,0 +1,19 @@
+@using evantage.Models
+@using evantage.Pages.Components
+@using Hydro
+@model Index
+
+@{
+    var rounds = new List<Round>();
+}
+
+<section class="grid grid-cols-2">
+
+    @foreach (var rnd in rounds)
+    {
+        <bento-card>
+            <slot name="title">@rnd.Name</slot>
+            @rnd.Price
+        </bento-card>
+    }
+</section>

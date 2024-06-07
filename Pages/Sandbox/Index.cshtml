@@ -4,16 +4,22 @@
 @using evantage.Services
 @using CodeMechanic.Types
 @using Htmx.TagHelpers
+@using Hydro
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model evantage.Pages.Sandbox.Index
 
 @inject IRazorRoutesService2 routesService2
 @{
     var razor_routes = routesService2.GetAllRoutes("Sandbox", debug: false);
-    // razor_routes.Take(5).Dump("sample rr");
 
     var main_routes = new List<TooltipRoute>()
     {
+        new TooltipRoute()
+        {
+            Title = "Dynamic Htmx Form"
+            , Link = "Sandbox/DynamicHtmxForm"
+            , Tip = "Generate a htmx-post form from MySQL"
+        },
         new TooltipRoute()
         {
             Title = "CSV Importing (Nugs)"
@@ -67,7 +73,6 @@
     int batch_size = 3;
 
 }
-
 
 <section>
 

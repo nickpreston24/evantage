@@ -1,18 +1,49 @@
 @page
 @using Htmx.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using evantage.Pages.Components
 @model evantage.Pages.Nugs.Index
 
 @{
 }
 
-<div>
-    <button
-        class="btn btn-accent"
-        hx-get
-        hx-page="Index"
-        hx-trigger="click"
-        hx-swap="outerHTML"
-        hx-page-handler="AllNugs">
-        Load Nugs
-    </button>
+<div class="flex flex-row gap-4">
+    <div id="controls" class="w-1/5 gap-2 flex flex-col">
+        <button
+            class="btn btn-accent"
+            hx-get
+            hx-page="Index"
+            hx-trigger="load,click"
+            hx-swap="innerHTML"
+            hx-target="#all_nugs"
+            hx-page-handler="AllNugs">
+            Load Nugs
+        </button>
+
+
+        <button
+            class="btn btn-accent"
+            hx-get
+            hx-page="Index"
+            hx-trigger="load, click"
+            hx-swap="innerHTML"
+            hx-page-handler="AllRounds">
+            Load Rounds
+        </button>
+    </div>
+
+
+    <div class="w-4/5">
+        <shadow shadow-type="distant">
+            <h1 class="text-secondary  text-2xl">Prices</h1>
+        </shadow>
+        <partial name="_AmmoSeekPrices"/>
+        <shadow shadow-type="distant">
+            <h1 class="text-secondary text-2xl">Rounds</h1>
+        </shadow>
+        <partial name="_RoundsGrid"/>
+        
+        <span id="all_nugs"></span>
+    </div>
+
 </div>

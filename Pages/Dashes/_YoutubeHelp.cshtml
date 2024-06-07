@@ -1,0 +1,43 @@
+@using evantage.Pages.Components
+@using Hydro
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Index
+
+@{
+    var videos = @Model.Videos;
+}
+
+<div id="videos_grid" class="grid md:grid-cols-2 sm:grid-cols-1">
+
+    @foreach (var video in videos)
+    {
+        <bento-card>
+
+            <slot name="image">
+                @* <iframe src="@video.Url"></iframe> *@
+            </slot>
+            <slot name="title">
+                @video.Title
+            </slot>
+            <ul class="list-disc space-y-2">
+
+                @foreach (var note in video.Notes)
+                {
+                    <hydro-li>@note</hydro-li>
+                }
+            </ul>
+
+            <slot name="buttons">
+                <p class="badge badge-sm badge-accent">@video.Status.Name</p>
+            </slot>
+
+        </bento-card>
+    }
+
+    <bento-card>
+        <slot name="title">Add Video</slot>
+
+        <partial name="_YoutubeForm" model="Model"></partial>
+
+    </bento-card>
+</div>

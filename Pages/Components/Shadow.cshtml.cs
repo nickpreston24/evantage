@@ -7,5 +7,5 @@ namespace evantage.Pages.Components;
 [HtmlTargetElement("shadow")]
 public class Shadow : HydroView
 {
-    public string ShadowType { get; set; } = "pop";
+    public string ShadowType { get; set; } = "basic";
 }

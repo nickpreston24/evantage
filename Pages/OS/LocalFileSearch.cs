@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace evantage.Pages.OS;
 
-public record PwintOption
+public record LocalFileSearch
 {
     public string root_directory { set; get; } = string.Empty;
     public string title { set; get; } = string.Empty;

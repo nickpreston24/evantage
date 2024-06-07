@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Runtime.Caching;
 using CodeMechanic.Diagnostics;
+using CodeMechanic.Types;
 using Newtonsoft.Json.Linq;
 
 namespace CodeMechanic.Airtable;
@@ -62,7 +63,10 @@ public class AirtableServiceV2 : IAirtableServiceV2
         if (string.IsNullOrEmpty(search.table_name))
             search.table_name = typeof(T).Name + "s";
 
-        if (debug) Console.WriteLine("base id:>>" + base_id);
+        if (search.airtable_pat.IsEmpty()) throw new ArgumentNullException("airtable_pat");
+        if (search.base_id.IsEmpty()) throw new ArgumentNullException("base_id");
+
+        if (debug) Console.WriteLine($"base id:>>{base_id}");
         if (debug) Console.WriteLine("pat:>>" + search.airtable_pat);
         if (debug) search.Dump(nameof(search));
 

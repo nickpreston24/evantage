@@ -56,6 +56,9 @@ builder.Services.AddSingleton<ITodoistService, TodoistService>();
 builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IGenerateSQLTypes, SQLCService>();
 builder.Services.AddTransient<INotesService, NotesService>();
+
+builder.Services.AddTransient<INugsRepository, NugsRepository>();
+builder.Services.AddTransient<INugsService, NugsService>();
 builder.Services.AddTransient<ICopyPastaService, CopyPastaService>();
 builder.Services.AddControllers();
 

@@ -1,11 +1,11 @@
 @page
 @using CodeMechanic.Todoist
 @using evantage.Pages.Components
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Index
 
 <div x-data="setup_todoist()"
      class="items-center justify-center flex flex-col">
-
 
     <ul class="menu sm:menu-vertical menu-horizontal bg-base-200 rounded-box">
         <template x-for="blade in blades">
@@ -19,9 +19,15 @@
         </template>
     </ul>
 
-
     <hydro-bento>
 
+        
+        <div x-transition
+             x-show="blades.add_todo.show" class="bento bento-shadow-blue p-4 col-span-2">
+            <partial name="_AddTodo"></partial>
+        </div>
+        
+        
         <div x-transition
              x-show="blades.full_day.show" class="bento bento-shadow-blue p-4 col-span-2">
             <partial name="FullDay"></partial>

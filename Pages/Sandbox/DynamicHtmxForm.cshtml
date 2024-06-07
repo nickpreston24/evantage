@@ -1,0 +1,104 @@
+@page
+@using CodeMechanic.Airtable
+@using evantage.Pages.Components
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model evantage.Pages.Sandbox.DynamicHtmxForm
+
+@{
+    var player = @Model.player;
+    var type_values = player.ToDictionary();
+}
+
+<section>
+    <div>
+
+        <shadow shadow-type="distant">
+            <h2 class="text-yellow-500">Normal (Vanilla) Form</h2>
+        </shadow>
+
+        <form hx-post="@Url.Page("DynamicHtmxForm", "HtmxForm")"
+              hx-swap="outerHTML"
+              class="form-horizontal needs-validation"
+              _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+
+            <!-- Text input-->
+            <div class="mb-3">
+                <label class="form-label" asp-for="@player.Name"></label>
+                <input type="text" class="form-control" asp-for="@player.Name">
+                <div class="invalid-feedback">
+                    <span asp-validation-for="@player.Name"></span>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="mb-3">
+                <label class="form-label" asp-for="@player.Age"></label>
+                <input type="text" class="form-control" asp-for="@player.Age">
+                <div class="invalid-feedback">
+                    <span asp-validation-for="@player.Age"></span>
+                </div>
+            </div>
+
+            <div class="control">
+                <button id="submitButton" type="submit" class="btn btn-primary">
+                    <span class="htmx-indicator">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="visually-hidden">Loading...</span>
+                    </span>
+                    Submit
+                </button>
+
+                @Html.AntiForgeryToken()
+            </div>
+
+        </form>
+
+    </div>
+
+    <shadow shadow-type="distant">
+        <h2 class="text-yellow-500">Dynamic Htmx Form</h2>
+    </shadow>
+
+
+    <form hx-post="@Url.Page("DynamicHtmxForm", "HtmxForm")"
+          hx-swap="outerHTML"
+          class="form-horizontal needs-validation"
+          _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">
+
+        <h1>Total: @type_values.Count</h1>
+        @foreach (var item in type_values)
+        {
+            <!-- Text input-->
+            <div class="mb-3">
+                <label class="form-label">@item.Key</label>
+                <input type="text" class="form-control" placeholder="@item.Value" asp-for="@item.Key">
+                <div class="invalid-feedback">
+                    <span asp-validation-for="@item.Key"></span>
+                </div>
+            </div>
+        }
+
+        <div class="control">
+            <button type="submit" class="btn btn-primary">
+                <span class="htmx-indicator">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="visually-hidden">Loading...</span>
+                </span>
+                Submit
+            </button>
+
+            @Html.AntiForgeryToken()
+        </div>
+
+    </form>
+
+
+    @* <ul> *@
+    @*     @foreach (var item in type_values) *@
+    @*     { *@
+    @*         <hydro-li> *@
+    @*             <p class="pl-2">@item.Key: @item.Value</p> *@
+    @*         </hydro-li> *@
+    @*     } *@
+    @* </ul> *@
+</section>

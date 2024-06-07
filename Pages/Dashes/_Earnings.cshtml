@@ -1,0 +1,79 @@
+@using CodeMechanic.Maths
+@using CodeMechanic.Types
+@using evantage.Pages.Components
+@using Hydro
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Index
+
+@{
+    var all_weeks = @Model.AllWeeks;
+}
+<div id="earnings_grid" class="grid md:grid-cols-2 sm:grid-cols-1">
+
+    @foreach ((var week,int index) in all_weeks.WithIndex())
+    {
+        var previous_week = index > 0 ? all_weeks[index - 1] : null;
+        <bento-card>
+            <slot name="title">Week @(@index + 1)</slot>
+
+            <div class="stats stats-vertical shadow">
+
+                <div class="stat">
+                    <div class="stat-title"> @(nameof(week.average_gas_tank_cost)):</div>
+                    <div class="stat-value">@week.average_gas_tank_cost</div>
+
+                    @if (previous_week != null)
+                    {
+                        <div class="stat-desc text-info">
+                            @(@previous_week.average_gas_tank_cost
+                                .PercentChanged(week.average_gas_tank_cost)
+                                .RoundTo(2))% compared to last week
+                        </div>
+                    }
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title"> @(nameof(week.estimated_earnings_for_week)):</div>
+                    <div class="stat-value">$@week.estimated_earnings_for_week</div>
+
+                    @if (previous_week != null)
+                    {
+                        <div class="stat-desc text-info">
+                            @(@previous_week.estimated_earnings_for_week
+                                .PercentChanged(week.estimated_earnings_for_week)
+                                .RoundTo(2))% compared to last week
+                        </div>
+                    }
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title"> @(nameof(week.gas_savings_for_week)):</div>
+                    <div class="stat-value">$@week.gas_savings_for_week</div>
+
+                    @if (previous_week != null)
+                    {
+                        <div class="stat-desc text-info">
+                            @(@previous_week.gas_savings_for_week
+                                .PercentChanged(week.gas_savings_for_week)
+                                .RoundTo(2))% compared to last week
+                        </div>
+                    }
+                </div>
+            </div>
+            @* <ul> *@
+            @*     <hydro-li> *@
+            @*         @(nameof(week.average_gas_tank_cost)): @week.average_gas_tank_cost *@
+            @*     </hydro-li> *@
+            @* </ul> *@
+        </bento-card>
+    }
+
+
+    <bento-card>
+
+        <slot name="title">Add Earnings</slot>
+
+        <partial name="_EarningsForm" model="Model"></partial>
+
+    </bento-card>
+</div>

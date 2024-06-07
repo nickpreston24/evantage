@@ -6,6 +6,7 @@ using CodeMechanic.Curl;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 using evantage.Models;
+using evantage.Models.Csv;
 using evantage.Services;
 using Htmx;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -82,7 +83,7 @@ public class IndexModel : PageModel
 
         // string url = $"https://api.airtable.com/v0/{base_id}/{tablename}?maxRecords=3&view=Calls%20%26%20meetings";
         // Console.WriteLine("url:>>" + url);
-        var search = new AirtableSearchV2(base_id, tablename, 10) { };
+        var search = new AirtableSearchV2(airtable_pat, base_id, tablename, 10) { };
 
         search.Dump("search", ignoreNulls: false);
 
@@ -113,7 +114,7 @@ public class IndexModel : PageModel
     {
         string tablename = "Parts";
         Console.WriteLine(nameof(OnGetAllInteractions));
-        var search = new AirtableSearchV2(base_id, tablename, 10) { };
+        var search = new AirtableSearchV2(airtable_pat, base_id, tablename, 10) { };
         search.Dump("search", ignoreNulls: false);
 
         if (airtable_service == null)
@@ -298,11 +299,6 @@ public class IndexModel : PageModel
             Console.WriteLine("content :>> " + content);
         return content;
     }
-}
-
-public class Part
-{
-    public string Name { get; set; } = "";
 }
 
 public class Interaction

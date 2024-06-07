@@ -1,0 +1,27 @@
+@using evantage.Services
+@using Htmx.TagHelpers
+@using evantage.Pages.Components
+@model Pwints
+
+<section>
+
+    <shadow shadow-type="distant">
+        <h1 class="text-yellow-500 card-title text-3xl"> SSE Sample </h1>
+    </shadow>
+
+    <p>I want to stream in dirs / watch directory for updates</p>
+
+    <div class="d-flex justify-content-center">
+        <div hx-sse="connect:/rn-updates" class="card mb-3 text-center" style="max-width: 18rem;">
+            <div class="card-header bg-primary text-white">Featured Random Number</div>
+            <div class="card-body bg-neutral">
+                <h5 class="card-title text-accent text-2xl">The Random Number is..</h5>
+                <p class="text-md text-primary"
+                   hx-trigger="sse:number"
+                   hx-get="@Url.Page("Pwints", "Random")">
+                    <span>@Number.Value</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

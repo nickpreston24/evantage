@@ -1,0 +1,78 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model evantage.Pages.Dashes.Modal
+
+@{
+    ViewBag.Title = "Modals";
+    ViewBag.Next = "07_Tabs";
+    ViewBag.Previous = "06_Scroll";
+}
+
+<div class="card m-5">
+    <div class="card-header bg-primary text-white">
+        <h2>Fancy Newsletter Signup</h2>
+    </div>
+    <div class="card-body">
+        <form
+            id="newsletter"
+            hx-post="@Url.Page("06_Modal", "Modal")"
+            hx-target="#modals-here"
+            hx-trigger="submit">
+
+            <div class="form-floating mb-3">
+                <input type="email"
+                       name="email"
+                       required class="form-control" id="email" placeholder="name@example.com">
+                <label for="email">Email address</label>
+            </div>
+            <button type="submit" class="btn btn-outline-primary btn-lg float-end">
+                Subscribe
+            </button>
+        </form>
+        <div id="modals-here"></div>
+    </div>
+</div>
+
+@* *@
+@* @section end *@
+@* { *@
+@*     <script type="text/javascript"> *@
+@*      *@
+@*     let newsletter = document.getElementById('newsletter'); *@
+@*     newsletter.addEventListener('htmx:afterOnLoad', () => { *@
+@*         const backdrop = document.getElementById("modal-backdrop"); *@
+@*         const modal = document.getElementById("modal"); *@
+@*          *@
+@*         setTimeout(() => { *@
+@*             modal.classList.toggle("show") *@
+@*             backdrop.classList.toggle("show") *@
+@*         }, 10); *@
+@*     }); *@
+@*      *@
+@*     let inputs = newsletter.querySelectorAll('input'); *@
+@*     inputs.forEach((e) => { *@
+@*         e.oninvalid = () => e.classList.add('is-invalid'); *@
+@*         e.onchange = () => { *@
+@*             if (e.validity.valid) {   *@
+@*                 e.classList.remove('is-invalid'); *@
+@*             } else { *@
+@*                 e.classList.add('is-invalid'); *@
+@*             } *@
+@*         } *@
+@*     }); *@
+@*      *@
+@*     function closeModal() { *@
+@*     	const container = document.getElementById("modals-here"); *@
+@*     	const backdrop = document.getElementById("modal-backdrop"); *@
+@*     	const modal = document.getElementById("modal"); *@
+@*      *@
+@*     	modal.classList.toggle("show") *@
+@*     	backdrop.classList.toggle("show") *@
+@*      *@
+@*     	setTimeout(function() { *@
+@*     		container.removeChild(backdrop) *@
+@*     		container.removeChild(modal) *@
+@*     	}, 200) *@
+@*     } *@
+@*     </script> *@
+@* } *@

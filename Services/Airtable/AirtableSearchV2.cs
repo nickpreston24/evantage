@@ -10,20 +10,20 @@ public class AirtableSearchV2
     private readonly bool debugMode;
 
     public AirtableSearchV2(
-        string baseId
+        string airtablePAT
+        , string baseId
         , string tableName
         , int maxRecords = 100
         , bool debug_mode = false
     )
     {
         debugMode = debug_mode;
-        this.base_id = baseId ?? throw new ArgumentNullException(nameof(baseId));
-        this.table_name = tableName ?? throw new ArgumentNullException(nameof(tableName));
+        this.airtable_pat = airtablePAT.IsEmpty() ? throw new ArgumentNullException(nameof(airtablePAT)) : airtablePAT;
+        this.base_id = baseId.IsEmpty() ? throw new ArgumentNullException(nameof(baseId)) : baseId;
+        this.table_name = tableName.IsEmpty() ? throw new ArgumentNullException(nameof(tableName)) : tableName;
         this.maxRecords = maxRecords;
     }
 
-    // private static string[] prop_names = { };
-    // private static PropertyInfo[] props { get; set; } = { };
     public string airtable_pat { get; set; } = string.Empty;
     public string base_id { get; set; } = string.Empty;
     public string table_name { get; set; } = string.Empty;
@@ -97,7 +97,7 @@ public class AirtableSearchV2
         var props = typeof(AirtableSearchV2).GetProperties();
         string[] prop_names = props.Select(p => p.Name).ToArray();
         prop_names.Dump(nameof(prop_names));
-        var blacklist = new[] { nameof(table_name), "sort", "fields" };
+        var blacklist = new[] { nameof(table_name), "sort", "fields", "airtable_pat", "base_id" };
 
         Console.WriteLine("base_id = " + base_id);
         string query =
@@ -117,7 +117,7 @@ public class AirtableSearchV2
                 .ToString()
                 .Trim();
 
-        if (debugMode) query.Dump("generated query");
+        if (debugMode) Console.WriteLine("generated query: " + query);
 
         return query;
     }

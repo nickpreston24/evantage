@@ -28,9 +28,8 @@ public class Contacts : PageModel
         try
         {
             Console.WriteLine(nameof(OnGetAllContacts));
-            var search = new AirtableSearchV2(job_hunt_base_id, "Contacts", debug_mode: true)
+            var search = new AirtableSearchV2(pat, job_hunt_base_id, "Contacts", debug_mode: true)
             {
-                airtable_pat = pat
             };
 
             // TODO: unencode the names, or map to correct props, somehow...

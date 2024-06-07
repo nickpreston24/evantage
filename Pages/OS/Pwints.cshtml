@@ -1,49 +1,63 @@
 @page
-@using CodeMechanic.Extensions
-@using evantage.Services
-@using Htmx.TagHelpers
+@using evantage.Pages.Components
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model evantage.Pages.OS.Pwints
 
 @{
     // string cwd = Directory.GetCurrentDirectory();
     // var di = cwd.AsDirectory();
 
-    var pwint_options = new List<PwintOption>()
+    var videos = new List<LocalFileSearch>()
     {
-        new PwintOption()
+        new LocalFileSearch()
+        {
+            title = "Videos in Downloads",
+            tooltip = "Find all video files on a given drive",
+            file_mask = "*.mp4,*.mkv,*.webm",
+            root_directory = "/home/nick/Downloads/VideoDownloader"
+        },
+        new LocalFileSearch()
+        {
+            title = "Videos in Videos folder",
+            tooltip = "Find all video files on a given drive",
+            file_mask = "*.mp4,*.mkv,*.webm,*.gif",
+            root_directory = "/home/nick/Videos/"
+        },
+    };
+
+    var markdown_files = new List<LocalFileSearch>()
+    {
+        new LocalFileSearch()
+        {
+            root_directory = "/home/nick/Documents/",
+            title = "Markdown files in Documents",
+            tooltip = "Find all Markdown in /Documents",
+            file_mask = "*.md"
+        },
+    };
+
+    var pwint_options = new List<LocalFileSearch>()
+    {
+        new LocalFileSearch()
         {
             title = "STLs in Downloads",
             tooltip = "Find all STL files on a given drive",
             file_mask = "*.stl",
             root_directory = "/home/nick/Downloads/pwints"
         },
-        // new PwintOption()
-        // {
-        //     title = "STLs in Desktop",
-        //     tooltip = "Find all STL files on a given drive",
-        //     file_mask = "*.stl",
-        //     root_directory = "/home/nick/Desktop/"
-        // },
-        // new PwintOption()
-        // {
-        //     title = "STLs in Documents",
-        //     tooltip = "Find all STL files on a given drive",
-        //     file_mask = "*.stl",
-        //     root_directory = "/home/nick/Documents/"
-        // },
-        // new PwintOption()
-        // {
-        //     root_directory = "/home/nick/Documents/",
-        //     title = "Markdown files in Documents",
-        //     tooltip = "Find all Markdown in /Documents",
-        //     file_mask = "*.md"
-        // },
     };
 }
 
 <div x-data="setup_pwints()" id="main_flex" class="flex flex-row">
 
     <div class="border-primary-content/10 border-2 w-1/10 ">
+
+        @* CONTROL PANEL *@
+        <shadow shadow-type="inset">
+            <h2 class="pl-4 text-info">
+                Controls
+            </h2>
+        </shadow>
 
         <template x-cloak x-for="[key, value] of Object.entries(views)">
             <div :data-tip="value.tip" class="tooltip tooltip-bottom tooltip-accent flex-col flex items-center justify-center gap-2">
@@ -71,79 +85,41 @@
         </template>
     </div>
 
-    <div class="grid grid-cols-1 grid-rows-2 w-9/10">
+    @* MAIN GRID *@
+    <div class="grid grid-cols-2 grid-rows-auto w-9/10">
+
+        <template x-if="true">
+
+            <div x-transition x-show="views.Videos.enabled">
+
+                <partial name="_FilesOnDrive" model="@videos"></partial>
+
+            </div>
+        </template>
+
+        <template x-if="true">
+
+            <div x-transition x-show="views.Markdown.enabled">
+
+                <partial name="_FilesOnDrive" model="@markdown_files"></partial>
+
+            </div>
+        </template>
 
         <template x-if="true">
 
             <div x-transition x-show="views.SSE.enabled">
 
-                <h1>SSE Sample </h1>
-
-                <p>I want to stream in dirs / watch directory for updates</p>
-
-                <div class="d-flex justify-content-center">
-                    <div hx-sse="connect:/rn-updates" class="card mb-3 text-center" style="max-width: 18rem;">
-                        <div class="card-header bg-primary text-white">Featured Random Number</div>
-                        <div class="card-body bg-neutral">
-                            <h5 class="card-title text-accent text-2xl">The Random Number is..</h5>
-                            <p class="text-md text-primary"
-                               hx-trigger="sse:number"
-                               hx-get="@Url.Page("Pwints", "Random")">
-                                <span>@Number.Value</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <partial name="_SSEExample"></partial>
 
             </div>
         </template>
 
-        <template x-if="views.DriveSearch.enabled">
+        <template x-if="true">
 
-            <div x-transition class="grid grid-cols-2 grid-rows-auto">
+            <div x-show="views.STLs.enabled" x-transition>
 
-                @foreach ((var pwint, int index) in pwint_options.WithIndex())
-                {
-                    <div class="card w-96 bg-base-100 shadow-xl border-2 border-accent-content/20">
-
-                        <h1 class="card-title  text-yellow-500"> @pwint.title</h1>
-
-
-                        <div
-                            :key="@pwint.id"
-                            hx-get
-                            hx-indicator="#pwints_indicator_@pwint.id"
-                            hx-page="Pwints"
-                            hx-trigger="load, click delay:250ms"
-                            hx-page-handler="GrepFiles"
-                            hx-vars="{file_mask: @pwint.file_mask.AsJSON(), root_directory: @pwint.root_directory.AsJSON()}"
-                            hx-target="#results_@pwint.id"
-
-                            class="card-body">
-
-                            @* <pre>target: #results_@pwint.id</pre> *@
-
-                            <span id="results_@pwint.id">...</span>
-
-                            <span id="pwints_indicator_@pwint.id" class="htmx-indicator">
-                                <label>loading ...</label>
-                                <img class="w-8" alt="bars" src="~/img/loaders/circle_bars.svg"/>
-                            </span>
-
-                            <div card="card-actions">
-
-                                <button
-                                    @* disabled *@
-                                    class="btn btn-ghost"
-                                    hx-indicator="#pwints_indicator_@pwint.id"
-                                    hx-trigger="click delay:1s">
-                                    Reload
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
-                }
+                <partial name="_FilesOnDrive" model="@pwint_options"></partial>
 
             </div>
         </template>
@@ -152,8 +128,10 @@
         function setup_pwints(){
             return {
                 views: {
-                    SSE: { tip: 'Show SSE sample', enabled: true },
-                    DriveSearch: { tip: 'Search drive for files matching a mask', enabled: false }
+                    SSE: { tip: 'Show SSE sample', enabled: false },
+                    Videos: { tip: 'Show Local Videos on Drive', enabled: true },
+                    Markdown: { tip: 'Show Local Markdown files on Drive', enabled: true },
+                    STLs: { tip: 'Search drive for files matching a mask', enabled: false }
                 }
             }
         }

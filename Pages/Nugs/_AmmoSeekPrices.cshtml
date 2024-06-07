@@ -1,0 +1,107 @@
+@using evantage.Pages.Components
+@using Hydro
+@model Index
+
+@{
+    var prices = new List<AmmoSeekPrice>()
+    {
+        new AmmoSeekPrice()
+        {
+            Caliber = AmmoseekCaliber._224_Valkyrie,
+            LowestPricePerRound = .609,
+            LastFetchDate = DateTime.Now, // Jun 7, 2024
+            Url = "https://redriverreloading.com/outdoor-store?route=product/product&product_id=283688&p=Federal-American-Eagle-224-Valkyrie-75gr-TMJ-20&r=ammoseek"
+        },
+        new AmmoSeekPrice()
+        {
+            Caliber = AmmoseekCaliber._308_Winchester,
+            LowestPricePerRound = .666,
+            LastFetchDate = DateTime.Now,
+            Url = "https://www.theamericanmarksman.com/factory-2nds-bullets-1st-308-win-147gr-fmj-400.html?FLARN=1717779128"
+        },
+        new AmmoSeekPrice()
+        {
+            Caliber = AmmoseekCaliber._65_Creedmoor,
+            LowestPricePerRound = .68,
+            LastFetchDate = DateTime.Now,
+            Url = "https://www.ammovalley.com/6-5-Creedmoor-Plinker-p/acp65hmix-b0250.htm"
+        },
+        new AmmoSeekPrice()
+        {
+            Caliber = AmmoseekCaliber._556_NATO,
+            LowestPricePerRound = .38,
+            LastFetchDate = DateTime.Now,
+            Url = "https://1stroundammo.com/product/5-56x-45mm-nato-55gr-fmj-remanufactured-limited-to-1-per-purchase/?attribute_round-count=50"
+        },
+        new AmmoSeekPrice()
+        {
+            Caliber = AmmoseekCaliber._300_Blackout,
+            LowestPricePerRound = .42,
+            LastFetchDate = DateTime.Now,
+            Url = "https://americanreloading.com/product/factory-seconds-300-bo-125gr-copper-cd-free-shipping-1000-rds/"
+        }
+    };
+
+
+    // var prices_sorted = prices.OrderBy(p => p.Caliber.Force);
+}
+
+<div class="grid grid-cols-2 gap-4">
+
+    @foreach (var price in prices)
+    {
+        <bento-card>
+            <slot name="title">
+                <shadow>
+                    <h2 class="text-primary">@price.Caliber</h2>
+                </shadow>
+            </slot>
+
+            <ul>
+                <hydro-li>
+                    <shadow>
+                        <p class="text-secondary">
+                            $ @price.LowestPricePerRound
+                        </p>
+                    </shadow>
+                </hydro-li>
+
+                @* <hydro-li> *@
+                @*     <shadow> *@
+                @*         <p class="text-secondary"> *@
+                @*             Est. Range @price.Caliber.MaxEffectiveRange *@
+                @*         </p> *@
+                @*     </shadow> *@
+                @* </hydro-li> *@
+                @* *@
+                @* <hydro-li> *@
+                @*     <shadow> *@
+                @*         <p class="text-secondary"> *@
+                @*             Force Per 100 yds: @price.Caliber.Force *@
+                @*         </p> *@
+                @*     </shadow> *@
+                @* </hydro-li> *@
+
+                @* <hydro-li> *@
+                @*     <shadow> *@
+                @*         <p class="text-secondary"> *@
+                @*             Force: @price.Caliber.Force *@
+                @*         </p> *@
+                @*     </shadow> *@
+                @* </hydro-li> *@
+            </ul>
+
+            <slot name="actions">
+                <span class="flex flex-row gap-2">
+                    <a target="_" href="@price.Url">
+                        <button class="btn btn-accent">Go to Cheapest</button>
+                    </a>
+                    <a target="_" href="@price.Caliber.SearchUrl">
+                        <button class="btn btn-accent">Go to Ammoseek</button>
+                    </a>
+                </span>
+            </slot>
+
+        </bento-card>
+    }
+</div>

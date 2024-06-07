@@ -8,6 +8,8 @@ namespace evantage.Pages.Todos;
 [BindProperties(SupportsGet = true)]
 public class Index : PageModel
 {
+    public TodoistTask Todo { get; set; } = new();
+
     public int project_total_count { get; set; }
     public int completed_tasks_count { get; set; }
     public int all_tasks_count { get; set; }
@@ -23,22 +25,18 @@ public class Index : PageModel
     private static bool get_all_todoist_on_htmxevent = false;
 
 
-    // public TodoistStats todoist_stats { get; set; } = new();
-    public TodoistStats todoist_stats => cached_todoist_stats;
     private static TodoistStats cached_todoist_stats = new();
-
-
-    public MyFullDay FullDay => cached_full_day;
     private static MyFullDay cached_full_day { get; set; } = new();
 
-    public List<MyFullDay> FullWeek => cached_full_week;
     private static List<MyFullDay> cached_full_week { get; set; } = new();
+    public TodoistStats todoist_stats => cached_todoist_stats;
 
-    // public List<TodoistTask> SearchResults = new();
+    public MyFullDay FullDay => cached_full_day;
+
+    public List<MyFullDay> FullWeek => cached_full_week;
+
 
     private readonly ITodoistService todoist;
-    // private readonly IReadmeService readme_service;
-    // private readonly IMarkdownService markdown;
 
     public Index(
         ITodoistService todos

@@ -4,20 +4,20 @@
 @model Index
 
 @{
-    var rounds = @Model.Rounds;
+    var zeroes = @Model.Zeroes;
 }
 
-<div id="rounds_grid" class="min-h-screen">
+<div id="zeroes_grid" class="min-h-screen">
     <shadow shadow-type="distant">
-        <h1 class="text-secondary text-2xl">Rounds</h1>
+        <h1 class="text-secondary text-2xl">Zeroes</h1>
     </shadow>
 
-    <section class="grid grid-cols-2">
+    <section class="grid lg:grid-cols-2 sm:grid-cols-1">
 
-        @foreach (var item in rounds)
+        @foreach (var item in zeroes)
         {
             <bento-card>
-                <slot name="title">@item.Name</slot>
+                <slot name="title">@item.Id</slot>
                 @if (@item.Price_Per_Round.NotEmpty())
                 {
                     <hydro-li>
@@ -30,11 +30,17 @@
                         @nameof(@item.BallisticCoefficient): @item.BallisticCoefficient
                     </hydro-li>
                 }
+                @if (@item.Velocity.NotEmpty())
+                {
+                    <hydro-li>
+                        @nameof(@item.Velocity): @item.Velocity
+                    </hydro-li>
+                }
 
                 <slot name="actions">
-                    <div class="tooltip-bottom tooltip" data-tip="View @item.Name">
-                        <a target="_" href="@item.Found">
-                            <button class="btn btn-ghost">View</button>
+                    <div class="tooltip-bottom tooltip" data-tip="View @item.Calculator">
+                        <a target="_" href="@item.Calculator">
+                            <button>Calculator</button>
                         </a>
                     </div>
                 </slot>

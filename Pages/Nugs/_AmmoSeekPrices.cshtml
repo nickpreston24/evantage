@@ -46,62 +46,68 @@
     // var prices_sorted = prices.OrderBy(p => p.Caliber.Force);
 }
 
-<div class="grid grid-cols-2 gap-4">
+<div>
+    <shadow shadow-type="distant">
+        <h1 class="text-secondary  text-2xl">Prices</h1>
+    </shadow>
 
-    @foreach (var price in prices)
-    {
-        <bento-card>
-            <slot name="title">
-                <shadow>
-                    <h2 class="text-primary">@price.Caliber</h2>
-                </shadow>
-            </slot>
+    <div class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
 
-            <ul>
-                <hydro-li>
+        @foreach (var price in prices)
+        {
+            <bento-card>
+                <slot name="title">
                     <shadow>
-                        <p class="text-secondary">
-                            $ @price.LowestPricePerRound
-                        </p>
+                        <h2 class="text-primary">@price.Caliber</h2>
                     </shadow>
-                </hydro-li>
+                </slot>
 
-                @* <hydro-li> *@
-                @*     <shadow> *@
-                @*         <p class="text-secondary"> *@
-                @*             Est. Range @price.Caliber.MaxEffectiveRange *@
-                @*         </p> *@
-                @*     </shadow> *@
-                @* </hydro-li> *@
-                @* *@
-                @* <hydro-li> *@
-                @*     <shadow> *@
-                @*         <p class="text-secondary"> *@
-                @*             Force Per 100 yds: @price.Caliber.Force *@
-                @*         </p> *@
-                @*     </shadow> *@
-                @* </hydro-li> *@
+                <ul>
+                    <hydro-li>
+                        <shadow>
+                            <p class="text-secondary">
+                                $ @price.LowestPricePerRound
+                            </p>
+                        </shadow>
+                    </hydro-li>
 
-                @* <hydro-li> *@
-                @*     <shadow> *@
-                @*         <p class="text-secondary"> *@
-                @*             Force: @price.Caliber.Force *@
-                @*         </p> *@
-                @*     </shadow> *@
-                @* </hydro-li> *@
-            </ul>
+                    @* <hydro-li> *@
+                    @*     <shadow> *@
+                    @*         <p class="text-secondary"> *@
+                    @*             Est. Range @price.Caliber.MaxEffectiveRange *@
+                    @*         </p> *@
+                    @*     </shadow> *@
+                    @* </hydro-li> *@
+                    @* *@
+                    @* <hydro-li> *@
+                    @*     <shadow> *@
+                    @*         <p class="text-secondary"> *@
+                    @*             Force Per 100 yds: @price.Caliber.Force *@
+                    @*         </p> *@
+                    @*     </shadow> *@
+                    @* </hydro-li> *@
 
-            <slot name="actions">
-                <span class="flex flex-row gap-2">
-                    <a target="_" href="@price.Url">
-                        <button class="btn btn-accent">Go to Cheapest</button>
-                    </a>
-                    <a target="_" href="@price.Caliber.SearchUrl">
-                        <button class="btn btn-accent">Go to Ammoseek</button>
-                    </a>
-                </span>
-            </slot>
+                    @* <hydro-li> *@
+                    @*     <shadow> *@
+                    @*         <p class="text-secondary"> *@
+                    @*             Force: @price.Caliber.Force *@
+                    @*         </p> *@
+                    @*     </shadow> *@
+                    @* </hydro-li> *@
+                </ul>
 
-        </bento-card>
-    }
+                <slot name="actions">
+                    <span class="flex flex-row gap-2">
+                        <a target="_" href="@price.Url">
+                            <button class="btn btn-accent">Go to Cheapest</button>
+                        </a>
+                        <a target="_" href="@price.Caliber.SearchUrl">
+                            <button class="btn btn-accent">Go to Ammoseek</button>
+                        </a>
+                    </span>
+                </slot>
+
+            </bento-card>
+        }
+    </div>
 </div>

@@ -1,7 +1,7 @@
-using CodeMechanic.Todoist;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using CodeMechanic.Todoist;
 
 namespace evantage.Pages.Todos;
 
@@ -188,21 +188,10 @@ public class Index : PageModel
     //     return Partial("_ReadmeTable", todos_from_readme);
     // }
 
-
     public async Task<IActionResult> OnGetAllTodoistTasks()
     {
         Console.WriteLine(nameof(OnGetAllTodoistTasks));
-        // if (get_all_todoist_on_htmxevent)
-        // {
-        //     var stats = await this.todoist.GetProjectsAndTasks();
-        //
-        //     stats.TodoistTasks = stats.TodoistTasks.ApplyFilters(new FilterOptions()
-        //     {
-        //     });
-        //
-        //     cached_todoist_stats = stats;
-        // }
-
+        cached_todoist_stats.TodoistTasks = await this.todoist.SearchTodos(new TodoistTaskSearch("@coding"));
         return Partial("_TodoistTasksTable", this);
     }
 

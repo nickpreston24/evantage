@@ -1,49 +1,105 @@
 @page
-@using Htmx.TagHelpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using evantage.Pages.Components
 @model evantage.Pages.Nugs.Index
 
 @{
 }
 
-<div class="flex flex-row gap-4">
-    <div id="controls" class="w-1/5 gap-2 flex flex-col">
-        <button
-            class="btn btn-accent"
-            hx-get
-            hx-page="Index"
-            hx-trigger="load,click"
-            hx-swap="innerHTML"
-            hx-target="#all_nugs"
-            hx-page-handler="AllNugs">
-            Load Nugs
-        </button>
+<div x-data="setup_nugs()" id="main_flex" class="flex flex-row">
 
+    <div class="border-primary-content/10 menu menu-vertical  bg-base-200 rounded-box border-0 w-1/10 ">
 
-        <button
-            class="btn btn-accent"
-            hx-get
-            hx-page="Index"
-            hx-trigger="load, click"
-            hx-swap="innerHTML"
-            hx-page-handler="AllRounds">
-            Load Rounds
-        </button>
+        <template x-cloak x-for="[key, value] of Object.entries(views)">
+            <div :data-tip="value.tip" class="tooltip tooltip-bottom tooltip-accent flex-col flex items-center justify-center gap-2">
+
+                <button
+                    x-on:click="value.enabled=!value.enabled"
+                    class="btn btn-primary join-item shadow-md shadow-secondary-400/50"
+                    :class="{'border-2 border-info btn-ghost': !value.enabled, 'border-2 border-ghost': value.enabled }">
+                    <label
+                        x-text="key"
+                        class="form-label badge badge-sm"
+                        :asp-for='key'>
+                    </label>
+
+                    <input x-bind:name='key'
+                           x-bind:value='value.enabled'
+                           x-bind:checked="value.enabled"
+                           type="checkbox"
+                           :asp-for="key"
+                           class="form-control toggle toggle-primary">
+                </button>
+
+            </div>
+
+        </template>
     </div>
 
+    @* MAIN GRID *@
+    <div class="grid grid-cols-1 grid-rows-auto w-9/10">
 
-    <div class="w-4/5">
-        <shadow shadow-type="distant">
-            <h1 class="text-secondary  text-2xl">Prices</h1>
-        </shadow>
-        <partial name="_AmmoSeekPrices"/>
-        <shadow shadow-type="distant">
-            <h1 class="text-secondary text-2xl">Rounds</h1>
-        </shadow>
-        <partial name="_RoundsGrid"/>
-        
-        <span id="all_nugs"></span>
+        <div x-transition x-show="views.Prices.enabled">
+            <partial x-show="views.Prices.enabled" name="_AmmoSeekPrices"/>
+        </div>
+
+        <div x-transition x-show="views.Parts.enabled"
+             hx-get
+             hx-page="Index"
+             hx-swap="outerHTML"
+             hx-trigger="load"
+             hx-target="#parts_grid"
+             hx-page-handler="AllParts">
+            <partial name="_PartsGrid"></partial>
+        </div>
+
+        <div x-transition x-show="views.Zeroes.enabled"
+
+             hx-get
+             hx-page="Index"
+             hx-swap="outerHTML"
+             hx-trigger="load"
+             hx-target="#zeroes_grid"
+             hx-indicator="#zeros_indicator"
+             hx-page-handler="AllZeroes">
+
+            <span id="zeros_indicator" class="htmx-indicator">
+                <label>loading ...</label>
+                <img class="w-8" alt="bars" src="~/img/loaders/circle_bars.svg"/>
+            </span>
+            @* <partial name="_ZeroesGrid"/> *@
+
+        </div>
+
+        <div x-show="views.Rounds.enabled" x-transition
+             hx-get
+             hx-page="Index"
+             hx-swap="outerHTML"
+             hx-trigger="load"
+             hx-target="#rounds_grid"
+             hx-indicator="#rounds_indicator"
+             hx-page-handler="AllRounds">
+            <span id="rounds_indicator" class="htmx-indicator">
+                <label>loading ...</label>
+                <img class="w-8" alt="bars" src="~/img/loaders/circle_bars.svg"/>
+            </span>
+            @* <partial name="_RoundsGrid"/> *@
+        </div>
+
+
     </div>
-
 </div>
+
+<script>
+    function setup_nugs() {
+    return {
+            views: {
+                Parts: { tip: '', enabled: true },
+                Prices: { tip: '', enabled: false },
+                Zeroes: { tip: '', enabled: false },
+                Builds: { tip: '', enabled: false },
+                Rounds: { tip: '', enabled: false }
+            }
+        }        
+    }
+
+</script>

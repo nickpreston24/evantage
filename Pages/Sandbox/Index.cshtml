@@ -82,37 +82,37 @@
         <div class="grid grid-cols-1 grid-rows-auto gap-@batch_size">
 
 
-            <div class="text-info">
-                <h1>Source Copier</h1>
+            @* <div class="text-info"> *@
+            @* <h1>Source Copier</h1> *@
 
-                <button
-                    class="btn btn-tahiti"
-                    hx-get
-                    hx-trigger="click"
-                    hx-page-handler="CloneMyCode">
-                    @* Look sir, Clones! *@
-                    @* <!-- Duplicate --> *@
-                    Clone Code
-                </button>
-            </div>
+            @* <button *@
+            @*     class="btn btn-tahiti" *@
+            @*     hx-get *@
+            @*     hx-trigger="click" *@
+            @*     hx-page-handler="CloneMyCode">  #todo: fix this method / swap *@
+            @*     $1$ Look sir, Clones! #1# *@
+            @*     $1$ <!-- Duplicate --> #1# *@
+            @*     Clone Code *@
+            @* </button> *@
+            @* </div> *@
 
-            <div id="raw_routes" class="grid grid-cols-3">
-                @foreach (var batch in razor_routes.Batch(@batch_size))
-                {
-                    <ul>
-                        @foreach (var route in batch)
-                        {
-                            <hydro-card>
-                                <slot title="import success!"></slot>
-                            </hydro-card>
-                            @* *@
-                            <li>@route.file_name</li>
-                            @* <li>@route.subdirectory</li> *@
-                            @* <span class="badge badge-primary">@route.extension</span> *@
-                        }
-                    </ul>
-                }
-            </div>
+            @* <div id="raw_routes" class="grid grid-cols-3"> *@
+            @*     @foreach (var batch in razor_routes.Batch(@batch_size)) *@
+            @*     { *@
+            @*         <ul> *@
+            @*             @foreach (var route in batch) *@
+            @*             { *@
+            @*                 <hydro-card> *@
+            @*                     <slot title="import success!"></slot> *@
+            @*                 </hydro-card> *@
+            @*                 $1$ #1# *@
+            @*                 <li>@route.file_name</li> *@
+            @*                 $1$ <li>@route.subdirectory</li> #1# *@
+            @*                 $1$ <span class="badge badge-primary">@route.extension</span> #1# *@
+            @*             } *@
+            @*         </ul> *@
+            @*     } *@
+            @* </div> *@
 
             <div id="raw_routes" class="grid grid-rows-@batch_size">
                 @foreach (var batch in main_routes.Batch(@batch_size))

@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
 });
 
 // Load and inject .env files & values
-DotEnv.Load();
+DotEnv.Load(debug: true);
 
 // add dependencies to services collection
 builder.Services.AddHttpClient();
@@ -57,7 +57,7 @@ builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IGenerateSQLTypes, SQLCService>();
 builder.Services.AddTransient<INotesService, NotesService>();
 
-builder.Services.AddTransient<INugsRepository, NugsRepository>();
+builder.Services.AddTransient<IPartsRepository, PartsRepository>();
 builder.Services.AddTransient<INugsService, NugsService>();
 builder.Services.AddTransient<ICopyPastaService, CopyPastaService>();
 builder.Services.AddControllers();

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+    <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -35,7 +35,7 @@
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.3" />
         <PackageReference Include="CodeMechanic.Maths" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.Scriptures" Version="1.0.0" />
-        <PackageReference Include="CodeMechanic.Todoist" Version="1.0.2" />
+        <PackageReference Include="CodeMechanic.Todoist" Version="1.0.4" />
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.12" />
         <PackageReference Include="CodeMechanic.Markdown" Version="1.0.0" />
@@ -48,6 +48,7 @@
         <PackageReference Include="FuzzySharp" Version="2.0.2" />
         <PackageReference Include="Hydro" Version="0.10.0" />
         <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="9.0.0" />
+        <PackageReference Include="Libsql.Client" Version="0.4.0" />
         <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.4" />
         <PackageReference Include="MySqlConnector" Version="2.3.7" />
         <PackageReference Include="System.Runtime.Caching" Version="8.0.0" />
@@ -58,7 +59,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Pages\Admin\Packages\Index.cshtml" />
+      <Content Remove="Pages\Dashes\06_Modals.cshtml" />
+      <Content Remove="Pages\Dashes\09_FormValidation.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Pages\Dashes\06_Modals.cshtml.cs" />
+      <Compile Remove="Pages\Dashes\09_FormValidation.cshtml.cs" />
     </ItemGroup>
 
 </Project>

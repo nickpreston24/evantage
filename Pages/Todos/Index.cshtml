@@ -21,13 +21,13 @@
 
     <hydro-bento>
 
-        
+
         <div x-transition
              x-show="blades.add_todo.show" class="bento bento-shadow-blue p-4 col-span-2">
             <partial name="_AddTodo"></partial>
         </div>
-        
-        
+
+
         <div x-transition
              x-show="blades.full_day.show" class="bento bento-shadow-blue p-4 col-span-2">
             <partial name="FullDay"></partial>
@@ -140,6 +140,13 @@
     function setup_todoist() {
         return {
             blades: {
+                
+                add_todo: {
+                   title: 'Add Todo'
+                  , show: true
+                  , get classname() {
+                      return !this.show? 'tooltip':'tooltip border-2 rounded-lg border-info'
+                  }},  
                 // stats: {
                 //     title: 'Stats'
                 //     , show:false

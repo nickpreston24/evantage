@@ -1,0 +1,54 @@
+@using evantage.Pages.Components
+@using Hydro
+@using CodeMechanic.Types
+@model Index
+
+@{
+    var parts = @Model.Parts;
+
+    // Console.WriteLine(" parts at render time : " + parts.Count);
+
+    // var incomplete_parts = parts.Where(p => p.Name.IsEmpty()).ToArray();
+    // Console.WriteLine(" incomplete parts : " + incomplete_parts.Length);
+
+}
+
+
+@* hx-trigger="load,click" *@
+@* *@
+<div id="parts_grid" class="min-h-screen">
+
+    <shadow shadow-type="distant">
+        <h1 class="text-secondary text-2xl">Parts</h1>
+    </shadow>
+    <div class="grid lg:grid-cols-2 sm:grid-cols-1">
+
+        @foreach (var item in parts)
+        {
+            <bento-card>
+                <slot name="title">@item.Name</slot>
+
+                <ul>
+                    @if (@item.Manufacturer.NotEmpty())
+                    {
+                        <hydro-li>
+                            @nameof(@item.Manufacturer): @item.Manufacturer
+                        </hydro-li>
+                    }
+                </ul>
+                <pre>@item.Url</pre>
+
+
+                <slot name="actions">
+                    <div class="tooltip-bottom tooltip" data-tip="View @item.Name">
+                        <a target="_" href="@item.Url">
+                            <button class="btn btn-primary">
+                                See Part
+                            </button>
+                        </a>
+                    </div>
+                </slot>
+            </bento-card>
+        }
+    </div>
+</div>

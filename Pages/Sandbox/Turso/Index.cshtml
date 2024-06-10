@@ -1,0 +1,36 @@
+@page
+@model evantage.Pages.Sandbox.Turso.Index
+
+@{
+}
+
+<div class="h-screen">
+    <hydro-hero>
+        <slot name="title">
+
+            <shadow shadow-type="distant">
+                <h1 class="text-5xl text-primary">
+                    It's Turso time!
+                </h1>
+            </shadow>
+        </slot>
+
+        <slot name="buttons">
+
+            <button
+                class="btn btn-primary"
+                hx-get
+                hx-page="Index"
+                hx-trigger="click"
+                hx-swap="outerHTML"
+                hx-target="#turso_results"
+                hx-page-handler="ConnectToTurso">
+                Connect
+            </button>
+        </slot>
+        <span id="turso_results"></span>
+
+    </hydro-hero>
+
+
+</div>

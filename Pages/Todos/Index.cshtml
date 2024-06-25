@@ -35,7 +35,10 @@
 
         <div x-transition
              x-show="blades.todos_table.show" class="bento bento-shadow-blue p-4 col-span-2">
+            <tbody id="todoist_results">
+
             <partial name="TodoistTasks"></partial>
+            </tbody>
         </div>
 
         @* <template x-if="blades.readme_table.show"> *@
@@ -143,7 +146,7 @@
                 
                 add_todo: {
                    title: 'Add Todo'
-                  , show: true
+                  , show: false  // NOTE: Disabled, because I'm having issues POSTing new todos.
                   , get classname() {
                       return !this.show? 'tooltip':'tooltip border-2 rounded-lg border-info'
                   }},  

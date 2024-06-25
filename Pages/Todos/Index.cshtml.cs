@@ -1,7 +1,14 @@
+using System.Net.Http.Headers;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CodeMechanic.Todoist;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace evantage.Pages.Todos;
 
@@ -68,6 +75,39 @@ public class Index : PageModel
         //     completed_tasks_count = todoist_stats.CompletedTasks.Count;
         //     all_tasks_count = todoist_stats.TodoistTasks.Count;
         // }
+    }
+
+
+    public async Task<IActionResult> OnPostAddTodo()
+    {
+        string url = "https://api.todoist.com/rest/v2/tasks?content='Buy Milk zzz'";
+        var todo = new TodoistTask() { content = "" };
+        string json =
+            // """
+            //     '{"content": "Buy Milk zzz"}'
+            // """;
+            JsonConvert.SerializeObject(todo);
+        string api_key = Environment.GetEnvironmentVariable("TODOIST_API_KEY") ?? "";
+        // Console.WriteLine("Keey " + api_key);
+
+        Console.WriteLine(json);
+
+        try
+        {
+            
+            // TODO: this needs fixing.  Apparently, I'm sending the wrong model? (I don't bloody know, b/c they don't send helpful message back!
+            // some help: https://stackoverflow.com/questions/71013202/calling-an-api-using-httpclient-postasync-400-bad-request
+            
+            await RunPost(api_key, url, json, true);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return Content(e.Message);
+        }
+
+
+        return Content("added.");
     }
 
     public async Task<IActionResult> OnGetFullDay()
@@ -250,5 +290,50 @@ public class Index : PageModel
         //     return Content($"<p class='alert alert-error'>{e.Message}</p>");
         // }
         return Content($"<p class='alert alert-success'>Task {task_id} set to Priority {priority}<p>");
+    }
+
+    private async Task<string> RunPost(string api_key, string uri, string json, bool debug = false)
+    {
+        using HttpClient http = new HttpClient();
+        http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", api_key);
+
+        var request = new HttpRequestMessage(HttpMethod.Post, uri);
+        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        request.Content = new StringContent(json, Encoding.UTF8);
+        request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        var response = await http.SendAsync(request);
+        if (debug)
+            response.Dump(nameof(response));
+
+        response.EnsureSuccessStatusCode();
+        var content = await response.Content.ReadAsStringAsync();
+        return content;
+    }
+}
+
+sealed class ExcludeCalculatedResolver : DefaultContractResolver
+{
+    protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+    {
+        var property = base.CreateProperty(member, memberSerialization);
+        property.ShouldSerialize = _ => ShouldSerialize(member);
+        return property;
+    }
+
+    internal static bool ShouldSerialize(MemberInfo memberInfo)
+    {
+        var propertyInfo = memberInfo as PropertyInfo;
+        if (propertyInfo == null)
+        {
+            return false;
+        }
+
+        if (propertyInfo.SetMethod != null)
+        {
+            return true;
+        }
+
+        var getMethod = propertyInfo.GetMethod;
+        return Attribute.GetCustomAttribute(getMethod, typeof(CompilerGeneratedAttribute)) != null;
     }
 }

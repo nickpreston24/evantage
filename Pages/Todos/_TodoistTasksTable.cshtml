@@ -39,8 +39,8 @@
 <div class="overflow-x-auto wrapper">
     @* <b>Rows: @rows.Count</b> *@
 
+    @* disabled *@
     <input
-        disabled
         type="text"
         id="query"
         autocomplete="off"
@@ -69,8 +69,7 @@
             <th>Age</th>
         </tr>
         </thead>
-        <tbody id="todoist_results">
         <partial name="_TodoistRows" model="@rows"/>
-        </tbody>
+        @* </tbody> *@
     </table>
 </div>

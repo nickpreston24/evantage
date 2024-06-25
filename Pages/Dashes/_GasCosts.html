@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html data-theme="halloween" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+  </head>
+  <body>
+    <div x-data="setup()" class="flex flex-col items-center justify-center">
+      <h1>Fuel costs</h1>
+
+      <!-- Credit: https://www.calculator.net/fuel-cost-calculator.html?tripdistance=10&tripdistanceunit=miles&fuelefficiency=23&fuelefficiencyunit=mpg&gasprice=3.759686&gaspriceunit=gallon&x=Calculate -->
+      <ul>
+        <label>Trip gallons:</label>
+        <li x-text="trip_gallons"></li>
+        <label>Total Cost:</label>
+        <li x-text="total_cost"></span>
+      </ul>
+      <div class="flex flex-row items-center justify-center gap-2">
+        <template x-for="week in weeks">
+          <div>
+              <h2>Completed deliveries</h2>
+              <span x-text="week.completed_deliveries"></span>
+              <h2>Average Run Pay</h2>
+              <span x-text="week.average_run_pay"></span>
+            </div>
+        </template>       
+      </div>
+    </div>
+  </body>
+  <script>
+    function setup() {
+      return {
+        trip_distance_mi: 10.0,
+        fuel_efficiency: 23,
+        fuel_price: 3.759686,
+        get trip_gallons() {
+          return (this.trip_distance_mi / this.fuel_efficiency) * 1.0;
+        },
+        get total_cost() {
+          return this.trip_gallons * this.fuel_price;
+        },
+        weeks: [
+          {completed_deliveries: 22, average_run_pay: 6.97},
+          {completed_deliveries: 14, average_run_pay: 6.66},
+          {completed_deliveries: 11, average_run_pay: 6.07},
+        ]
+      };
+    }
+  </script>
+</html>

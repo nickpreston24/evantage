@@ -10,5 +10,5 @@ obj/
 out/
 public/
 dist/
-
+**/*.vscode/
 **/*.old/

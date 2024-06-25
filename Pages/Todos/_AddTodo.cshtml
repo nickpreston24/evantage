@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Index
 
-<form hx-post="@Url.Page("Index", "Earnings")"
+<form hx-post="@Url.Page("Index", "AddTodo")"
       hx-swap="outerHTML"
       class="form-horizontal needs-validation"
       _="on htmx:beforeSend set #submitButton.disabled to 'disabled'">

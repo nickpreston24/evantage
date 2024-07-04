@@ -1,4 +1,6 @@
-
+/Doodles/pocketbase*
+/**/*pocketbase_*
+/**/*.zip
 .env
 **/unsafe/*.rest
 rest/nugs.rest

@@ -56,7 +56,7 @@ public class ImportOCR : PageModel
 
     private async Task<string> RunTesseractViaBash(string file_name)
     {
-        Console.WriteLine(nameof(RunTesseractViaBash));
+        // Console.WriteLine(nameof(RunTesseractViaBash));
         // var output = await $"cd ~/Downloads; pwd; ls -a".Bash(); // sample
         // TODO: Finish this as a GET request:
         // string file_name = "20240422_195116.jpg";

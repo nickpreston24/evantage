@@ -14,6 +14,12 @@
 
     var main_routes = new List<TooltipRoute>()
     {
+        // new TooltipRoute()
+        // {
+        //     Title = "Html from external API"
+        //     , Link = "Sandbox/ExternalHTMLApi"
+        //     , Tip = "Get static HTML from an external API and render it."
+        // },
         new TooltipRoute()
         {
             Title = "Dynamic Htmx Form"
@@ -149,4 +155,33 @@
     @* *@
     @*     </div> *@
     @* </section> *@
+
+
+    @* QUICKIES *@
+
+    @* <h1 class="text-3xl ">Quickies</h1> *@
+
+    <div class="bg-black flex flex-col gap-2">
+        <div class="m-4 text-5xl font-extrabold">
+            <span class="animate-pulse text-xl bg-gradient-to-r from-pink-500 via-green-500 to-violet-500 bg-clip-text text-transparent"> Call an External API (Railway Production) </span>
+        </div>
+
+        <div hx-get
+             hx-page="Index"
+             hx-trigger="load"
+             hx-vars="{url: 'https://aspcontainerized-production.up.railway.app/html'}"
+             hx-page-handler="HtmlFromAPI">
+        </div>
+
+        <div class="m-4 text-5xl font-extrabold">
+            <span class="animate-pulse text-xl bg-gradient-to-r from-pink-500 via-green-500 to-violet-500 bg-clip-text text-transparent"> Call an External API (Localhost) </span>
+        </div>
+
+        <div hx-get
+             hx-page="Index"
+             hx-trigger="load"
+             hx-vars="{url: 'http://127.1.1.0:8080/html'}"
+             hx-page-handler="HtmlFromAPI">
+        </div>
+    </div>
 </section>

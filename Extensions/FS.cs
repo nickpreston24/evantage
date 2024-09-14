@@ -3,6 +3,8 @@ using CodeMechanic.Types;
 
 namespace CodeMechanic.FileSystem;
 
+public record FileSave(string filename, string text, string root, params string[] subfolders);
+
 public static class FS
 {
     public static void OpenWith(this string filepath, string program)
@@ -49,7 +51,7 @@ public static class FS
     }
 }
 
-public record SaveAs //(string file_name)
+public record SaveAs
 {
     public SaveAs(string file_name)
     {
@@ -61,4 +63,32 @@ public record SaveAs //(string file_name)
     public string root_path { get; set; } = string.Empty;
     public string save_folder { get; set; } = string.Empty;
     public string file_name { get; set; } = string.Empty;
+}
+
+public static class FS_V2
+{
+    public static void SaveAs(this FileSave file_save, bool debug = false)
+    {
+        if (file_save == null) throw new NullReferenceException(nameof(file_save));
+        if (file_save.root.IsEmpty()) throw new NullReferenceException(nameof(file_save.root));
+        if (file_save.filename.IsEmpty()) throw new NullReferenceException(nameof(file_save.filename));
+
+        string save_folder = file_save.root;
+        foreach (var subfolder in file_save.subfolders ?? Array.Empty<string>())
+        {
+            save_folder = Path.Combine(save_folder, subfolder);
+        }
+
+        if (debug)
+            Console.WriteLine("save folder: \n" + save_folder);
+
+        string save_path = Path.Combine(save_folder, file_save.filename);
+
+        if (debug)
+            Console.WriteLine("save path: \n" + save_path);
+
+        if (!Directory.Exists(save_folder)) Directory.CreateDirectory(save_folder);
+
+        File.WriteAllText(save_path, file_save.text);
+    }
 }

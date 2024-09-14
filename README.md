@@ -414,3 +414,66 @@ I want to be able to see my latest Todos and tick them off, without creating a R
 
 1. Update your web clipper to save programmerhumor.io memes to mysql
 2. Like this one... [totally me right?] (https://programmerhumor.io/programming-memes/regex-is-the-biggest-flex/)
+
+### Jul 5, 2024 Ideas & Todos
+
+- [ ] p1 - HomeLab - Find a way to redeploy Docker images on BUILD (retaining volumes).
+    - [ ] Test this out with simple node-base image first.
+    - GOALS:
+        1. I want be able to see ALL of my README.md tasks and be able to update them FROM MY HOME server (evantage.sln
+           deploy)
+        2. I'd love to be able to find all STL files on my drives and USBs, and be able to import them into
+           a `pocketbase` at the click of a button.
+- [ ] P2 - Fix your Sharpify CLI to properly install on your local machine...
+- [ ] Find `nicks_totally_awesome_nuget_key` on your local drive
+- [ ] Make a migration service for sqlites and mysqls to pocketbase
+    - One service for each
+    - Gets all tables from schema
+    - Creates a new table in `pocketbase` for each table in the (sql) schema.
+    - Runs `pbcodegen` on the resulting `pocketbase`
+    - auto-publishes a new nuget package
+    - on command (y/N), pushes the nuget package to `myget` for me.
+        - if existing, finds the version number, then increments it and pushes. (add to Packmutt)
+        - [ ] I would like this upgrade process tested using the `.Bash()` support method I wrote.
+- [ ] Make a CLI/sh that runs pbcodegen (IF it works perfectly)
+- [ ] Contribute to pbcodegen
+- [ ] Make a TaskTreadmill (infinite scroll) component that takes TodoistTasks.
+- [ ] Deploy a temporary node api that POSTs new tasks to your `justdoit` pocketbase deployment.
+    - Also, test out bun.js variant of a node api (`bun run start`) on railway.
+- [ ] Add a sign-in form to your chrome extension.
+    - [ ] Figure out how to sign in as a `pocketbase` user while still in the chrome extension.
+- [ ] Add a sample POST to your chrome extension to that deployed justdoit node api.
+- [ ] Find free animated `svg` library
+    - or, build your own animated
+      svgs! https://www.svgbackgrounds.com/how-to-make-animated-loading-graphics-with-only-svg/
+- [ ] Create a free Railway template from `asp_railway`
+- [ ] Add a natural language `duration` field to remote pocketbase db.
+    - [ ] Figure out how to make Timespan durations in C#.
+    - [ ] Write some LINQ to make a raw Gantt model (C# only, not UI)
+    - [ ] Write a sandbox partial Gantt chart or binary tree
+        1. Candidates:
+        2. https://fperucic.github.io/treant-js/
+        3. https://www.sigmajs.org/ -- this one doesn't use `<canvas/>` and instead uses `WebGL` for FASTER RENDERING.
+        4. https://d3js.org/d3-hierarchy/treehttps://d3js.org/d3-hierarchy/tree (fallback.... :/)
+    - [ ] ...??
+- (nice to have) I'd like to have my markdown service / Grepper be able to branch off into multiple threads to attack
+  each Directory by how large it is, using a `ConcurrentQueue` to
+- (nice to have) background Dockerized container or daemon that automatically creates MS Word copies of .md files
+    - check raindrop to see if you have that old npm package for converting `.md` to `docx`.
+- [ ] Try making this quick form uploading api: https://masteringjs.io/tutorials/express/post
+- [x] Try out hot reloading node + Docker
+  - [ ]https://blog.bencomeau.dev/docker-hot-reloading/  - you might try the refresh always and exploiting volumes
+    - [x] https://thatstatsguy.github.io/blog/2023/Hot-reloading-a-.Net-Application-in-Docker/
+        - Tried, but only lets me refresh manually (browser). It DOES detect changes, but I don't see it reloading the
+          service, which is what I want.
+- [ ] https://medium.com/@simonescigliuzzi/create-a-complete-web-api-set-from-scratch-with-fastify-swagger-and-heroku-c6eb1c293215
+
+1. Logging (Rocket)
+    - I'd like to have my own way to read `console.log` errors from the browser and directly feed them to a db.
+      preferably my own library (`npm`) over `myget`.
+
+### Needful Items Checklist - Jul 7, 2024
+
+- [ ] Task treadmill.
+- [ ] GET and POST for pocketbase.
+- [ ] deploy and test on phone.

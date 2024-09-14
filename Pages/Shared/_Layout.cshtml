@@ -18,7 +18,7 @@
             asp-fallback-src="~/lib/htmx.org/dist/htmx.min.js"
             asp-fallback-test="window.htmx"
             crossorigin="anonymous">
-       </script>
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.min.js"
             asp-fallback-src="~/lib/chartjs"></script>
@@ -43,6 +43,7 @@
 
     <!-- v5 -->
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
     <script type="module" src="~/js/main.js"></script>
     @* <script src="~/dist/index.js" type="module"></script> *@
@@ -103,7 +104,11 @@
 
         <h1 class="text-lg md:text-2xl lg:text-3xl text-accent">
             <div class="tooltip tooltip-bottom" :data-tip="slogan">
-                Sales Spy 🕵️
+                @* Sales Spy 🕵️ *@
+                <span>
+                    Home Lab
+                </span>
+                <box-icon name="rocket"></box-icon>
             </div>
         </h1>
 

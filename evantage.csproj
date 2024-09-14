@@ -1,4 +1,4 @@
-    <Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -30,27 +30,30 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bogus" Version="35.5.0" />
-        <PackageReference Include="CodeMechanic.Async" Version="1.0.1" />
+        <PackageReference Include="CodeMechanic.Airtable" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.3" />
+        <PackageReference Include="CodeMechanic.Embeds" Version="1.0.1" />
+        <PackageReference Include="CodeMechanic.Types" Version="1.0.10" />
+        <PackageReference Include="CodeMechanic.Async" Version="1.0.2" />
         <PackageReference Include="CodeMechanic.Maths" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.Scriptures" Version="1.0.0" />
         <PackageReference Include="CodeMechanic.Todoist" Version="1.0.4" />
-        <PackageReference Include="CodeMechanic.Embeds" Version="1.0.0" />
-        <PackageReference Include="CodeMechanic.FileSystem" Version="1.0.12" />
+        <PackageReference Include="CodeMechanic.FileSystem" Version="2.0.0" />
         <PackageReference Include="CodeMechanic.Markdown" Version="1.0.0" />
-        <PackageReference Include="CodeMechanic.RazorHAT" Version="1.0.9" />
         <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4" />
-        <PackageReference Include="CodeMechanic.Regex" Version="1.0.6" />
-        <PackageReference Include="CodeMechanic.Types" Version="1.0.9" />
+        <PackageReference Include="CodeMechanic.RegularExpressions" Version="1.0.1" />
+        <PackageReference Include="Bogus" Version="35.5.0" />
         <PackageReference Include="CsvHelper" Version="32.0.3" />
         <PackageReference Include="Dapper" Version="2.1.35" />
         <PackageReference Include="FuzzySharp" Version="2.0.2" />
+        <PackageReference Include="Htmx" Version="1.8.0" />
+        <PackageReference Include="Htmx.TagHelpers" Version="1.8.0" />
         <PackageReference Include="Hydro" Version="0.10.0" />
         <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="9.0.0" />
         <PackageReference Include="Libsql.Client" Version="0.4.0" />
         <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.4" />
         <PackageReference Include="MySqlConnector" Version="2.3.7" />
+        <PackageReference Include="NSpecifications" Version="1.2.0" />
         <PackageReference Include="System.Runtime.Caching" Version="8.0.0" />
     </ItemGroup>
 
@@ -59,13 +62,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="Pages\Dashes\06_Modals.cshtml" />
-      <Content Remove="Pages\Dashes\09_FormValidation.cshtml" />
+        <Content Remove="Pages\Dashes\06_Modals.cshtml" />
+        <Content Remove="Pages\Dashes\09_FormValidation.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Pages\Dashes\06_Modals.cshtml.cs" />
-      <Compile Remove="Pages\Dashes\09_FormValidation.cshtml.cs" />
+        <Compile Remove="Pages\Dashes\06_Modals.cshtml.cs" />
+        <Compile Remove="Pages\Dashes\09_FormValidation.cshtml.cs" />
     </ItemGroup>
 
 </Project>

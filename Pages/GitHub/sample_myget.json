@@ -212,7 +212,7 @@
     },
     {
       "packagetype": "nuget",
-      "id": "CodeMechanic.Regex",
+      "id": "CodeMechanic.RegularExpressions",
       "versions": [
         "1.0.2",
         "1.0.3",

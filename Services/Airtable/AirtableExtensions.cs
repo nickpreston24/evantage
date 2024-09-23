@@ -1,11 +1,12 @@
 using Newtonsoft.Json;
 
-namespace CodeMechanic.Airtable;
-
-public static class AirtableExtensions
+namespace CodeMechanic.Airtable
 {
-    public static List<T> Deserialize<T>(this string line) // where T : class
+    public static class AirtableExtensions
     {
-        return JsonConvert.DeserializeObject<List<T>>(line);
+        public static List<T> Deserialize<T>(this string line) // where T : class
+        {
+            return JsonConvert.DeserializeObject<List<T>>(line);
+        }
     }
 }

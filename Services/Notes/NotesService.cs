@@ -5,7 +5,6 @@ using Bogus;
 using Dapper;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
-using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Sqlc;
 using CodeMechanic.Types;
 using evantage.Models;

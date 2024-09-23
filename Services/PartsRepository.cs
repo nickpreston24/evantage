@@ -1,11 +1,8 @@
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
-using CodeMechanic.RazorHAT.Services;
-using CodeMechanic.Types;
 using Dapper;
 using evantage.Models;
 using evantage.Models.Csv;
-using Microsoft.Data.Sqlite;
 using MySqlConnector;
 
 public class PartsRepository : IPartsRepository

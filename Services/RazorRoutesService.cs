@@ -2,7 +2,6 @@ using System.Text.RegularExpressions;
 using CodeMechanic.RegularExpressions;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.FileSystem;
-using CodeMechanic.RazorHAT.Services;
 using CodeMechanic.Types;
 using evantage.Models;
 using NSpecifications;

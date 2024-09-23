@@ -1,5 +1,3 @@
-using evantage.Models.Csv;
-
 namespace evantage.Services
 {
     public interface INugsService
